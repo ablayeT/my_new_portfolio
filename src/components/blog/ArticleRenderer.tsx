@@ -1,165 +1,195 @@
+// src/components/blog/Article-renderer.tsx
 "use client";
 
-import React from "react";
-import type { ContentBlock } from "@/data/blog/posts";
-import { Copy, Check, Link as LinkIcon } from "lucide-react";
-import { slugify } from "@/data/blog/posts";
-
-function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = React.useState(false);
-  async function onCopy() {
-    try {
-      if (navigator.clipboard?.writeText)
-        await navigator.clipboard.writeText(text);
-      else {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-      }
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  return (
-    <button
-      onClick={onCopy}
-      className="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs
-                 bg-white/90 hover:bg-white text-slate-700 border-slate-200
-                 dark:bg-slate-900/80 dark:hover:bg-slate-900 dark:text-slate-200 dark:border-slate-700"
-      aria-label={copied ? "Code copié" : "Copier le code"}
-      type="button"
-    >
-      {copied ? (
-        <Check className="h-3.5 w-3.5" />
-      ) : (
-        <Copy className="h-3.5 w-3.5" />
-      )}
-      {copied ? "Copié" : "Copier"}
-    </button>
-  );
-}
-
-function CodeBlock({ code, lang }: { code: string; lang?: string }) {
-  return (
-    <div className="relative not-prose my-6">
-      <div
-        className="absolute right-2 top-2 z-10"
-        style={{ pointerEvents: "auto" }}
-      >
-        <CopyButton text={code} />
-      </div>
-      <pre
-        className="overflow-x-auto rounded-lg border p-4 font-mono text-sm leading-relaxed"
-        aria-label={lang ? `Bloc de code ${lang}` : "Bloc de code"}
-        // couleurs pilotées par globals.css (variables --code-block-*)
-        style={{
-          backgroundColor: "var(--code-block-bg)",
-          color: "var(--code-block-fg)",
-          borderColor: "var(--code-block-border)",
-        }}
-      >
-        {code}
-      </pre>
-    </div>
-  );
-}
-
-function AnchorHeading({ level, text }: { level: 2 | 3; text: string }) {
-  const id = slugify(text);
-  const Tag = `h${level}` as unknown as "h2" | "h3";
-  return (
-    <Tag
-      id={id}
-      className={
-        level === 2
-          ? "group scroll-mt-28 text-2xl font-semibold mt-10 mb-4"
-          : "group scroll-mt-28 text-xl font-semibold mt-8 mb-3"
-      }
-    >
-      <a
-        href={`#${id}`}
-        className="inline-flex items-center gap-2 no-underline"
-      >
-        {text}
-        <LinkIcon
-          className="ml-1 hidden h-4 w-4 text-muted-foreground opacity-0 transition group-hover:opacity-100"
-          aria-hidden
-        />
-      </a>
-    </Tag>
-  );
-}
+import * as React from "react";
+import { Copy } from "lucide-react";
+import type { ContentBlock } from "@/data/blog/types";
+import { slugify } from "@/data/blog/utils";
 
 export function ArticleRenderer({ content }: { content: ContentBlock[] }) {
   return (
-    <article className="prose prose-slate max-w-none dark:prose-invert">
-      {content.map((block, i) => {
-        switch (block.type) {
-          case "h2":
-            return <AnchorHeading key={i} level={2} text={block.text} />;
-          case "h3":
-            return <AnchorHeading key={i} level={3} text={block.text} />;
+    <div className="article-content space-y-5">
+      {content.map((b, i) => {
+        switch (b.type) {
+          case "h2": {
+            const id = slugify(b.text);
+            return (
+              <h2
+                id={id}
+                key={i}
+                className="scroll-mt-24 text-xl font-semibold tracking-tight md:text-2xl"
+              >
+                {b.text}
+              </h2>
+            );
+          }
+          case "h3": {
+            const id = slugify(b.text);
+            return (
+              <h3
+                id={id}
+                key={i}
+                className="scroll-mt-24 text-lg font-semibold tracking-tight md:text-xl"
+              >
+                {b.text}
+              </h3>
+            );
+          }
           case "p":
             return (
               <p
                 key={i}
                 className="text-[15px] leading-7 text-muted-foreground"
               >
-                {block.text}
+                {b.text}
               </p>
             );
           case "ul":
             return (
               <ul
                 key={i}
-                className="ml-5 list-disc space-y-1 text-[15px] leading-7 text-muted-foreground"
+                className="list-disc space-y-2 pl-5 text-[15px] text-muted-foreground"
               >
-                {block.items.map((it, k) => (
+                {b.items.map((it, k) => (
                   <li key={k}>{it}</li>
                 ))}
               </ul>
             );
-          case "code":
-            return <CodeBlock key={i} code={block.code} lang={block.lang} />;
           case "quote":
             return (
               <blockquote
                 key={i}
-                className="my-5 border-l-4 border-slate-300 pl-4 italic text-slate-700 dark:text-slate-300"
+                className="border-l-2 border-border/60 pl-4 italic text-muted-foreground"
               >
-                {block.text}
+                {b.text}
               </blockquote>
             );
-          case "callout": {
-            const color =
-              block.intent === "danger"
-                ? "bg-red-50 border-red-200 text-red-900 dark:bg-red-900/20 dark:border-red-800 dark:text-red-100"
-                : block.intent === "warn"
-                  ? "bg-amber-50 border-amber-200 text-amber-900 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-100"
-                  : block.intent === "success"
-                    ? "bg-emerald-50 border-emerald-200 text-emerald-900 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-100"
-                    : "bg-sky-50 border-sky-200 text-sky-900 dark:bg-sky-900/20 dark:border-sky-800 dark:text-sky-100";
+          case "hr":
+            return <hr key={i} className="my-8 border-border/60" />;
+          case "img":
+            return (
+              <figure key={i} className="my-6">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={b.src}
+                  alt={b.alt ?? ""}
+                  className="mx-auto rounded-lg border"
+                />
+                {b.caption && (
+                  <figcaption className="mt-2 text-center text-sm text-muted-foreground">
+                    {b.caption}
+                  </figcaption>
+                )}
+              </figure>
+            );
+          case "callout":
             return (
               <div
                 key={i}
-                className={`not-prose my-4 rounded-lg border p-3 text-sm ${color}`}
                 role="note"
+                className={
+                  "rounded-lg border p-4 text-sm " +
+                  (b.intent === "warning"
+                    ? "border-amber-300/40 bg-amber-50 dark:bg-amber-900/20"
+                    : b.intent === "danger"
+                      ? "border-red-300/40 bg-red-50 dark:bg-red-900/20"
+                      : "border-blue-300/40 bg-blue-50 dark:bg-blue-900/20")
+                }
               >
-                {block.text}
+                <strong className="mr-2">{b.title ?? "Note"}</strong>
+                <span className="text-muted-foreground">{b.text}</span>
               </div>
             );
-          }
+          case "code":
+            return <CodeBlock key={i} lang={b.lang} code={b.code} />;
+          case "table":
+            return (
+              <div key={i} className="overflow-x-auto">
+                <table className="w-full border-collapse rounded-lg border text-sm">
+                  {b.head && (
+                    <thead className="bg-muted/60">
+                      <tr>
+                        {b.head.map((th, idx) => (
+                          <th
+                            key={idx}
+                            className="border px-3 py-2 text-left font-medium"
+                          >
+                            {th}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                  )}
+                  <tbody>
+                    {b.rows.map((row, r) => (
+                      <tr key={r} className="even:bg-muted/30">
+                        {row.map((cell, c) => (
+                          <td
+                            key={c}
+                            className="border px-3 py-2 align-top text-muted-foreground"
+                          >
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+          case "steps":
+            return (
+              <ol
+                key={i}
+                className="list-decimal space-y-3 pl-5 text-[15px] text-muted-foreground"
+              >
+                {b.items.map((it, k) => (
+                  <li key={k}>
+                    <div className="font-medium text-foreground">
+                      {it.title}
+                    </div>
+                    {it.detail && <div className="mt-1">{it.detail}</div>}
+                    {it.code && (
+                      <CodeBlock lang={it.lang ?? "bash"} code={it.code} />
+                    )}
+                  </li>
+                ))}
+              </ol>
+            );
           default:
             return null;
         }
       })}
-    </article>
+    </div>
+  );
+}
+
+function CodeBlock({ lang, code }: { lang: string; code: string }) {
+  const [copied, setCopied] = React.useState(false);
+  const onCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      // no-op
+    }
+  };
+  return (
+    <div className="relative">
+      <pre className="code-block" data-lang={lang}>
+        <code>{code}</code>
+      </pre>
+      <button
+        type="button"
+        aria-label="Copier le code"
+        onClick={onCopy}
+        className="copy-btn"
+      >
+        <Copy className="h-4 w-4" />
+        <span className="sr-only">{copied ? "Copié" : "Copier"}</span>
+      </button>
+      {copied && <span className="copy-toast">Copié</span>}
+    </div>
   );
 }
