@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "./Theme-toggle";
+import { CV_ASSET } from "@/data/cv/cv";
 
 const navigation = [
   { name: "Accueil", href: "/" },
@@ -110,19 +111,15 @@ export function Header() {
           <ThemeToggle />
 
           {/* ✅ CTA Desktop : visible à partir de md, caché sur mobile */}
-          <Button
-            asChild
-            size="sm"
-            className="hidden md:inline-flex"
-            // variant="secondary" // <- option : ou laisse le variant par défaut
-          >
+
+          <Button asChild size="sm" className="hidden md:inline-flex">
             <Link
-              href="/cv/Abdoulaye-Toure.pdf"
+              href={CV_ASSET.href}
               target="_blank"
               rel="noopener noreferrer"
             >
               <Download className="mr-2 h-4 w-4" />
-              Télécharger CV
+              Télécharger mon CV
             </Link>
           </Button>
 

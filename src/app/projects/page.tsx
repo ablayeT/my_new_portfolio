@@ -23,7 +23,9 @@ export default function Page() {
       {/* Garde NavTopbar si tu ne montes pas un Header global dans layout */}
       {/* <NavTopbar /> */}
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <ProjectsPage onProjectSelect={handleProjectSelect} />
+        <ProjectsPage
+          onProjectSelect={(id) => router.push(`/projects/${id}`)}
+        />
       </main>
     </div>
   );

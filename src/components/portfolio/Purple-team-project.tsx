@@ -16,6 +16,7 @@ import {
   ArrowLeft,
 } from "@/components/portfolio/Icons";
 import { CVDownloadModal } from "@/components/portfolio/cv-download-modal";
+import { NetworkDiagram } from "@/components/portfolio/Network-diagram";
 
 export interface PurpleTeamProjectProps {
   onBack: () => void;
@@ -30,6 +31,7 @@ export const PurpleTeamProject: React.FC<PurpleTeamProjectProps> = ({
 }) => {
   const [showDownloadModal, setShowDownloadModal] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState<TabId>("overview");
+  const [showDiagram, setShowDiagram] = React.useState(false);
 
   const kpis = [
     {
@@ -124,19 +126,23 @@ export const PurpleTeamProject: React.FC<PurpleTeamProjectProps> = ({
         </p>
 
         <div className="flex flex-col justify-center gap-4 px-4 sm:flex-row">
-          <Button
-            intent="primary"
-            size="lg"
-            className="min-h-[44px] w-full sm:w-auto"
-          >
-            <GitHub size={18} className="mr-2" />
-            <span className="hidden sm:inline">Voir le dépôt GitHub</span>
-            <span className="sm:hidden">GitHub</span>
-          </Button>
+          <a href="https://github.com/ablayeT?tab=repositories">
+            <Button
+              intent="primary"
+              size="lg"
+              className="min-h-[44px] w-full sm:w-auto"
+            >
+              <GitHub size={18} className="mr-2" />
+              <span className="hidden sm:inline">Voir le dépôt GitHub</span>
+              <span className="sm:hidden">GitHub</span>
+            </Button>
+          </a>
+
           <Button
             intent="secondary"
             size="lg"
             className="min-h-[44px] w-full sm:w-auto"
+            onClick={() => setShowDiagram(true)}
           >
             <Network size={18} className="mr-2" />
             <span className="hidden sm:inline">Voir le diagramme</span>
@@ -714,6 +720,10 @@ export const PurpleTeamProject: React.FC<PurpleTeamProjectProps> = ({
       <CVDownloadModal
         isOpen={showDownloadModal}
         onClose={() => setShowDownloadModal(false)}
+      />
+      <NetworkDiagram
+        open={showDiagram}
+        onClose={() => setShowDiagram(false)}
       />
     </div>
   );

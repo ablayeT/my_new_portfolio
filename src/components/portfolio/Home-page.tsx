@@ -13,7 +13,8 @@ import {
   Mail,
   Radar,
 } from "lucide-react";
-
+import { CV_ASSET } from "@/data/cv/cv";
+import { Download } from "lucide-react";
 type KPITrend = "up" | "down" | "neutral";
 
 function KPI({
@@ -196,7 +197,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </Button>
             ) : (
               <Button asChild size="lg" className="group">
-                <Link href="/projects">
+                <Link href="/projects/purple-team">
                   Voir le projet Purple Team
                   <ArrowRight
                     size={18}
@@ -206,14 +207,11 @@ export const HomePage: React.FC<HomePageProps> = ({
               </Button>
             )}
 
-            <Button variant="outline" size="lg" asChild className="group">
-              <Link href="/cv/Abdoulaye-Toure.pdf" target="_blank">
+            <Button asChild size="lg" variant="outline">
+              <a href={CV_ASSET.href} target="_blank" rel="noopener noreferrer">
+                <Download className="mr-2 h-4 w-4" />
                 Télécharger mon CV
-                <ArrowRight
-                  size={18}
-                  className="ml-2 transition-transform duration-200 group-hover:translate-x-1"
-                />
-              </Link>
+              </a>
             </Button>
           </div>
         </div>
@@ -510,7 +508,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </Button>
 
             <Button variant="outline" asChild className="group">
-              <Link href="/cv/Abdoulaye-Toure.pdf" target="_blank">
+              <Link href="/cv" target="_blank">
                 Voir mon CV
                 <ArrowRight
                   size={16}

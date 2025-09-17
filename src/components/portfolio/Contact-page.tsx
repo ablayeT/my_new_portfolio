@@ -12,92 +12,31 @@ import {
   Check,
   Loader2,
 } from "@/components/portfolio/Icons";
+import {
+  CONTACT_ITEMS,
+  CONTACT_COPY,
+  CONTACT_FORM_TEXT,
+} from "@/data/contacts/contact";
+import { useContactForm } from "@/hooks/useContactForm";
 
 export interface ContactPageProps {
   className?: string;
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
-  const [formData, setFormData] = React.useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-    consent: false,
-  });
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const {
+    formData,
+    errors,
+    isSubmitted,
+    isSubmitting,
+    isFormValid,
+    handleInputChange,
+    handleSubmit,
+  } = useContactForm();
 
-  // -------- Handlers
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    setFormData((prev) => ({
-      ...prev,
-      [name]:
-        type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
-    }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
-  };
+  // Map des icônes (clé -> composant)
+  const ICONS = { Mail, LinkedIn, GitHub, MapPin } as const;
 
-  const validateForm = () => {
-    const next: Record<string, string> = {};
-    if (!formData.name.trim()) next.name = "Le nom est requis";
-    if (!formData.email.trim()) {
-      next.email = "L'email est requis";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      next.email = "Format d'email invalide";
-    }
-    if (!formData.message.trim()) {
-      next.message = "Le message est requis";
-    } else if (formData.message.trim().length < 10) {
-      next.message = "Le message doit contenir au moins 10 caractères";
-    }
-    if (!formData.consent) {
-      next.consent = "Vous devez accepter le traitement de vos données";
-    }
-    setErrors(next);
-    return Object.keys(next).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    setIsSubmitting(true);
-    try {
-      // simulate
-      await new Promise((r) => setTimeout(r, 1500));
-      console.log("Contact form submitted:", {
-        ...formData,
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent,
-        referrer: document.referrer,
-      });
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-          consent: false,
-        });
-      }, 3500);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const isFormValid =
-    !!formData.name &&
-    !!formData.email &&
-    !!formData.message &&
-    formData.consent;
-
-  // -------- UI helpers
   function FieldError({ text }: { text?: string }) {
     if (!text) return null;
     return (
@@ -107,11 +46,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
     );
   }
 
-  /**
-   * FancyWrap
-   * - **mode clair** : pas de fond, simple bordure + ombre douce (propre comme la home)
-   * - **mode sombre** : léger “ring” dégradé pour garder le look premium
-   */
   function FancyWrap({
     children,
     className = "",
@@ -125,9 +59,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
       <div
         className={[
           "relative rounded-2xl",
-          // Light: clean card (no bg color), border + shadow
           "border border-[color:var(--color-border,#e5e7eb)] shadow-[0_8px_28px_rgba(2,6,23,0.08)]",
-          // Dark: gradient ring & stronger drop shadow
           "dark:border-transparent dark:p-[1px] dark:bg-gradient-to-br dark:from-[#6d28d9] dark:via-[#7c3aed] dark:to-[#0ea5e9]",
           glow ? "dark:shadow-[0_18px_60px_-20px_rgba(109,40,217,0.45)]" : "",
           className,
@@ -137,9 +69,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
           elev={1}
           className={[
             "rounded-2xl",
-            // Light: **pas de couleur de fond**
             "bg-transparent border-transparent",
-            // Dark: surface douce et lisible
             "dark:bg-[color:var(--color-neutral-900,#0b1220)]/80 dark:border-transparent dark:backdrop-blur-md",
           ].join(" ")}
         >
@@ -149,36 +79,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
     );
   }
 
-  const contactItems = [
-    {
-      icon: Mail,
-      title: "Email",
-      value: "abdoulaye.toure@example.com",
-      href: "mailto:abdoulaye.toure@example.com",
-      toneBg: "bg-[#6d28d9]/15",
-      tone: "text-[#6d28d9]",
-    },
-    {
-      icon: LinkedIn,
-      title: "LinkedIn",
-      value: "/in/abdoulaye-toure",
-      href: "https://linkedin.com/in/abdoulaye-toure",
-      toneBg: "bg-[#0ea5e9]/15",
-      tone: "text-[#0ea5e9]",
-    },
-    {
-      icon: GitHub,
-      title: "GitHub",
-      value: "/abdoulaye-toure",
-      href: "https://github.com/abdoulaye-toure",
-      toneBg: "bg-[#6b7280]/15",
-      tone: "text-[#6b7280]",
-    },
-  ] as const;
-
   return (
     <div className={`relative ${className}`}>
-      {/* Décor : visible uniquement en sombre (clair = aucune couleur de fond) */}
+      {/* Décor sombre uniquement */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 hidden dark:block"
@@ -188,7 +91,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
       </div>
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* header */}
+        {/* Header */}
         <div className="mb-10 text-center">
           <h1
             className={[
@@ -197,17 +100,16 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
               "bg-gradient-to-r from-[#6d28d9] via-[#7c3aed] to-[#0ea5e9] bg-clip-text text-transparent",
             ].join(" ")}
           >
-            Contact
+            {CONTACT_COPY.heading}
           </h1>
           <p className="mx-auto max-w-2xl text-[color:var(--color-muted-foreground,#6b7280)] [font-size:var(--tokens-text-body-16,16px)]">
-            Vous avez une question, un projet ou souhaitez collaborer ?
-            Écrivez-moi, je réponds rapidement.
+            {CONTACT_COPY.subtitle}
           </p>
         </div>
 
-        {/* grille */}
+        {/* Grille */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {/* formulaire */}
+          {/* Formulaire */}
           <FancyWrap glow>
             <div className="space-y-6">
               <h2 className="[font-size:var(--tokens-text-h3-22,22px)] font-semibold text-[color:var(--color-foreground,#0b1324)]">
@@ -232,23 +134,21 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label className="mb-2 block text-sm font-medium text-[color:var(--color-foreground,#0b1324)]">
-                        Nom complet *
+                        {CONTACT_FORM_TEXT.nameLabel}
                       </label>
                       <input
                         type="text"
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        placeholder="Votre nom et prénom"
+                        placeholder={CONTACT_FORM_TEXT.namePlaceholder}
                         required
                         className={[
-                          // **mode clair : pas de fond**, bord + ombre
                           "w-full rounded-2xl px-3 py-2 transition-all",
                           "bg-transparent",
                           "border border-[color:var(--color-border,#e5e7eb)]",
                           "shadow-[0_2px_10px_rgba(2,6,23,0.06)] hover:shadow-[0_6px_18px_rgba(2,6,23,0.08)]",
                           "focus:outline-none focus:ring-4 focus:ring-[#6d28d9]/20 focus:border-[#6d28d9]",
-                          // sombre : surface légère
                           "dark:bg-white/5",
                         ].join(" ")}
                       />
@@ -256,14 +156,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                     </div>
                     <div>
                       <label className="mb-2 block text-sm font-medium text-[color:var(--color-foreground,#0b1324)]">
-                        Email *
+                        {CONTACT_FORM_TEXT.emailLabel}
                       </label>
                       <input
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        placeholder="vous@exemple.com"
+                        placeholder={CONTACT_FORM_TEXT.emailPlaceholder}
                         required
                         className={[
                           "w-full rounded-2xl px-3 py-2 transition-all",
@@ -281,14 +181,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                   {/* subject */}
                   <div>
                     <label className="mb-2 block text-sm font-medium text-[color:var(--color-foreground,#0b1324)]">
-                      Sujet
+                      {CONTACT_FORM_TEXT.subjectLabel}
                     </label>
                     <input
                       type="text"
                       name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      placeholder="Objet de votre message"
+                      placeholder={CONTACT_FORM_TEXT.subjectPlaceholder}
                       className={[
                         "w-full rounded-2xl px-3 py-2 transition-all",
                         "bg-transparent",
@@ -303,13 +203,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                   {/* message */}
                   <div>
                     <label className="mb-2 block text-sm font-medium text-[color:var(--color-foreground,#0b1324)]">
-                      Message *
+                      {CONTACT_FORM_TEXT.messageLabel}
                     </label>
                     <textarea
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder="Décrivez votre projet, question ou demande…"
+                      placeholder={CONTACT_FORM_TEXT.messagePlaceholder}
                       rows={6}
                       required
                       className={[
@@ -336,10 +236,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                     />
                     <div>
                       <p className="text-sm text-[color:var(--color-muted-foreground,#6b7280)] leading-relaxed">
-                        J&apos;accepte que mes données personnelles soient
-                        utilisées pour me recontacter dans le cadre de cette
-                        demande. Elles ne seront pas partagées ni utilisées à
-                        d&apos;autres fins. *
+                        {CONTACT_COPY.consent}
                       </p>
                       <FieldError text={errors.consent} />
                     </div>
@@ -356,12 +253,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                     {isSubmitting ? (
                       <>
                         <Loader2 size={18} className="mr-2 animate-spin" />
-                        Envoi en cours…
+                        {CONTACT_FORM_TEXT.sending}
                       </>
                     ) : (
                       <>
                         <Send size={18} className="mr-2" />
-                        Envoyer le message
+                        {CONTACT_FORM_TEXT.submit}
                       </>
                     )}
                   </PurpleButton>
@@ -370,7 +267,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
             </div>
           </FancyWrap>
 
-          {/* colonne droite */}
+          {/* Colonne droite */}
           <div className="space-y-8">
             {/* contact direct */}
             <FancyWrap>
@@ -380,8 +277,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                 </h2>
 
                 <div className="space-y-4">
-                  {contactItems.map((c) => {
-                    const Icon = c.icon;
+                  {CONTACT_ITEMS.map((c) => {
+                    const Icon = ICONS[c.icon];
                     return (
                       <a
                         key={c.title}
@@ -439,23 +336,23 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                   </div>
                   <div>
                     <p className="font-medium text-[color:var(--color-foreground,#0b1324)]">
-                      Paris, France
+                      {CONTACT_COPY.location.city}
                     </p>
                     <p className="text-sm text-[color:var(--color-muted-foreground,#6b7280)]">
-                      Disponible en remote ou sur site (IDF)
+                      {CONTACT_COPY.location.note}
                     </p>
                   </div>
                 </div>
 
                 <div className="rounded-2xl border border-emerald-300/40 bg-emerald-50/80 px-3 py-2 text-emerald-700 shadow-[0_2px_10px_rgba(2,6,23,0.04)] dark:bg-emerald-900/20 dark:text-emerald-200 dark:border-emerald-900/40">
-                  ✅ Actuellement disponible pour nouveaux projets
+                  {CONTACT_COPY.availability}
                 </div>
               </div>
             </FancyWrap>
           </div>
         </div>
 
-        {/* pied d’info léger */}
+        {/* Pied d’info */}
         <div className="mx-auto mt-10 max-w-3xl text-center text-sm text-[color:var(--color-muted-foreground,#6b7280)]">
           * Vos informations ne seront jamais partagées. Réponse sous 24h (jours
           ouvrés).

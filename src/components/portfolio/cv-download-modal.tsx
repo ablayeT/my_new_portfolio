@@ -1,5 +1,7 @@
+// src/components/portfolio/cv-download-modal.tsx
 "use client";
 
+import { useCallback } from "react";
 import { Download, Eye, X } from "lucide-react";
 import {
   Dialog,
@@ -9,15 +11,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCallback } from "react";
+import { CV_ASSET } from "@/data/cv/cv";
 
 export interface CVDownloadModalProps {
   isOpen: boolean;
   onClose: () => void;
   className?: string;
 }
-
-const CV_URL = "/cv/Abdoulaye-Toure.pdf";
 
 export const CVDownloadModal = ({
   isOpen,
@@ -27,8 +27,8 @@ export const CVDownloadModal = ({
   const handleDownload = useCallback(() => {
     try {
       const a = document.createElement("a");
-      a.href = CV_URL;
-      a.download = "CV_Abdoulaye_Toure_Cybersecurity.pdf";
+      a.href = CV_ASSET.href;
+      a.download = CV_ASSET.filename;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -38,7 +38,7 @@ export const CVDownloadModal = ({
   }, [onClose]);
 
   const handlePreview = useCallback(() => {
-    window.open(CV_URL, "_blank", "noopener,noreferrer");
+    window.open(CV_ASSET.href, "_blank", "noopener,noreferrer");
   }, []);
 
   return (
@@ -52,7 +52,7 @@ export const CVDownloadModal = ({
         className={`sm:max-w-md ${className}`}
         aria-describedby="cv-download-description"
       >
-        {/* Bouton fermer (optionnel) */}
+        {/* Bouton fermer */}
         <button
           onClick={onClose}
           className="absolute right-3 top-3 rounded-md p-1.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -66,6 +66,9 @@ export const CVDownloadModal = ({
             <Download size={18} />
             Télécharger mon CV
           </DialogTitle>
+          <p className="text-xs text-muted-foreground">
+            Dernière mise à jour : {CV_ASSET.updatedAt}
+          </p>
         </DialogHeader>
 
         <Card>
@@ -97,7 +100,7 @@ export const CVDownloadModal = ({
 
             <div className="text-center">
               <p className="text-xs text-slate-500">
-                Format PDF • Mise à jour : Décembre 2024
+                Format PDF • Mise à jour : {CV_ASSET.updatedAt}
               </p>
             </div>
           </CardContent>

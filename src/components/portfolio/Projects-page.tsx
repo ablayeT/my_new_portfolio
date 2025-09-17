@@ -34,7 +34,7 @@ export interface ProjectsPageProps {
 
 const allProjects: Project[] = [
   {
-    id: "purple-team-lab",
+    id: "purple-team",
     title: "Purple Team Lab Infrastructure",
     description: `Architecture réseau complète pour simulations d'attaques et défense avec monitoring en temps réel.`,
     icon: (

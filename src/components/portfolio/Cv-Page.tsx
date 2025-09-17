@@ -1,10 +1,14 @@
+// src/components/portfolio/CvPage.tsx
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CVDownloadModal } from "./cv-download-modal";
+
 import {
   Download,
   Mail,
@@ -19,14 +23,14 @@ import {
   ShieldCheck,
   Globe2,
 } from "lucide-react";
-import Link from "next/link";
+
+import { CV_ASSET, FEATURED_CV_PROJECTS } from "@/data/cv/cv";
 
 export interface CVPageProps {
   className?: string;
 }
 
 type BadgeVariant = "default" | "secondary" | "outline";
-
 function getSkillBadgeStyle(level: string): BadgeVariant {
   switch (level) {
     case "expert":
@@ -41,7 +45,7 @@ function getSkillBadgeStyle(level: string): BadgeVariant {
 export default function CVPage({ className = "" }: CVPageProps) {
   const [showDownloadModal, setShowDownloadModal] = useState(false);
 
-  // ===== Données (depuis ton CV) =====
+  // ===== Données =====
   const headline = useMemo(
     () =>
       "Actuellement en recherche d’une alternance en cybersécurité dans le cadre de mon Master à partir de septembre 2025. Spécialisé en audit, pentest, threat hunting et développement d’outils sécurité.",
@@ -100,7 +104,7 @@ export default function CVPage({ className = "" }: CVPageProps) {
       skills: [
         { name: "Français (courant)", level: "expert" },
         { name: "Anglais (courant)", level: "expert" },
-        { name: "Espagnol (intermédiaire)", level: "advanced" }, // intermédiaire → on garde un style secondary
+        { name: "Espagnol (intermédiaire)", level: "advanced" },
         { name: "Wolof (courant)", level: "expert" },
         { name: "Malinké (courant)", level: "expert" },
         { name: "Bambara (courant)", level: "expert" },
@@ -180,6 +184,13 @@ export default function CVPage({ className = "" }: CVPageProps) {
       details: "Front-end & back-end, intégration, bonnes pratiques.",
     },
     {
+      title: "Développeur web & web mobile (alternance)",
+      school: "WebForce3 • Paris",
+      period: "Oct 2022 — Nov 2023",
+      details:
+        "Alternance (Entourage) : développement full-stack, architecture, tests.",
+    },
+    {
       title: "Master II : Littérature & civilisation américaine & caribéenne",
       school: "UCAD • Dakar, Sénégal",
       period: "Oct 2011 — Juil 2015",
@@ -221,9 +232,21 @@ export default function CVPage({ className = "" }: CVPageProps) {
 
         {/* Actions */}
         <div className="flex flex-wrap justify-center gap-3">
-          <Button onClick={() => setShowDownloadModal(true)}>
-            <Download className="mr-2 h-4 w-4" />
-            Télécharger le CV (PDF)
+          {/* Télécharger direct */}
+          <Button asChild>
+            <a href={CV_ASSET.href} download={CV_ASSET.filename}>
+              <Download className="mr-2 h-4 w-4" />
+              Télécharger le CV (PDF)
+            </a>
+          </Button>
+
+          {/* Optionnel : ouvrir le modal */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDownloadModal(true)}
+          >
+            Options de téléchargement
           </Button>
 
           <Button variant="outline" size="sm" asChild>
@@ -341,6 +364,36 @@ export default function CVPage({ className = "" }: CVPageProps) {
         </CardContent>
       </Card>
 
+      {/* Projets phares */}
+      <Card className="shadow-sm">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg font-semibold md:text-xl">
+              Projets phares
+            </CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {FEATURED_CV_PROJECTS.map((p) => (
+            <Link
+              key={p.id}
+              href={p.href}
+              className="rounded-lg border p-4 transition-shadow hover:shadow-sm"
+            >
+              <h3 className="text-sm font-medium text-foreground">{p.title}</h3>
+              <div className="mt-2 flex flex-wrap gap-1">
+                {p.chips.map((c) => (
+                  <Badge key={c} variant="secondary">
+                    {c}
+                  </Badge>
+                ))}
+              </div>
+            </Link>
+          ))}
+        </CardContent>
+      </Card>
+
       {/* Expériences */}
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
@@ -355,7 +408,7 @@ export default function CVPage({ className = "" }: CVPageProps) {
                 key={i}
                 className="relative rounded-lg border p-4 md:p-5"
               >
-                {/* barre colorée gauche en md+ */}
+                {/* barre colorée gauche (md+) */}
                 <span className="absolute left-0 top-0 hidden h-full w-1 rounded-l bg-primary/80 md:block" />
                 <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
                   <h3 className="text-base font-medium text-foreground md:text-lg">
@@ -437,7 +490,7 @@ export default function CVPage({ className = "" }: CVPageProps) {
             </div>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
-            {softSkills.map((s) => (
+            {["Rigoureux", "Curieux", "Organisé", "Discret"].map((s) => (
               <Badge key={s} variant="secondary">
                 {s}
               </Badge>
@@ -455,7 +508,7 @@ export default function CVPage({ className = "" }: CVPageProps) {
             </div>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
-            {interests.map((h) => (
+            {["Lecture", "Taekwondo", "Baseball", "Course à pied"].map((h) => (
               <Badge key={h} variant="outline">
                 {h}
               </Badge>
@@ -463,53 +516,6 @@ export default function CVPage({ className = "" }: CVPageProps) {
           </CardContent>
         </Card>
       </div>
-
-      {/* Liens utiles */}
-      <Card className="shadow-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-semibold md:text-xl">
-            Profils & liens
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-3">
-          <Button variant="outline" size="sm" asChild>
-            <Link
-              href={contact.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
-            </Link>
-          </Button>
-          <Button variant="outline" size="sm" asChild>
-            <Link
-              href={contact.github}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github className="mr-2 h-4 w-4" /> GitHub
-            </Link>
-          </Button>
-          <Button variant="outline" size="sm" asChild>
-            <Link
-              href={contact.tryhackme}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Target className="mr-2 h-4 w-4" /> TryHackMe
-            </Link>
-          </Button>
-          <Button variant="outline" size="sm" asChild>
-            <Link
-              href={contact.entourage}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <User className="mr-2 h-4 w-4" /> Entourage Pro
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
 
       {/* Modal de téléchargement */}
       <CVDownloadModal
