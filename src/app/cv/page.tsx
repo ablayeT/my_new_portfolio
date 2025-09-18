@@ -1,6 +1,6 @@
 // src/app/cv/page.tsx
 import type { Metadata } from "next";
-import CVPage from "@/components/portfolio/Cv-Page";
+import CVPage from "@/components/cv/Cv-Page";
 
 export const metadata: Metadata = {
   title: "CV — Abdoulaye Touré",

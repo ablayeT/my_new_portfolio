@@ -15,7 +15,7 @@ import {
   Mail,
   ArrowLeft,
 } from "@/components/portfolio/Icons";
-import { CVDownloadModal } from "@/components/portfolio/cv-download-modal";
+import { CVDownloadModal } from "@/components/cv/pdf/cv-download-modal";
 import { NetworkDiagram } from "@/components/portfolio/Network-diagram";
 
 export interface PurpleTeamProjectProps {

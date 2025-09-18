@@ -4,7 +4,7 @@
 import * as React from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { CVDownloadModal } from "./cv-download-modal";
+import { CVDownloadModal } from "../cv/pdf/cv-download-modal";
 import { Shield, Moon, Sun, Download, Loader2 } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 
