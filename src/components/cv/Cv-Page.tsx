@@ -241,13 +241,13 @@ export default function CVPage({ className = "" }: CVPageProps) {
           </Button>
 
           {/* Optionnel : ouvrir le modal */}
-          <Button
+          {/* <Button
             variant="outline"
             size="sm"
             onClick={() => setShowDownloadModal(true)}
           >
             Options de téléchargement
-          </Button>
+          </Button> */}
 
           <Button variant="outline" size="sm" asChild>
             <a href={`mailto:${contact.email}`}>

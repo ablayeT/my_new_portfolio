@@ -18,6 +18,7 @@ import {
   CONTACT_FORM_TEXT,
 } from "@/data/contacts/contact";
 import { useContactForm } from "@/hooks/useContactForm";
+import { StableWrap } from "../layout/StableWrap";
 
 export interface ContactPageProps {
   className?: string;
@@ -29,6 +30,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
     errors,
     isSubmitted,
     isSubmitting,
+    serverError,
     isFormValid,
     handleInputChange,
     handleSubmit,
@@ -43,39 +45,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
       <p className="mt-1 text-sm text-[color:var(--color-feedback-danger,#dc2626)]">
         {text}
       </p>
-    );
-  }
-
-  function FancyWrap({
-    children,
-    className = "",
-    glow = true,
-  }: {
-    children: React.ReactNode;
-    className?: string;
-    glow?: boolean;
-  }) {
-    return (
-      <div
-        className={[
-          "relative rounded-2xl",
-          "border border-[color:var(--color-border,#e5e7eb)] shadow-[0_8px_28px_rgba(2,6,23,0.08)]",
-          "dark:border-transparent dark:p-[1px] dark:bg-gradient-to-br dark:from-[#6d28d9] dark:via-[#7c3aed] dark:to-[#0ea5e9]",
-          glow ? "dark:shadow-[0_18px_60px_-20px_rgba(109,40,217,0.45)]" : "",
-          className,
-        ].join(" ")}
-      >
-        <PurpleCard
-          elev={1}
-          className={[
-            "rounded-2xl",
-            "bg-transparent border-transparent",
-            "dark:bg-[color:var(--color-neutral-900,#0b1220)]/80 dark:border-transparent dark:backdrop-blur-md",
-          ].join(" ")}
-        >
-          {children}
-        </PurpleCard>
-      </div>
     );
   }
 
@@ -110,7 +79,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
         {/* Grille */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Formulaire */}
-          <FancyWrap glow>
+          <StableWrap glow>
             <div className="space-y-6">
               <h2 className="[font-size:var(--tokens-text-h3-22,22px)] font-semibold text-[color:var(--color-foreground,#0b1324)]">
                 Envoyez-moi un message
@@ -142,6 +111,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder={CONTACT_FORM_TEXT.namePlaceholder}
+                        autoComplete="name"
                         required
                         className={[
                           "w-full rounded-2xl px-3 py-2 transition-all",
@@ -164,6 +134,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder={CONTACT_FORM_TEXT.emailPlaceholder}
+                        autoComplete="name"
                         required
                         className={[
                           "w-full rounded-2xl px-3 py-2 transition-all",
@@ -262,15 +233,20 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                       </>
                     )}
                   </PurpleButton>
+                  {serverError && (
+                    <p className="mt-3 text-sm text-[color:var(--color-feedback-danger,#dc2626)]">
+                      {serverError}
+                    </p>
+                  )}
                 </form>
               )}
             </div>
-          </FancyWrap>
+          </StableWrap>
 
           {/* Colonne droite */}
           <div className="space-y-8">
             {/* contact direct */}
-            <FancyWrap>
+            <StableWrap>
               <div className="space-y-6">
                 <h2 className="[font-size:var(--tokens-text-h3-22,22px)] font-semibold text-[color:var(--color-foreground,#0b1324)]">
                   Contact direct
@@ -321,10 +297,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                   })}
                 </div>
               </div>
-            </FancyWrap>
+            </StableWrap>
 
             {/* localisation & dispo */}
-            <FancyWrap>
+            <StableWrap>
               <div className="space-y-5">
                 <h3 className="font-semibold text-[color:var(--color-foreground,#0b1324)]">
                   Localisation & Disponibilité
@@ -348,7 +324,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ className = "" }) => {
                   {CONTACT_COPY.availability}
                 </div>
               </div>
-            </FancyWrap>
+            </StableWrap>
           </div>
         </div>
 

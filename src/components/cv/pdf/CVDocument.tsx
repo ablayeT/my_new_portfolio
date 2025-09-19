@@ -1,65 +1,44 @@
 // src/components/cv/pdf/CVDocument.tsx
 import React from "react";
-import {
-  Document,
-  Page,
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Link,
-} from "@react-pdf/renderer";
-import type { ReactNode } from "react";
+import { Document, Page, View, Text, Image, Link } from "@react-pdf/renderer";
+import { styles } from "@/components/styles/CVDocument_styles";
 
-const styles = StyleSheet.create({
-  page: {
-    padding: 28,
-    fontSize: 11,
-    color: "#1a202c",
-    fontFamily: "Helvetica",
-  },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-    paddingBottom: 8,
-    borderBottom: "1 solid #e2e8f0",
-  },
-  left: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 10,
-    alignItems: "center",
-  },
-  avatar: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    objectFit: "contain",
-  },
-  name: { fontSize: 20, fontWeight: 700 },
-  role: { fontSize: 12, color: "#4a5568", marginTop: 2 },
-  right: { textAlign: "right" },
-  link: { color: "#2563eb", textDecoration: "none" },
-  linksRow: { flexDirection: "row", gap: 4, justifyContent: "flex-end" },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: 700,
-    marginTop: 12,
-    marginBottom: 6,
-    borderBottom: "1 solid #e2e8f0",
-    paddingBottom: 4,
-  },
-  bullet: { marginBottom: 2 },
-  row: { display: "flex", flexDirection: "row", gap: 10 },
-  col: { flex: 1 },
-});
+type CVData = {
+  identity: {
+    name: string;
+    title: string;
+    under_title?: string;
+    phone: string;
+    email: string;
+    links: { linkedin: string; github: string; tryhackme: string };
+  };
+  summary: string;
+  experiences: Array<{
+    role: string;
+    company: string;
+    period: string;
+    bullets: string[];
+  }>;
+  featuredProjects: Array<{
+    name: string;
+    bullets: string[];
+    tags?: string[];
+  }>;
+  skills: {
+    security: string;
+    systems: string;
+    dev: string;
+    tools: string;
+    ats: string;
+  };
+  education: Array<{ title: string; school: string; period: string }>;
+  personal: { languages: string; soft: string; hobbies: string };
+  meta?: { updatedAt?: string };
+};
 
 type Props = {
-  data: any;
-  photoSrc?: string; // data URL
+  data: CVData;
+  photoSrc?: string; // data URL, injectée par la route
 };
 
 export function CVDocument({ data, photoSrc }: Props) {
@@ -71,6 +50,7 @@ export function CVDocument({ data, photoSrc }: Props) {
     skills,
     education,
     personal,
+    meta,
   } = data;
 
   return (
@@ -80,15 +60,17 @@ export function CVDocument({ data, photoSrc }: Props) {
       subject="Cybersécurité"
     >
       <Page size="A4" style={styles.page}>
-        {/* Header */}
+        {/* ===== Header ===== */}
         <View style={styles.header}>
           <View style={styles.left}>
             {photoSrc ? <Image src={photoSrc} style={styles.avatar} /> : null}
-            <View>
+            <View style={styles.ViewsCol}>
               <Text style={styles.name}>{identity.name}</Text>
               <Text style={styles.role}>{identity.title}</Text>
+              <Text style={styles.role}>{identity.under_title}</Text>
             </View>
           </View>
+
           <View style={styles.right}>
             <Text>{identity.phone}</Text>
             <Text>{identity.email}</Text>
@@ -96,11 +78,11 @@ export function CVDocument({ data, photoSrc }: Props) {
               <Link src={identity.links.linkedin} style={styles.link}>
                 LinkedIn
               </Link>
-              <Text> • </Text>
+              <Text>·</Text>
               <Link src={identity.links.github} style={styles.link}>
                 GitHub
               </Link>
-              <Text> • </Text>
+              <Text>·</Text>
               <Link src={identity.links.tryhackme} style={styles.link}>
                 TryHackMe
               </Link>
@@ -108,17 +90,18 @@ export function CVDocument({ data, photoSrc }: Props) {
           </View>
         </View>
 
-        {/* Profil */}
+        {/* ===== Profil ===== */}
         <Text style={styles.sectionTitle}>Profil</Text>
         <Text style={{ marginBottom: 6 }}>{summary}</Text>
 
         <View style={styles.row}>
-          {/* Col gauche : Expériences + Projets */}
+          {/* ===== Colonne gauche : Expériences + Compétences ===== */}
           <View style={styles.col}>
             <Text style={styles.sectionTitle}>
               Expériences professionnelles
             </Text>
-            {experiences.map((exp: any, i: number) => (
+
+            {experiences.map((exp, i) => (
               <View key={i} style={{ marginBottom: 6 }}>
                 <Text style={{ fontWeight: 700 }}>
                   {exp.role} | {exp.company}
@@ -132,43 +115,68 @@ export function CVDocument({ data, photoSrc }: Props) {
                 >
                   {exp.period}
                 </Text>
-                {exp.bullets.map((b: string, k: number) => (
+                {exp.bullets.map((b, k) => (
                   <Text key={k} style={styles.bullet}>
                     • {b}
                   </Text>
                 ))}
               </View>
             ))}
-            <Text style={styles.sectionTitle}>Compétences</Text>
-            <Text style={{ marginBottom: 4 }}>
-              <Text style={{ fontWeight: 700 }}>Cybersécurité: </Text>
-              {skills.security}
-            </Text>
-            <Text style={{ marginBottom: 4 }}>
-              <Text style={{ fontWeight: 700 }}>Systèmes: </Text>
-              {skills.systems}
-            </Text>
-            <Text style={{ marginBottom: 4 }}>
-              <Text style={{ fontWeight: 700 }}>Développement: </Text>
-              {skills.dev}
-            </Text>
-            <Text style={{ marginBottom: 4 }}>
-              <Text style={{ fontWeight: 700 }}>Outils: </Text>
-              {skills.tools}
-            </Text>
-            <Text style={{ marginBottom: 8, color: "#4a5568" }}>
-              <Text style={{ fontWeight: 700 }}>Mots-clés ATS: </Text>
-              {skills.ats}
-            </Text>
+            <View style={styles.ViewsCol}>
+              <View>
+                <Text style={styles.sectionTitle}>Compétences</Text>
+                <Text style={{ marginBottom: 3 }}>
+                  <Text style={{ fontWeight: 700 }}>Cybersécurité: </Text>
+                  <Text>{skills.security}</Text>
+                </Text>
+              </View>
+              <View>
+                <Text style={{ marginBottom: 3 }}>
+                  <Text style={{ fontWeight: 700 }}>Systèmes: </Text>
+                  <Text>{skills.systems}</Text>
+                </Text>
+              </View>
+              <View>
+                <Text style={{ marginBottom: 3 }}>
+                  <Text style={{ fontWeight: 700 }}>Dev: </Text>
+                  <Text>{skills.dev}</Text>
+                </Text>
+              </View>
+              <View style={{ marginBottom: 8 }}>
+                <Text>
+                  <Text style={{ fontWeight: 700 }}>Outils/ATS: </Text>
+                  <Text>
+                    {skills.tools} • {skills.ats}
+                  </Text>
+                </Text>
+              </View>
+            </View>
+            <View>
+              <Text>
+                <Text style={styles.sectionTitle}>Centres d’intérêt:</Text>
+                <Text>{personal.hobbies}</Text>
+              </Text>
+            </View>
           </View>
 
-          {/* Col droite : Compétences + Formations + Infos */}
+          {/* ===== Colonne droite : Projets + Formations + Infos ===== */}
           <View style={styles.col}>
-            <Text style={styles.sectionTitle}>Projets sélectionnés</Text>
-            {featuredProjects.map((p: any, i: number) => (
-              <View key={i} style={{ marginBottom: 6 }}>
+            <Text style={styles.sectionTitle}>Projets </Text>
+            {featuredProjects.map((p, i) => (
+              <View key={i} style={{ marginBottom: 5 }}>
                 <Text style={{ fontWeight: 700 }}>{p.name}</Text>
-                {p.bullets.map((b: string, k: number) => (
+
+                {p.tags?.length ? (
+                  <View style={styles.chipRow}>
+                    {p.tags.map((t, idx) => (
+                      <Text key={idx} style={styles.chip}>
+                        {t}
+                      </Text>
+                    ))}
+                  </View>
+                ) : null}
+
+                {p.bullets.map((b, k) => (
                   <Text key={k} style={styles.bullet}>
                     • {b}
                   </Text>
@@ -177,8 +185,8 @@ export function CVDocument({ data, photoSrc }: Props) {
             ))}
 
             <Text style={styles.sectionTitle}>Formations</Text>
-            {education.map((e: any, i: number) => (
-              <View key={i} style={{ marginBottom: 4 }}>
+            {education.map((e, i) => (
+              <View key={i} style={{ marginBottom: 1 }}>
                 <Text style={{ fontWeight: 700 }}>{e.title}</Text>
                 <Text style={{ color: "#718096" }}>
                   {e.school} | {e.period}
@@ -187,7 +195,7 @@ export function CVDocument({ data, photoSrc }: Props) {
             ))}
 
             <Text style={styles.sectionTitle}>Infos personnelles</Text>
-            <Text style={{ marginBottom: 2 }}>
+            <Text>
               <Text style={{ fontWeight: 700 }}>Langues: </Text>
               {personal.languages}
             </Text>
@@ -195,12 +203,21 @@ export function CVDocument({ data, photoSrc }: Props) {
               <Text style={{ fontWeight: 700 }}>Soft skills: </Text>
               {personal.soft}
             </Text>
-            <Text>
-              <Text style={{ fontWeight: 700 }}>Centres d’intérêt: </Text>
-              {personal.hobbies}
-            </Text>
           </View>
         </View>
+
+        {/* ===== Footer ===== */}
+        <View style={styles.divider} />
+        {/* <Text
+          style={{
+            fontSize: 9,
+            color: "#718096",
+            textAlign: "right",
+            marginTop: 3,
+          }}
+        >
+          Mis à jour&nbsp;: {meta?.updatedAt ?? "2025-09"}
+        </Text> */}
       </Page>
     </Document>
   );

@@ -37,7 +37,7 @@ export const FEATURED_CV_PROJECTS: FeaturedProject[] = [
 export const PROFILE_LINKS = {
   linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
   github: "https://github.com/ablayeT?tab=repositories",
-  tryhackme: "https://tryhackme.com/p/abdoulaye.toure0",
+  tryhackme: "https://tryhackme.com/p/ablaye.toure0",
 };
 
 export const CONTACT = {
@@ -46,24 +46,27 @@ export const CONTACT = {
   phone: "+33 644 93 26 27",
 };
 
-// src/data/cv/cv.ts
+// ===== Données PDF =====
 export const CV_DATA = {
+  meta: { updatedAt: "2025-09" },
+
   identity: {
     name: "Abdoulaye Touré",
-    title: "Alternant – Cybersécurité (Blue Team / Automatisation)",
+    title: "Expert en Cybersécurité",
+    under_title: " En recherche d'alternance",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
     links: {
-      linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
-      github: "https://github.com/ablayeT?tab=repositories",
-      tryhackme: "https://tryhackme.com/p/ablaye.toure0",
+      linkedin: PROFILE_LINKS.linkedin,
+      github: PROFILE_LINKS.github,
+      tryhackme: PROFILE_LINKS.tryhackme,
     },
     location: "Paris, France",
-    photoPublicPath: "/cv/photo.jpg", // mets ta photo ici: public/cv/photo.jpg
+    photoPublicPath: "/cv/photo.jpg", // côté React (page HTML), pas utilisé dans le PDF
   },
 
   summary:
-    "Étudiant en cybersécurité avec une double compétence en systèmes/réseaux sécurisés et en développement. Je recherche une alternance à partir de septembre 2025 pour mettre en pratique mes compétences ",
+    "Étudiant en cybersécurité avec double compétence systèmes/réseaux et développement. Je recherche une alternance dès septembre 2025 pour renforcer détection, réponse aux incidents et automatisation sécurité.",
 
   experiences: [
     {
@@ -72,9 +75,9 @@ export const CV_DATA = {
       period: "Mars 2025 – Mai 2025",
       bullets: [
         "Audits techniques systèmes/réseaux/applications.",
-        "Pentest (XSS, SQLi, brute force) avec Burp Suite, Nmap, SQLMap.",
+        "Pentests (XSS, SQLi, bruteforce) – Burp Suite, Nmap, SQLMap.",
         "Analyse & détection via ELK (Filebeat, Logstash, Kibana).",
-        "Automatisation de tâches d’audit (Bash/PowerShell) et rapports avec recommandations.",
+        "Automatisation (Bash/PowerShell) et rapports de recommandations.",
       ],
     },
     {
@@ -83,7 +86,7 @@ export const CV_DATA = {
       period: "Oct 2022 – Nov 2023",
       bullets: [
         "Développement et évolutions de plateformes web (front/back).",
-        "Contribution à l’architecture, aux choix techniques, aux tests/recettes.",
+        "Architecture, choix techniques, tests et recettes.",
       ],
     },
     {
@@ -99,7 +102,7 @@ export const CV_DATA = {
       company: "Toure Multi-Services • Sénégal",
       period: "2017 – 2019",
       bullets: [
-        "Gestion d’équipe (2 commerciaux, 1 technicien), coordination commerciale/technique, suivi clients.",
+        "Gestion d’équipe (2 commerciaux, 1 technicien) et suivi clients.",
       ],
     },
   ],
@@ -107,41 +110,43 @@ export const CV_DATA = {
   featuredProjects: [
     {
       name: "Purple Team Lab – Infrastructure de simulation",
+      tags: ["MITRE ATT&CK", "Suricata", "ELK"],
       bullets: [
-        "Lab segmenté (Public / DMZ / Privé) aligné MITRE ATT&CK.",
-        "Suricata + ELK pour collecte, corrélation et visualisation en temps réel.",
-        "Automatisation, playbooks: démontrer la chaîne détection → investigation → réponse.",
+        "Lab segmenté Public/DMZ/Privé pour scénarios ATT&CK.",
+        "Suricata + ELK : collecte, corrélation, vues temps réel.",
+        "Automations & playbooks pour détection → investigation → réponse",
       ],
     },
     {
       name: "Plateforme de simulation Phishing",
+      tags: ["GoPhish", "SMTP", "Awareness"],
       bullets: [
-        "Campagnes GoPhish (modèles, tracking, dashboard de métriques).",
-        // "Intégration SMTP et rapports de sensibilisation.",
+        "Campagnes GoPhish avec modèles, tracking, dashboard.",
+        "Intégration SMTP et rapports de sensibilisation.",
       ],
     },
     {
       name: "Dashboard SIEM personnalisé",
+      tags: ["Kibana", "Alerting", "Baselines"],
       bullets: [
-        "Vues Kibana par use-case (phishing, exécution suspecte, mouvements latéraux).",
-        // "Règles d’alerting & lignes de base pour réduire le bruit.",
+        "Vues par use-cases (phishing, exécution suspecte, latéral).",
+        "Règles d’alerting & lignes de base pour réduire le bruit.",
       ],
     },
     {
       name: "Framework de Threat Hunting",
-      bullets: [
-        "Hypothèses de chasse (TTP), requêtes KQL, procédures d’enrichissement, traces & IOC.",
-      ],
+      tags: ["TTP", "KQL", "IOC"],
+      bullets: ["Hypothèses de chasse, requêtes KQL, enrichissement & IOC."],
     },
   ],
 
   skills: {
     security:
-      "Red team (Burp Suite, Nmap, SQLMap), vulnérabilités (Nessus, Wireshark), chiffrement & AuthN/Z, automatisation.",
-    systems: "Linux (Kali, administration), Bash, powershell.",
-    dev: "JavaScript/Node.js, React, Python, PHP, MySQL.",
-    tools: "ELK, Nmap, Nesus, Wireshark.",
-    ats: "Blue Team, Pentest, MITRE ATT&CK, SIEM/ELK, Incident Response, Threat Hunting, Automatisation, CI/CD, Sécurité applicative.",
+      "Pentest, vulnérabilités (Nessus/Wireshark), chiffrement & AuthN/Z, sécurité applicative,(Bash/PowerShell).",
+    systems: "Linux (Kali, admin), Bash.",
+    dev: "JavaScript/Node.js, React, Python, PHP, MySQL (UI: Material UI).",
+    tools: "ELK, Nmap, Gobuster, Nessus, Wireshark.",
+    ats: "Blue Team, MITRE ATT&CK, SIEM/ELK, Incident Response, Threat Hunting, Automatisation, CI/CD",
   },
 
   education: [
@@ -156,7 +161,7 @@ export const CV_DATA = {
       period: "Sept 2024 – Juin 2025",
     },
     {
-      title: "Titre RNCP – Développeur Web & Web Mobile (Alternance)", // formation manquante ajoutée
+      title: "Titre RNCP – Développeur Web & Web Mobile (Alternance)",
       school: "WebForce3, Paris",
       period: "Oct 2022 – Nov 2023",
     },
@@ -173,8 +178,7 @@ export const CV_DATA = {
   ],
 
   personal: {
-    languages:
-      "Français • Anglais (courant) • Espagnol (intermédiaire) • Wolof • Malinké • Bambara.",
+    languages: "Français • Anglais • Wolof • Malinké • Bambara.",
     soft: "Rigoureux • Curieux • Organisé • Discret.",
     hobbies: "Lecture • Taekwondo • Baseball • Course à pied.",
   },

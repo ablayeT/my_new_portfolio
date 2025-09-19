@@ -24,18 +24,22 @@ export function useContactForm() {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const [serverError, setServerError] = React.useState<string | null>(null);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    setFormData((prev) => ({
-      ...prev,
-      [name]:
-        type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
-    }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
-  };
+  const handleInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, type } = e.target as HTMLInputElement;
+      const value =
+        type === "checkbox"
+          ? (e.target as HTMLInputElement).checked
+          : e.target.value;
+
+      setFormData((prev) => ({ ...prev, [name]: value as any }));
+      if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+      if (serverError) setServerError(null);
+    },
+    [errors, serverError]
+  );
 
   const validateForm = () => {
     const next: Record<string, string> = {};
@@ -59,21 +63,30 @@ export function useContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
+
     setIsSubmitting(true);
+    setServerError(null);
+
     try {
-      // Simu d'envoi (branchable plus tard sur un endpoint / server action)
-      await new Promise((r) => setTimeout(r, 1500));
-      console.log("Contact form submitted:", {
-        ...formData,
-        timestamp: new Date().toISOString(),
-        userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-        referrer: typeof document !== "undefined" ? document.referrer : "",
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (!res.ok) {
+        const payload = await res.json().catch(() => ({}));
+        throw new Error(payload?.error || "Échec d’envoi du message.");
+      }
+
       setIsSubmitted(true);
+      // reset “soft” après affichage du succès
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData(DEFAULT_FORM);
       }, 3500);
+    } catch (err: any) {
+      setServerError(err.message || "Une erreur est survenue.");
     } finally {
       setIsSubmitting(false);
     }
@@ -89,6 +102,7 @@ export function useContactForm() {
     formData,
     setFormData,
     errors,
+    serverError,
     isSubmitted,
     isSubmitting,
     isFormValid,

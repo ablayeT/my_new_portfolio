@@ -1,7 +1,8 @@
+import React from "react";
 // import React from "react";
 import { cn } from "@/lib/utils";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-import React = require("react");
+// import React = require("react");
 
 export interface PurpleCardProps {
   elev?: 0 | 1 | 2;

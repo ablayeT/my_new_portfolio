@@ -28,7 +28,8 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/app/globals.css"
+    "src/app/globals.css",
+    "src/components/styles/CVDocument_styles.css"
   ],
   "exclude": ["node_modules"]
 }
