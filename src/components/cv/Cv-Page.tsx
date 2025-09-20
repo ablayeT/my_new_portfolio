@@ -1,526 +1,91 @@
-// src/components/portfolio/CvPage.tsx
 "use client";
 
-import { useMemo, useState } from "react";
-import Link from "next/link";
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CVDownloadModal } from "@/components/cv/pdf/cv-download-modal";
-
+import * as React from "react";
 import {
-  Download,
-  Mail,
-  Linkedin,
-  Github,
-  MapPin,
+  ShieldCheck,
   GraduationCap,
   User,
-  Phone,
-  Target,
   BookOpen,
-  ShieldCheck,
   Globe2,
 } from "lucide-react";
+import { CvHero } from "@/components/cv/parts/cvHero";
+import { CvSection } from "@/components/cv/parts/cvSection";
+import { SkillsGrid } from "@/components/cv/parts//SkillsGrid";
+import { ProjectsGrid } from "@/components/cv/parts//ProjectsGrid";
+import { ExperiencesList } from "@/components/cv/parts//ExperiencesList";
+import { EducationGrid } from "@/components/cv/parts//EducationGrid";
+import { ExtrasGrid } from "@/components/cv/parts//ExtrasGrid";
 
-import { CV_ASSET, FEATURED_CV_PROJECTS } from "@/data/cv/cv";
+import { CV_ASSET, CV_DATA } from "@/data/cv/cv";
+import {
+  HEADLINE,
+  CONTACT,
+  SKILL_CATEGORIES,
+  EXPERIENCES,
+  EDUCATION,
+  SOFT_SKILLS,
+  INTERESTS,
+} from "@/data/cv/cvPage/page";
 
-export interface CVPageProps {
-  className?: string;
-}
-
-type BadgeVariant = "default" | "secondary" | "outline";
-function getSkillBadgeStyle(level: string): BadgeVariant {
-  switch (level) {
-    case "expert":
-      return "default";
-    case "advanced":
-      return "secondary";
-    default:
-      return "outline";
-  }
-}
-
-export default function CVPage({ className = "" }: CVPageProps) {
-  const [showDownloadModal, setShowDownloadModal] = useState(false);
-
-  // ===== Données =====
-  const headline = useMemo(
-    () =>
-      "Actuellement en recherche d’une alternance en cybersécurité dans le cadre de mon Master à partir de septembre 2025. Spécialisé en audit, pentest, threat hunting et développement d’outils sécurité.",
-    []
-  );
-
-  const contact = {
-    location: "Paris, France",
-    email: "ablayetoure2014@gmail.com",
-    phone: "+33 644 93 26 27",
-    github: "https://github.com/ablayeT?tab=repositories",
-    linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
-    tryhackme: "https://tryhackme.com/p/ablaye.toure0",
-    entourage:
-      "https://www.entourage-pro.fr/cv/abdoulaye-2e32086a?hideShareOptions=false",
-  };
-
-  const skillCategories: Array<{
-    title: string;
-    skills: { name: string; level: "expert" | "advanced" | "intermediate" }[];
-  }> = [
-    {
-      title: "Sécurité informatique",
-      skills: [
-        { name: "Contrôle des accès & AuthN/Z", level: "advanced" },
-        { name: "Chiffrement des données", level: "advanced" },
-        { name: "Validation & désinfection des entrées", level: "advanced" },
-        { name: "Gestion des vulnérabilités & correctifs", level: "advanced" },
-        { name: "Audit & Pentest (XSS, SQLi, brute force)", level: "expert" },
-        { name: "Analyse sécurité (logs/IOC)", level: "advanced" },
-      ],
-    },
-    {
-      title: "Outils & Plateformes",
-      skills: [
-        { name: "Linux / Bash (admin système)", level: "expert" },
-        { name: "Kali Linux", level: "expert" },
-        { name: "ELK (Filebeat, Logstash, Kibana)", level: "advanced" },
-        { name: "Nmap, Gobuster", level: "expert" },
-        { name: "Wireshark, Nessus", level: "advanced" },
-        { name: "MySQL", level: "advanced" },
-      ],
-    },
-    {
-      title: "Langages & Frameworks",
-      skills: [
-        { name: "JavaScript / Node.js", level: "expert" },
-        { name: "React", level: "expert" },
-        { name: "Python", level: "expert" },
-        { name: "PHP", level: "advanced" },
-        { name: "Material UI", level: "advanced" },
-      ],
-    },
-    {
-      title: "Langues",
-      skills: [
-        { name: "Français (courant)", level: "expert" },
-        { name: "Anglais (courant)", level: "expert" },
-        { name: "Espagnol (intermédiaire)", level: "advanced" },
-        { name: "Wolof (courant)", level: "expert" },
-        { name: "Malinké (courant)", level: "expert" },
-        { name: "Bambara (courant)", level: "expert" },
-      ],
-    },
-  ];
-
-  const experiences: Array<{
-    title: string;
-    company: string;
-    period: string;
-    tasks: string[];
-  }> = [
-    {
-      title: "Stage : Audit & Pentest",
-      company: "ADVENS • Paris",
-      period: "Mars 2025 — Mai 2025",
-      tasks: [
-        "Réalisation d’audits techniques (systèmes, réseaux, applications)",
-        "Pentest (XSS, SQLi, brute force) avec Burp Suite, Nmap, SQLMap",
-        "Analyse de logs & détection via la stack ELK (Filebeat, Logstash, Kibana)",
-        "Automatisation d’audits (Bash / PowerShell)",
-        "Rédaction de rapports techniques & recommandations",
-        "Interactions régulières avec les équipes techniques",
-      ],
-    },
-    {
-      title: "Développeur Web & Web Mobile",
-      company: "Entourage • Paris",
-      period: "Oct 2022 — Nov 2023",
-      tasks: [
-        "Développement et évolutions des plateformes web",
-        "Contribution aux choix techniques et à l’architecture",
-        "Conception, développement et qualité (tests)",
-        "Mise en place de recettes fonctionnelles/techniques",
-      ],
-    },
-    {
-      title: "Professeur d’anglais",
-      company: "BEC • Dakar, Sénégal",
-      period: "Sept 2017 — Nov 2019",
-      tasks: [
-        "Création de cours adaptés aux niveaux des apprenants",
-        "Animation de classes hétérogènes & suivi individualisé",
-        "Structuration pédagogique des contenus",
-        "Évaluations régulières et feedback",
-      ],
-    },
-    {
-      title: "Fondateur & gérant",
-      company: "Toure Multi-Services • Sénégal",
-      period: "2017 — 2019",
-      tasks: [
-        "Gestion d’une équipe (2 commerciaux, 1 technicien)",
-        "Coordination des tâches commerciales et techniques",
-        "Suivi des projets clients et de la satisfaction",
-      ],
-    },
-  ];
-
-  const education: Array<{
-    title: string;
-    school: string;
-    period: string;
-    details?: string;
-  }> = [
-    {
-      title: "Bac +3 : Administration d’infrastructures sécurisées",
-      school: "ALT-RH • Paris",
-      period: "Sept 2024 — Juin 2025",
-      details: "Systèmes, réseaux, sécurité des infrastructures.",
-    },
-    {
-      title: "Développeur intégrateur web",
-      school: "WebForce3 • Paris",
-      period: "Avr 2022 — Oct 2022",
-      details: "Front-end & back-end, intégration, bonnes pratiques.",
-    },
-    {
-      title: "Développeur web & web mobile (alternance)",
-      school: "WebForce3 • Paris",
-      period: "Oct 2022 — Nov 2023",
-      details:
-        "Alternance (Entourage) : développement full-stack, architecture, tests.",
-    },
-    {
-      title: "Master II : Littérature & civilisation américaine & caribéenne",
-      school: "UCAD • Dakar, Sénégal",
-      period: "Oct 2011 — Juil 2015",
-    },
-  ];
-
-  const softSkills = ["Rigoureux", "Curieux", "Organisé", "Discret"];
-  const interests = ["Lecture", "Taekwondo", "Baseball", "Course à pied"];
-
-  // ===== Rendu =====
+export default function CVPage() {
   return (
-    <div className={`space-y-8 ${className}`}>
-      {/* En-tête CV */}
-      <section className="text-center">
-        <div className="mx-auto mb-6 flex h-28 w-28 items-center justify-center rounded-full bg-primary/10 text-primary shadow-sm md:h-32 md:w-32">
-          <span className="text-2xl font-extrabold md:text-3xl">AT</span>
-        </div>
+    <div className="space-y-8">
+      <CvHero
+        name={CV_DATA.identity.name}
+        headline={HEADLINE}
+        contact={CONTACT}
+        downloadHref={CV_ASSET.href}
+        downloadName={CV_ASSET.filename}
+      />
 
-        <h1 className="mb-1 text-3xl font-bold tracking-tight text-primary md:text-4xl">
-          Abdoulaye Touré
-        </h1>
-
-        <p className="mx-auto mb-5 max-w-3xl text-sm text-muted-foreground md:text-base">
-          {headline}
+      <CvSection
+        title="Profil professionnel"
+        icon={<User className="h-5 w-5 text-primary" />}
+      >
+        <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+          Étudiant en cybersécurité avec base solide en développement web.
+          Expérience en audit/pentest, outils de sécurité et dev full-stack.
+          Objectif : contribuer à la protection des SI via une approche Purple
+          Team.
         </p>
+      </CvSection>
 
-        {/* Contacts */}
-        <div className="mx-auto mb-6 flex max-w-3xl flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
-          <span className="inline-flex items-center gap-1.5">
-            <MapPin className="h-4 w-4" /> {contact.location}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <Mail className="h-4 w-4" /> {contact.email}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <Phone className="h-4 w-4" /> {contact.phone}
-          </span>
-        </div>
+      <CvSection
+        title="Compétences techniques"
+        icon={<ShieldCheck className="h-5 w-5 text-primary" />}
+      >
+        <SkillsGrid categories={SKILL_CATEGORIES} />
+      </CvSection>
 
-        {/* Actions */}
-        <div className="flex flex-wrap justify-center gap-3">
-          {/* Télécharger direct */}
-          <Button asChild>
-            <a href={CV_ASSET.href} download={CV_ASSET.filename}>
-              <Download className="mr-2 h-4 w-4" />
-              Télécharger le CV (PDF)
-            </a>
-          </Button>
+      <CvSection
+        title="Projets phares"
+        icon={<BookOpen className="h-5 w-5 text-primary" />}
+      >
+        <ProjectsGrid />
+      </CvSection>
 
-          {/* Optionnel : ouvrir le modal */}
-          {/* <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowDownloadModal(true)}
-          >
-            Options de téléchargement
-          </Button> */}
+      <CvSection
+        title="Expériences professionnelles"
+        icon={<User className="h-5 w-5 text-primary" />}
+      >
+        <ExperiencesList items={EXPERIENCES} />
+      </CvSection>
 
-          <Button variant="outline" size="sm" asChild>
-            <a href={`mailto:${contact.email}`}>
-              <Mail className="mr-2 h-4 w-4" />
-              Email
-            </a>
-          </Button>
+      <CvSection
+        title="Formation"
+        icon={<GraduationCap className="h-5 w-5 text-primary" />}
+      >
+        <EducationGrid items={EDUCATION} />
+      </CvSection>
 
-          <Button variant="outline" size="sm" asChild>
-            <a
-              href={contact.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Linkedin className="mr-2 h-4 w-4" />
-              LinkedIn
-            </a>
-          </Button>
-
-          <Button variant="outline" size="sm" asChild>
-            <a href={contact.github} target="_blank" rel="noopener noreferrer">
-              <Github className="mr-2 h-4 w-4" />
-              GitHub
-            </a>
-          </Button>
-
-          <Button variant="outline" size="sm" asChild>
-            <a
-              href={contact.tryhackme}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Target className="mr-2 h-4 w-4" />
-              TryHackMe
-            </a>
-          </Button>
-        </div>
-      </section>
-
-      {/* Profil pro */}
-      <Card className="shadow-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <User className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg font-semibold md:text-xl">
-              Profil professionnel
-            </CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="text-sm leading-relaxed text-muted-foreground md:text-base">
-          Étudiant en cybersécurité avec une solide base en développement web.
-          Expérience pratique en audit/pentest, maîtrise des outils de sécurité
-          et compétences full-stack. Objectif&nbsp;: approfondir mes
-          connaissances et contribuer à la protection des SI par des approches
-          Purple Team.
-        </CardContent>
-      </Card>
-
-      {/* Compétences */}
-      <Card className="shadow-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg font-semibold md:text-xl">
-              Compétences techniques
-            </CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-8">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {skillCategories.map((category) => (
-              <div key={category.title} className="space-y-3">
-                <h3 className="text-sm font-medium text-foreground md:text-base">
-                  {category.title}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill) => (
-                    <Badge
-                      key={skill.name}
-                      variant={getSkillBadgeStyle(
-                        skill.level === "intermediate" ? "default" : skill.level
-                      )}
-                      className="gap-2"
-                    >
-                      {skill.level === "expert" && (
-                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
-                      )}
-                      {skill.name}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Légende niveaux */}
-          <div className="rounded-lg border bg-accent/30 p-4">
-            <h4 className="mb-2 text-sm font-medium">Niveau de maîtrise</h4>
-            <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-2">
-                <span className="inline-block h-2 w-2 rounded-full bg-amber-400" />
-                Expert
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="inline-block h-2 w-2 rounded-full bg-blue-500" />
-                Avancé
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="inline-block h-2 w-2 rounded-full bg-gray-400" />
-                Intermédiaire/Débutant
-              </span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Projets phares */}
-      <Card className="shadow-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg font-semibold md:text-xl">
-              Projets phares
-            </CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {FEATURED_CV_PROJECTS.map((p) => (
-            <Link
-              key={p.id}
-              href={p.href}
-              className="rounded-lg border p-4 transition-shadow hover:shadow-sm"
-            >
-              <h3 className="text-sm font-medium text-foreground">{p.title}</h3>
-              <div className="mt-2 flex flex-wrap gap-1">
-                {p.chips.map((c) => (
-                  <Badge key={c} variant="secondary">
-                    {c}
-                  </Badge>
-                ))}
-              </div>
-            </Link>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Expériences */}
-      <Card className="shadow-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-semibold md:text-xl">
-            Expériences professionnelles
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-8">
-            {experiences.map((exp, i) => (
-              <article
-                key={i}
-                className="relative rounded-lg border p-4 md:p-5"
-              >
-                {/* barre colorée gauche (md+) */}
-                <span className="absolute left-0 top-0 hidden h-full w-1 rounded-l bg-primary/80 md:block" />
-                <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-                  <h3 className="text-base font-medium text-foreground md:text-lg">
-                    {exp.title}
-                  </h3>
-                  <span className="text-xs font-medium text-muted-foreground md:text-sm">
-                    {exp.period}
-                  </span>
-                </div>
-                <p className="mb-3 mt-1 text-sm font-medium text-primary/90">
-                  {exp.company}
-                </p>
-                <ul className="list-outside space-y-2 pl-0 text-sm text-muted-foreground">
-                  {exp.tasks.map((t, k) => (
-                    <li key={k}>• {t}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Formation */}
-      <Card className="shadow-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg font-semibold md:text-xl">
-              Formation
-            </CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {education.map((ed, idx) => (
-            <div key={idx} className="rounded-lg border p-4">
-              <h3 className="text-base font-medium">{ed.title}</h3>
-              <p className="text-sm font-medium text-primary/90">{ed.period}</p>
-              <p className="text-sm text-muted-foreground">{ed.school}</p>
-              {ed.details && (
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {ed.details}
-                </p>
-              )}
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Langues & Soft skills / Centres d’intérêt */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <Card className="shadow-sm">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <Globe2 className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold md:text-xl">
-                Langues
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            {skillCategories
-              .find((c) => c.title === "Langues")
-              ?.skills.map((s) => (
-                <Badge key={s.name} variant={getSkillBadgeStyle("advanced")}>
-                  {s.name}
-                </Badge>
-              ))}
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <User className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold md:text-xl">
-                Soft skills
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            {["Rigoureux", "Curieux", "Organisé", "Discret"].map((s) => (
-              <Badge key={s} variant="secondary">
-                {s}
-              </Badge>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="shadow-sm">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-primary" />
-              <CardTitle className="text-lg font-semibold md:text-xl">
-                Centres d’intérêt
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            {["Lecture", "Taekwondo", "Baseball", "Course à pied"].map((h) => (
-              <Badge key={h} variant="outline">
-                {h}
-              </Badge>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Modal de téléchargement */}
-      <CVDownloadModal
-        isOpen={showDownloadModal}
-        onClose={() => setShowDownloadModal(false)}
+      <ExtrasGrid
+        languages={
+          SKILL_CATEGORIES.find((c) => c.title === "Langues")?.skills.map(
+            (s) => s.name
+          ) || []
+        }
+        softSkills={SOFT_SKILLS}
+        interests={INTERESTS}
       />
     </div>
   );

@@ -28,7 +28,7 @@ export const CONTACT_COPY = {
     city: "Paris, France",
     note: "Disponible en remote ou sur site (IDF)",
   },
-  availability: "✅ Actuellement disponible pour nouveaux projets",
+  availability: "✅ Actuellement disponible pour de nouvelles opportunités",
   consent:
     "J'accepte que mes données personnelles soient utilisées pour me recontacter dans le cadre de cette demande. Elles ne seront pas partagées ni utilisées à d'autres fins. *",
 };

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { contactMetadata } from "@/data/contacts/contact";
-import { ContactPage } from "@/components/portfolio/Contact-page";
+import { ContactPage } from "@/components/contact/Contact-page";
 
 export const metadata: Metadata = contactMetadata;
 
