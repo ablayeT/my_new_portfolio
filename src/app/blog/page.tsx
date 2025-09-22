@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BlogPage } from "@/components/portfolio/Blog-page";
+import { BlogPage } from "@/components/blog/Blog-page";
 export const metadata: Metadata = {
   title: "Blog Technique - Abdoulaye Touré",
   description:

@@ -1,10 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { useRouter } from "next/navigation";
 import PhishingDemoPage from "@/components/phishing/PhisingDemoPage";
 
-export default function PhishingSimulationPage() {
+export default function PhishingDemo() {
   const router = useRouter();
   return <PhishingDemoPage onBack={() => router.push("/projects")} />;
 }

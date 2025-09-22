@@ -3,7 +3,7 @@
 
 import { useRouter } from "next/navigation";
 // import { NavTopbar } from "@/components/portfolio/Nav-topbar";
-import { ProjectsPage } from "@/components/portfolio/Projects-page";
+import { ProjectsPage } from "@/components/projects/Projects-page";
 
 export default function Page() {
   const router = useRouter();
