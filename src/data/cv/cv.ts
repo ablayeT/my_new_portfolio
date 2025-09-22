@@ -152,8 +152,8 @@ export const CV_DATA = {
   education: [
     {
       title: "Master I – Expert en Cybersécurité",
-      school: "Oterie Cyber School, Gennevilliers",
-      period: "Sept 2025 – en cours",
+      school: "Hetic , Paris",
+      period: "Octobre 2025",
     },
     {
       title: "Bac+4 – Administration d’infrastructures sécurisées",
