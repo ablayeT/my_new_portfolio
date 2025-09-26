@@ -2,7 +2,7 @@ name: CI/CD — deploy to VPS (Caddy)
 
 on:
   push:
-    branches: [ "main" ]  # adapte si tu déploies depuis "production"
+    branches: [ "main" ]
 
 jobs:
   build-and-deploy:
@@ -46,10 +46,10 @@ jobs:
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "mkdir -p $REMOTE"
           rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@$VPS_HOST:$REMOTE/
 
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST <<EOF
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST <<'SCRIPT'
             set -e
             cd $REMOTE
             npm ci --only=production
             ln -sfn $REMOTE /var/www/abdou-cyber/current
             sudo systemctl restart abdou-cyber
-EOF
+SCRIPT
