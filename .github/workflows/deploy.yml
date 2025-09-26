@@ -1,0 +1,55 @@
+name: CI/CD — deploy to VPS (Caddy)
+
+on:
+  push:
+    branches: [ "main" ]  # adapte si tu déploies depuis "production"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Prepare artifact
+        run: |
+          mkdir -p deploy
+          cp -r .next package.json next.config.js public deploy/ 2>/dev/null || true
+
+      - name: Deploy via rsync/ssh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          set -e
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+          TS=$(date -u +%Y%m%dT%H%M%SZ)
+          REMOTE="/var/www/abdou-cyber/releases/$TS"
+
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "mkdir -p $REMOTE"
+          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@$VPS_HOST:$REMOTE/
+
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST <<EOF
+            set -e
+            cd $REMOTE
+            npm ci --only=production
+            ln -sfn $REMOTE /var/www/abdou-cyber/current
+            sudo systemctl restart abdou-cyber
+EOF
