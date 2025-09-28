@@ -1,9 +1,19 @@
 // src/components/cv/pdf/CVDocument.tsx
-import React from "react";
-import { Document, Page, View, Text, Image, Link } from "@react-pdf/renderer";
+/* eslint-disable jsx-a11y/alt-text */ // Image de @react-pdf/renderer n'a pas d'alt
+
+import React, { type ReactElement } from "react";
+import {
+  Document,
+  Page,
+  View,
+  Text,
+  Image,
+  Link,
+  type DocumentProps,
+} from "@react-pdf/renderer";
 import { styles } from "@/components/styles/CVDocument_styles";
 
-type CVData = {
+export type CVData = {
   identity: {
     name: string;
     title: string;
@@ -38,10 +48,13 @@ type CVData = {
 
 type Props = {
   data: CVData;
-  photoSrc?: string; // data URL, injectée par la route
+  photoSrc?: string; // data URL injectée par la route
 };
 
-export function CVDocument({ data, photoSrc }: Props) {
+export function CVDocument({
+  data,
+  photoSrc,
+}: Props): ReactElement<DocumentProps> {
   const {
     identity,
     summary,
@@ -50,7 +63,6 @@ export function CVDocument({ data, photoSrc }: Props) {
     skills,
     education,
     personal,
-    meta,
   } = data;
 
   return (
@@ -67,7 +79,9 @@ export function CVDocument({ data, photoSrc }: Props) {
             <View style={styles.ViewsCol}>
               <Text style={styles.name}>{identity.name}</Text>
               <Text style={styles.role}>{identity.title}</Text>
-              <Text style={styles.role}>{identity.under_title}</Text>
+              {identity.under_title ? (
+                <Text style={styles.role}>{identity.under_title}</Text>
+              ) : null}
             </View>
           </View>
 
@@ -122,6 +136,7 @@ export function CVDocument({ data, photoSrc }: Props) {
                 ))}
               </View>
             ))}
+
             <View style={styles.ViewsCol}>
               <View>
                 <Text style={styles.sectionTitle}>Compétences</Text>
@@ -151,9 +166,10 @@ export function CVDocument({ data, photoSrc }: Props) {
                 </Text>
               </View>
             </View>
+
             <View>
               <Text>
-                <Text style={styles.sectionTitle}>Centres d’intérêt:</Text>
+                <Text style={styles.sectionTitle}>Centres d’intérêt: </Text>
                 <Text>{personal.hobbies}</Text>
               </Text>
             </View>
@@ -161,7 +177,7 @@ export function CVDocument({ data, photoSrc }: Props) {
 
           {/* ===== Colonne droite : Projets + Formations + Infos ===== */}
           <View style={styles.col}>
-            <Text style={styles.sectionTitle}>Projets </Text>
+            <Text style={styles.sectionTitle}>Projets</Text>
             {featuredProjects.map((p, i) => (
               <View key={i} style={{ marginBottom: 5 }}>
                 <Text style={{ fontWeight: 700 }}>{p.name}</Text>
@@ -208,16 +224,6 @@ export function CVDocument({ data, photoSrc }: Props) {
 
         {/* ===== Footer ===== */}
         <View style={styles.divider} />
-        {/* <Text
-          style={{
-            fontSize: 9,
-            color: "#718096",
-            textAlign: "right",
-            marginTop: 3,
-          }}
-        >
-          Mis à jour&nbsp;: {meta?.updatedAt ?? "2025-09"}
-        </Text> */}
       </Page>
     </Document>
   );
