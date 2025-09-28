@@ -1,10 +1,9 @@
-# .github/workflows/deploy.yml
 name: "CI/CD — deploy to VPS (Caddy)"
 
 on:
   push:
     branches:
-      - main # adapte si besoin
+      - main
 
 jobs:
   build-and-deploy:
@@ -15,6 +14,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Check required secrets
+        run: |
+          test -n "${{ secrets.VPS_HOST }}" || { echo "❌ Missing secret: VPS_HOST"; exit 1; }
+          test -n "${{ secrets.DEPLOY_SSH_KEY }}" || { echo "❌ Missing secret: DEPLOY_SSH_KEY"; exit 1; }
+          test -n "${{ secrets.SSH_KNOWN_HOSTS }}" || { echo "❌ Missing secret: SSH_KNOWN_HOSTS"; exit 1; }
+          echo "✅ All required secrets present"
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -49,8 +55,19 @@ jobs:
           TS="$(date -u +%Y%m%dT%H%M%SZ)"
           REMOTE="/var/www/abdou-cyber/releases/$TS"
 
+          echo "⏫ Creating remote release dir: $REMOTE"
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@"$VPS_HOST" "mkdir -p \"$REMOTE\""
+
+          echo "⏫ Rsync files"
           rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@"$VPS_HOST":"$REMOTE"/
 
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@"$VPS_HOST" \
-            "cd \"$REMOTE\" && npm i --omit=dev && ln -sfn \"$REMOTE\" /var/www/abdou-cyber/current && sudo systemctl restart abdou-cyber"
+          echo "🔁 npm install --omit=dev & switch symlink"
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@"$VPS_HOST" "
+            set -e
+            cd \"$REMOTE\"
+            npm i --omit=dev
+            ln -sfn \"$REMOTE\" /var/www/abdou-cyber/current
+            sudo systemctl restart abdou-cyber
+          "
+
+          echo "✅ Deploy done"
