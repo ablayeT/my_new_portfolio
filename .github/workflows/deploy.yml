@@ -1,12 +1,14 @@
+# .github/workflows/deploy.yml
 name: CI/CD — deploy to VPS (Caddy)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,21 +37,28 @@ jobs:
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
           set -e
+
+          # Setup SSH
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
+          # Create timestamped release directory
           TS=$(date -u +%Y%m%dT%H%M%SZ)
           REMOTE="/var/www/abdou-cyber/releases/$TS"
 
+          # Create remote directory
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "mkdir -p $REMOTE"
+
+          # Upload files
           rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@$VPS_HOST:$REMOTE/
 
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST <<'SCRIPT'
-            set -e
-            cd $REMOTE
-            npm ci --only=production
-            ln -sfn $REMOTE /var/www/abdou-cyber/current
+          # Deploy and restart service
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "
+            set -e &&
+            cd $REMOTE &&
+            npm ci --only=production &&
+            ln -sfn $REMOTE /var/www/abdou-cyber/current &&
             sudo systemctl restart abdou-cyber
-SCRIPT
+          "
