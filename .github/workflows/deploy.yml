@@ -1,12 +1,16 @@
-name: CI/CD — deploy to VPS (Caddy)
+# .github/workflows/deploy.yml
+name: "CI/CD — deploy to VPS (Caddy)"
 
 on:
   push:
-    branches: [ "main" ]  # adapte si tu déploies depuis autre branche
+    branches:
+      - main # adapte si besoin
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -16,9 +20,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: 'npm'
+          cache: npm
 
-      - name: Install deps (CI)
+      - name: Install deps
         run: npm ci
 
       - name: Build (Next.js)
@@ -31,30 +35,22 @@ jobs:
 
       - name: Deploy via rsync/ssh
         env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-          VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
-          set -e
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          set -euo pipefail
 
-          TS=$(date -u +%Y%m%dT%H%M%SZ)
+          mkdir -p ~/.ssh
+          printf "%s\n" "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf "%s\n" "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+          TS="$(date -u +%Y%m%dT%H%M%SZ)"
           REMOTE="/var/www/abdou-cyber/releases/$TS"
 
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "mkdir -p $REMOTE"
-          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@$VPS_HOST:$REMOTE/
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@"$VPS_HOST" "mkdir -p \"$REMOTE\""
+          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@"$VPS_HOST":"$REMOTE"/
 
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST <<EOF
-            set -e
-            cd $REMOTE
-            # Installe *runtime* uniquement. IMPORTANT:
-            # Assure-toi que "next" est bien dans "dependencies" de package.json (pas devDependencies)
-            npm i --omit=dev
-
-            # Bascule atomique + restart
-            ln -sfn "$REMOTE" /var/www/abdou-cyber/current
-            sudo systemctl restart abdou-cyber
-EOF
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@"$VPS_HOST" \
+            "cd \"$REMOTE\" && npm i --omit=dev && ln -sfn \"$REMOTE\" /var/www/abdou-cyber/current && sudo systemctl restart abdou-cyber"
