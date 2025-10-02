@@ -22,7 +22,7 @@ jobs:
           test -n "${{ secrets.SSH_KNOWN_HOSTS }}" || { echo "❌ Missing secret: SSH_KNOWN_HOSTS"; exit 1; }
           echo "✅ All required secrets present"
 
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -48,26 +48,26 @@ jobs:
           set -euo pipefail
 
           mkdir -p ~/.ssh
-          printf "%s\n" "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          printf "%s\n" "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
           TS="$(date -u +%Y%m%dT%H%M%SZ)"
           REMOTE="/var/www/abdou-cyber/releases/$TS"
 
-          echo "⏫ Creating remote release dir: $REMOTE"
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@"$VPS_HOST" "mkdir -p \"$REMOTE\""
+          echo "📂 Creating remote release dir: $REMOTE"
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "mkdir -p $REMOTE"
 
-          echo "⏫ Rsync files"
-          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@"$VPS_HOST":"$REMOTE"/
+          echo "⏫ Uploading files via rsync..."
+          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@$VPS_HOST:$REMOTE/
 
-          echo "🔁 npm install --omit=dev & switch symlink"
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@"$VPS_HOST" "
+          echo "🔁 Installing production deps & switching symlink..."
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST <<EOF
             set -e
-            cd \"$REMOTE\"
-            npm i --omit=dev
-            ln -sfn \"$REMOTE\" /var/www/abdou-cyber/current
+            cd $REMOTE
+            npm ci --omit=dev
+            ln -sfn $REMOTE /var/www/abdou-cyber/current
             sudo systemctl restart abdou-cyber
-          "
+EOF
 
           echo "✅ Deploy done"
