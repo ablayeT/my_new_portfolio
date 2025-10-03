@@ -151,7 +151,7 @@ export const CV_DATA = {
 
   education: [
     {
-      title: "Master I – Expert en Cybersécurité",
+      title: "Mastere Cybersécurité - annee 4",
       school: "Hetic , Paris",
       period: "Octobre 2025",
     },
