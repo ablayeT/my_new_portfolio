@@ -62,12 +62,12 @@ jobs:
           rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@$VPS_HOST:$REMOTE/
 
           echo "🔁 Installing production deps & switching symlink..."
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST <<EOF
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "
             set -e
             cd $REMOTE
             npm ci --omit=dev
             ln -sfn $REMOTE /var/www/abdou-cyber/current
             sudo systemctl restart abdou-cyber
-EOF
+          "
 
           echo "✅ Deploy done"
