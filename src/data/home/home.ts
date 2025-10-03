@@ -46,7 +46,7 @@ export const KPI_ITEMS: ReadonlyArray<KPIItem> = [
     trend: "up",
     trendValue: "5 ce mois-ci",
   },
-  { label: "Certifications", value: 8, trend: "neutral" },
+  { label: "Certifications", value: 3, trend: "neutral" },
 ] as const;
 
 /** ---------- Données du projet (titre/techs/objectifs) ---------- */
