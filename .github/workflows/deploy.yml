@@ -37,7 +37,7 @@ jobs:
       - name: Prepare artifact
         run: |
           mkdir -p deploy
-          cp -r .next package.json next.config.* public deploy/ 2>/dev/null || true
+          cp -r .next package.json package-lock.json next.config.* public deploy/ 2>/dev/null || true
 
       - name: Deploy via rsync/ssh
         env:
