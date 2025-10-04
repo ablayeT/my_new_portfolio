@@ -1,56 +1,54 @@
 "use client";
 
+import * as React from "react";
+import { Mail, Linkedin, Github, MapPin, Globe } from "lucide-react"; // 👈 ajout de Globe ici
 import { CONTACT_ITEMS } from "@/data/contacts/contact";
-import { Mail, LinkedIn, GitHub, MapPin } from "@/components/portfolio/Icons";
-
-const ICONS = { Mail, LinkedIn, GitHub, MapPin } as const;
 
 export function DirectList() {
-  return (
-    <div className="space-y-6">
-      <h2 className="[font-size:var(--tokens-text-h3-22,22px)] font-semibold text-[color:var(--color-foreground,#0b1324)]">
-        Contact direct
-      </h2>
+  // 🧭 Map des icônes disponibles
+  const icons = {
+    Mail,
+    LinkedIn: Linkedin,
+    GitHub: Github,
+    MapPin,
+    Portfolio: Globe, // 👈 nouvelle icône Globe
+  };
 
-      <div className="space-y-4">
-        {CONTACT_ITEMS.map((c) => {
-          const Icon = ICONS[c.icon];
-          return (
-            <a
-              key={c.title}
-              href={c.href}
-              target={c.href.startsWith("http") ? "_blank" : undefined}
-              rel={
-                c.href.startsWith("http") ? "noopener noreferrer" : undefined
-              }
+  return (
+    <div className="grid gap-5 sm:grid-cols-2">
+      {CONTACT_ITEMS.map((c, idx) => {
+        const Icon = icons[c.icon]; // sélectionne dynamiquement l’icône
+        return (
+          <a
+            key={idx}
+            href={c.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-3 rounded-xl border border-transparent bg-white/5 p-4 transition hover:bg-white/10"
+          >
+            {/* Cercle coloré avec icône */}
+            <div
               className={[
-                "group flex items-center gap-3 rounded-2xl border",
-                "border-[color:var(--color-border,#e5e7eb)] bg-transparent",
-                "px-3 py-3 transition-all hover:shadow-[0_10px_28px_rgba(2,6,23,0.08)]",
-                "dark:bg-white/5",
+                "flex h-10 w-10 items-center justify-center rounded-full transition",
+                c.toneBg,
               ].join(" ")}
             >
-              <div
-                className={[
-                  "rounded-xl p-2 transition-transform",
-                  c.toneBg,
-                  "group-hover:scale-105",
-                ].join(" ")}
-              >
-                <Icon className={c.tone} size={18} />
-              </div>
-              <div className="min-w-0">
-                <p className="font-medium text-[color:var(--color-foreground,#0b1324)]">
-                  {c.title}
-                </p>
-                <p className="truncate text-sm text-[color:var(--color-muted-foreground,#6b7280)]">
-                  {c.value}
-                </p>
-              </div>
-            </a>
-          );
-        })}
-      </div>
+              <Icon className={c.tone} size={18} />{" "}
+              {/* 👈 Correction ligne 40 */}
+            </div>
+
+            {/* Texte à droite */}
+            <div className="min-w-0">
+              <p className="font-medium text-[color:var(--color-foreground,#0b1324)]">
+                {c.title}
+              </p>
+              <p className="truncate text-sm text-[color:var(--color-muted,#6b7280)]">
+                {c.value}
+              </p>
+            </div>
+          </a>
+        );
+      })}
     </div>
   );
 }

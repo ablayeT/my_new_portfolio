@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 /** Clés d'icônes utilisées côté composant */
-export type IconKey = "Mail" | "LinkedIn" | "GitHub" | "MapPin";
+export type IconKey = "Mail" | "LinkedIn" | "GitHub" | "MapPin" | "Portfolio";
 
 /** Métadonnées de la page Contact (réutilisable par app/contact) */
 export const contactMetadata: Metadata = {
@@ -67,6 +67,14 @@ export const CONTACT_ITEMS: readonly ContactItemData[] = [
     href: "https://github.com/ablayeT?tab=repositories",
     toneBg: "bg-[#6b7280]/15",
     tone: "text-[#6b7280]",
+  },
+  {
+    icon: "Portfolio",
+    title: "Portfolio",
+    value: "abdou-cyber.dev",
+    href: "https://abdou-cyber.dev",
+    toneBg: "bg-[#22b5e4]/15",
+    tone: "text-[#22b5e4]",
   },
 ] as const;
 
