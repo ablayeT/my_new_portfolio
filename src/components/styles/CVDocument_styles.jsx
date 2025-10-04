@@ -40,10 +40,10 @@ export const styles = StyleSheet.create({
   name: { fontSize: 19, fontWeight: 700 },
   role: { fontSize: 11, color: TEXT_MUTED, marginTop: 1 },
   right: {
-    textAlign: "right",
+    textAlign: "left",
     flexDirection: "column",
     justifyContent: "space-between",
-    gap: 6,
+    gap: 5,
   },
   link: { color: BRAND, textDecoration: "none" },
   linksRow: { flexDirection: "row", gap: 8, justifyContent: "flex-end" },

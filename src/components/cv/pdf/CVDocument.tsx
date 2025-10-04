@@ -20,7 +20,12 @@ export type CVData = {
     under_title?: string;
     phone: string;
     email: string;
-    links: { linkedin: string; github: string; tryhackme: string };
+    links: {
+      linkedin: string;
+      github: string;
+      tryhackme: string;
+      portfolio: string;
+    };
   };
   summary: string;
   experiences: Array<{
@@ -89,16 +94,22 @@ export function CVDocument({
             <Text>{identity.phone}</Text>
             <Text>{identity.email}</Text>
             <View style={styles.linksRow}>
-              <Link src={identity.links.linkedin} style={styles.link}>
-                LinkedIn
+              <Link src={identity.links.portfolio} style={styles.link}>
+                Portfolio
               </Link>
               <Text>·</Text>
               <Link src={identity.links.github} style={styles.link}>
                 GitHub
               </Link>
-              <Text>·</Text>
+            </View>
+            <View style={styles.linksRow}>
+              {/* <Text>·</Text> */}
               <Link src={identity.links.tryhackme} style={styles.link}>
                 TryHackMe
+              </Link>
+              <Text>·</Text>
+              <Link src={identity.links.linkedin} style={styles.link}>
+                LinkedIn
               </Link>
             </View>
           </View>

@@ -35,9 +35,10 @@ export const FEATURED_CV_PROJECTS: FeaturedProject[] = [
 ];
 
 export const PROFILE_LINKS = {
-  linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
-  github: "https://github.com/ablayeT?tab=repositories",
-  tryhackme: "https://tryhackme.com/p/ablaye.toure0",
+  Linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
+  Github: "https://github.com/ablayeT?tab=repositories",
+  Tryhackme: "https://tryhackme.com/p/ablaye.toure0",
+  Portfolio: "https://abdou-cyber.dev",
 };
 
 export const CONTACT = {
@@ -57,10 +58,12 @@ export const CV_DATA = {
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
     links: {
-      linkedin: PROFILE_LINKS.linkedin,
-      github: PROFILE_LINKS.github,
-      tryhackme: PROFILE_LINKS.tryhackme,
+      linkedin: PROFILE_LINKS.Linkedin,
+      github: PROFILE_LINKS.Github,
+      tryhackme: PROFILE_LINKS.Tryhackme,
+      portfolio: PROFILE_LINKS.Portfolio,
     },
+
     location: "Paris, France",
     photoPublicPath: "/cv/photo.jpg", // côté React (page HTML), pas utilisé dans le PDF
   },
@@ -153,7 +156,7 @@ export const CV_DATA = {
     {
       title: "Mastere Cybersécurité - annee 4",
       school: "Hetic , Paris",
-      period: "Octobre 2025",
+      period: "Novembre 2025",
     },
     {
       title: "Bac+4 – Administration d’infrastructures sécurisées",
