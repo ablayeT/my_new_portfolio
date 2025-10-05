@@ -75,7 +75,7 @@ export const CV_DATA = {
     {
       role: "Stage – Audit & Pentest",
       company: "ADVENS • Paris",
-      period: "Mars 2025 – Mai 2025",
+      period: "Mars 2025 – Août 2025",
       bullets: [
         "Audits techniques systèmes/réseaux/applications.",
         "Pentests (XSS, SQLi, bruteforce) – Burp Suite, Nmap, SQLMap.",
