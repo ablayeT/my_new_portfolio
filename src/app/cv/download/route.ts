@@ -39,7 +39,7 @@ export async function GET(_req: NextRequest): Promise<Response> {
         status: 200,
         headers: {
           "Content-Type": "application/pdf",
-          "Content-Disposition": 'attachment; filename="cv.pdf"',
+          "Content-Disposition": 'attachment; filename="cv_Abdou_cyber.pdf"',
           "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
         },
       });
@@ -64,7 +64,8 @@ export async function GET(_req: NextRequest): Promise<Response> {
               status: 200,
               headers: {
                 "Content-Type": "application/pdf",
-                "Content-Disposition": 'attachment; filename="cv.pdf"',
+                "Content-Disposition":
+                  'attachment; filename="cv_Abdou_cyber.pdf"',
                 "Cache-Control":
                   "no-store, no-cache, must-revalidate, max-age=0",
               },
@@ -90,7 +91,7 @@ export async function GET(_req: NextRequest): Promise<Response> {
         status: 200,
         headers: {
           "Content-Type": "application/pdf",
-          "Content-Disposition": 'attachment; filename="cv.pdf"',
+          "Content-Disposition": 'attachment; filename="cv_Abdou_cyber.pdf"',
           "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
         },
       });

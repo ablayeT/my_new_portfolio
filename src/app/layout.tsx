@@ -5,7 +5,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-
+import Script from "next/script";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -19,44 +19,80 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://abdou-cyber.dev"),
+
   title: {
-    default: "Abdoulaye Touré - Expert Cybersécurité & Développeur",
-    template: "%s | Abdoulaye Touré",
+    default: "Abdoulaye Touré — Analyste Cybersécurité (Purple Team)",
+    template: "%s — Abdoulaye Touré",
   },
+
   description:
-    "Expert en cybersécurité et développeur web fullstack. Spécialisé en audit, pentest et développement d'applications sécurisées.",
+    "Analyste en cybersécurité (Purple Team) : détection & réponse, SIEM/ELK, MITRE ATT&CK, automatisation. Basé en Île-de-France.",
+
   keywords: [
     "cybersécurité",
-    "développeur web",
-    "pentest",
-    "audit sécurité",
-    "Next.js",
-    "React",
+    "purple team",
+    "détection et réponse",
+    "cyberdéfense",
+    "SIEM",
+    "ELK",
+    "gouvernance",
+    "risque",
+    "conformité",
+    "MITRE ATT&CK",
+    "EDR",
+    "analyste cybersécurité",
+    "gestion des incidents",
+    "sécurité réseau",
+    "vulnérabilités",
+    "automatisation",
+    "penteste",
+    "alternance",
+    "Île-de-France",
   ],
+
   authors: [{ name: "Abdoulaye Touré" }],
   creator: "Abdoulaye Touré",
+  alternates: {
+    canonical: "https://abdou-cyber.dev/",
+  },
+
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://abdoulaye-toure.dev", // Remplace par ton domaine
-    title: "Abdoulaye Touré - Expert Cybersécurité & Développeur",
-    description: "Expert en cybersécurité et développeur web fullstack",
+    url: "https://abdou-cyber.dev/",
+    title: "Abdoulaye Touré — Analyste Cybersécurité (Purple Team)",
+    description:
+      "Détection & réponse, SIEM/ELK, MITRE ATT&CK, automatisation et cyberdéfense. Portfolio professionnel d'Abdoulaye Touré.",
     siteName: "Portfolio Abdoulaye Touré",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Abdoulaye Touré — Analyste Cybersécurité (Purple Team)",
+      },
+    ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Abdoulaye Touré - Expert Cybersécurité & Développeur",
-    description: "Expert en cybersécurité et développeur web fullstack",
+    title: "Abdoulaye Toure — Analyste Cybersécurité (Purple Team)",
+    description:
+      "Purple Team • Detection & Response • SIEM/ELK • MITRE ATT&CK • Automatisation",
+    images: ["/og.jpg"],
+    creator: "@abdoulayetoure", // si tu veux ajouter ton pseudo X/Twitter
   },
+
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
       "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
     },
   },
 };
@@ -82,6 +118,24 @@ export default function RootLayout({
         <Header />
         <ThemeProvider>{children}</ThemeProvider>
         <Footer />
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Abdoulaye Touré",
+              jobTitle: "Analyste Cybersécurité (Purple Team)",
+              url: "https://abdou-cyber.dev",
+              sameAs: [
+                "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
+                "https://github.com/ablayeT",
+                "https://tryhackme.com/p/ablaye.toure0",
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );

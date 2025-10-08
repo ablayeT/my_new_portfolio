@@ -110,26 +110,27 @@ export const EXPERIENCES: Experience[] = [
 
 export const EDUCATION: EducationEntry[] = [
   {
-    title: "Bac +3 : Administration d’infrastructures sécurisées",
+    title: "Bac+4 : Administration d’infrastructures sécurisées",
     school: "ALT-RH • Paris",
     period: "Sept 2024 — Juin 2025",
     details: "Systèmes, réseaux, sécurité des infrastructures.",
   },
   {
-    title: "Développeur intégrateur web",
+    title: "Bac+2: Développeur intégrateur web",
     school: "WebForce3 • Paris",
     period: "Avr 2022 — Oct 2022",
     details: "Front-end & back-end, intégration, bonnes pratiques.",
   },
   {
-    title: "Développeur web & web mobile (alternance)",
+    title: "Bac+3: Développeur web & web mobile (alternance)",
     school: "WebForce3 • Paris",
     period: "Oct 2022 — Nov 2023",
     details:
       "Alternance (Entourage) : développement full-stack, architecture, tests.",
   },
   {
-    title: "Master II : Littérature & civilisation américaine & caribéenne",
+    title:
+      "Bac+5 : Littérature & civilisation anglophone (américaine & caribéenne)",
     school: "UCAD • Dakar, Sénégal",
     period: "Oct 2011 — Juil 2015",
   },

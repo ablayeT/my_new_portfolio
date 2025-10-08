@@ -1,8 +1,5 @@
 "use client";
-
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Download,
   Mail,
@@ -29,16 +26,22 @@ export function CvHero({
 }) {
   return (
     <section className="text-center">
-      <div className="mx-auto mb-6 flex h-28 w-28 items-center justify-center rounded-full bg-primary/10 text-primary shadow-sm md:h-32 md:w-32">
-        <span className="text-2xl font-extrabold md:text-3xl">
-          {name
+      <div className="mx-auto mb-6 flex h-50 w-28 items-center justify-center rounded-full bg-primary/10 shadow-sm md:h-32 md:w-32">
+        <div className="relative h-24 w-24 md:h-28 md:w-28  border-2 rounded-full overflow-hidden shadow-md">
+          <img
+            src="/cv/photo.jpeg"
+            alt="Photo de profil Abdoulaye Touré"
+            className="absolute inset-0 h-50 w-60 object-cover rounded-full transition-transform duration-500 ease-out hover:scale-105 animate-fadeIn"
+          />
+        </div>
+      </div>
+
+      {/* {name
             .split(" ")
             .map((n) => n[0])
             .join("")
             .slice(0, 2)
-            .toUpperCase()}
-        </span>
-      </div>
+            .toUpperCase()} */}
 
       <h1 className="mb-1 text-3xl font-bold tracking-tight text-primary md:text-4xl">
         {name}

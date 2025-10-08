@@ -53,7 +53,7 @@ export const CV_DATA = {
 
   identity: {
     name: "Abdoulaye Touré",
-    title: "Analyste en Cybersécurité",
+    title: "Analyste en Cybersécurité à la recherche d'une alternance",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
     local: "Local: Île-de-France",
@@ -74,7 +74,7 @@ export const CV_DATA = {
     {
       role: "Stage – Audit & Pentest",
       company: "ADVENS • Paris",
-      period: "Mars 2025 – Mai 2025",
+      period: "Mars 2025 – Juillet 2025",
       bullets: [
         "Mené des audits techniques (systèmes, sécurité réseau, applications) pour cartographier les risques et prioriser les corrections.",
         "Conçu et exécuté des tests d’intrusion (XSS, SQLi, bruteforce) avec Burp Suite, Nmap et SQLMap pour valider l’efficacité des contrôles.",
@@ -125,8 +125,6 @@ export const CV_DATA = {
     },
   ],
 
-  // Compétences : resserrées, mots génériques ATS + soft skills.
-  // (Les détails techniques restent DANS les expériences/projets.)
   skills: {
     security:
       "Cyberdéfense, gestion des incidents, sécurité réseau, gestion des vulnérabilités, SIEM.",
@@ -148,17 +146,18 @@ export const CV_DATA = {
       period: "2024 – 2025",
     },
     {
-      title: "Titre RNCP – Développeur Web & Web Mobile",
+      title: "Bac+3 – Développeur Web & Web Mobile",
       school: "WebForce3, Paris",
       period: "2022 – 2023",
     },
     {
-      title: "Parcours – Développeur Intégrateur Web",
+      title: "Bac+2 – Développeur Intégrateur Web",
       school: "OpenClassrooms, Paris",
       period: "Avr 2022 – Oct 2022",
     },
     {
-      title: "Master II – Littératures américaines et caribéennes",
+      title:
+        "BAc+5 – Littérature & civilisation anglophone (américaine & caribéenne)",
       school: "UCAD, Dakar",
       period: "2011 – 2015",
     },
