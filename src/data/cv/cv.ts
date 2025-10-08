@@ -49,38 +49,38 @@ export const CONTACT = {
 
 // ===== Données PDF =====
 export const CV_DATA = {
-  meta: { updatedAt: "2025-09" },
+  meta: { updatedAt: "2025-10" },
 
   identity: {
     name: "Abdoulaye Touré",
-    title: "Expert en Cybersécurité",
-    under_title: " En recherche d'alternance",
+    title: "Analyste en Cybersécurité",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
+    local: "Local: Île-de-France",
     links: {
-      linkedin: PROFILE_LINKS.Linkedin,
-      github: PROFILE_LINKS.Github,
-      tryhackme: PROFILE_LINKS.Tryhackme,
-      portfolio: PROFILE_LINKS.Portfolio,
+      linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
+      github: "https://github.com/ablayeT?tab=repositories",
+      tryhackme: "https://tryhackme.com/p/ablaye.toure0",
+      portfolio: "https://abdou-cyber.dev",
     },
-
-    location: "Paris, France",
-    photoPublicPath: "/cv/photo.jpg", // côté React (page HTML), pas utilisé dans le PDF
   },
 
+  // Accroche : 1 phrase, posture pro, mots-clés ATS (cyberdéfense, incidents…)
   summary:
-    "Étudiant en cybersécurité avec double compétence systèmes/réseaux et développement. Je recherche une alternance dès septembre 2025 pour renforcer détection, réponse aux incidents et automatisation sécurité.",
+    "Analyste en cybersécurité, je conçois et automatise des solutions de cyberdéfense pour la détection et la réponse aux incidents, afin de renforcer la sécurité réseau et la résilience des SI face aux vulnérabilités.",
 
+  // >>> UNIQUEMENT les expériences pertinentes, détaillées (≥5 bullets chacune)
   experiences: [
     {
       role: "Stage – Audit & Pentest",
       company: "ADVENS • Paris",
-      period: "Mars 2025 – Août 2025",
+      period: "Mars 2025 – Mai 2025",
       bullets: [
-        "Audits techniques systèmes/réseaux/applications.",
-        "Pentests (XSS, SQLi, bruteforce) – Burp Suite, Nmap, SQLMap.",
-        "Analyse & détection via ELK (Filebeat, Logstash, Kibana).",
-        "Automatisation (Bash/PowerShell) et rapports de recommandations.",
+        "Mené des audits techniques (systèmes, sécurité réseau, applications) pour cartographier les risques et prioriser les corrections.",
+        "Conçu et exécuté des tests d’intrusion (XSS, SQLi, bruteforce) avec Burp Suite, Nmap et SQLMap pour valider l’efficacité des contrôles.",
+        "Analysé les journaux avec ELK (Elasticsearch, Logstash, Kibana) afin d’identifier des patterns d’anomalies et de renforcer la détection.",
+        "Automatisé la génération de rapports (Bash/PowerShell), réduisant de ~40 % le temps de production et standardisant les livrables.",
+        "Présenté des recommandations techniques (durcissement, remédiations, baselines) à l’équipe sécurité et suivi de leur implémentation.",
       ],
     },
     {
@@ -88,24 +88,11 @@ export const CV_DATA = {
       company: "Entourage • Paris",
       period: "Oct 2022 – Nov 2023",
       bullets: [
-        "Développement et évolutions de plateformes web (front/back).",
-        "Architecture, choix techniques, tests et recettes.",
-      ],
-    },
-    {
-      role: "Professeur d’anglais",
-      company: "BEC • Dakar, Sénégal",
-      period: "Sept 2017 – Nov 2019",
-      bullets: [
-        "Conception de cours, animation de classes, évaluations régulières.",
-      ],
-    },
-    {
-      role: "Fondateur & Gérant",
-      company: "Toure Multi-Services • Sénégal",
-      period: "2017 – 2019",
-      bullets: [
-        "Gestion d’équipe (2 commerciaux, 1 technicien) et suivi clients.",
+        "Conçu et développé des plateformes web full-stack (Node.js, React, MySQL) avec une attention particulière à la sécurité applicative.",
+        "Mis en place des architectures sécurisées (authentification, validation des entrées, gestion des secrets) et durci les endpoints API.",
+        "Écrit des tests unitaires/intégration et intégré la CI/CD, réduisant de ~25 % les incidents post-déploiement et accélérant les releases.",
+        "Piloté des choix techniques, réalisé des revues de code et documenté les bonnes pratiques de sécurité (OWASP, gestion des vulnérabilités).",
+        "Collaboré avec produit/UX pour améliorer l’ergonomie et la conformité sécurité (journalisation, traçabilité, gestion des erreurs).",
       ],
     },
   ],
@@ -115,58 +102,55 @@ export const CV_DATA = {
       name: "Purple Team Lab – Infrastructure de simulation",
       tags: ["MITRE ATT&CK", "Suricata", "ELK"],
       bullets: [
-        "Lab segmenté Public/DMZ/Privé pour scénarios ATT&CK.",
-        "Suricata + ELK : collecte, corrélation, vues temps réel.",
-        "Automations & playbooks pour détection → investigation → réponse",
+        "Lab segmenté (Public/DMZ/Privé) pour scénarios ATT&CK mesurables.",
+        "Suricata + ELK : collecte, corrélation et visualisation en temps réel.",
+        "Chaîne automatisée détection → investigation → réponse (playbooks).",
       ],
     },
     {
-      name: "Plateforme de simulation Phishing",
-      tags: ["GoPhish", "SMTP", "Awareness"],
-      bullets: [
-        "Campagnes GoPhish avec modèles, tracking, dashboard.",
-        "Intégration SMTP et rapports de sensibilisation.",
-      ],
-    },
-    {
-      name: "Dashboard SIEM personnalisé",
+      name: "Dashboard SIEM Personnalisé",
       tags: ["Kibana", "Alerting", "Baselines"],
       bullets: [
-        "Vues par use-cases (phishing, exécution suspecte, latéral).",
-        "Règles d’alerting & lignes de base pour réduire le bruit.",
+        "Vues par use-cases (phishing, exécution suspecte, latéralisation).",
+        "Règles d’alerting et baselines pour réduire le bruit de détection.",
       ],
     },
     {
-      name: "Framework de Threat Hunting",
-      tags: ["TTP", "KQL", "IOC"],
-      bullets: ["Hypothèses de chasse, requêtes KQL, enrichissement & IOC."],
+      name: "Plateforme de Simulation Phishing",
+      tags: ["GoPhish", "SMTP", "Awareness"],
+      bullets: [
+        "Campagnes avec modèles, tracking et tableau de bord d’indicateurs.",
+        "Mesure du taux de clic et plan de sensibilisation continue.",
+      ],
     },
   ],
 
+  // Compétences : resserrées, mots génériques ATS + soft skills.
+  // (Les détails techniques restent DANS les expériences/projets.)
   skills: {
     security:
-      "Pentest, vulnérabilités (Nessus/Wireshark), chiffrement & AuthN/Z, sécurité applicative,(Bash/PowerShell).",
-    systems: "Linux (Kali, admin), Bash.",
-    dev: "JavaScript/Node.js, React, Python, PHP, MySQL (UI: Material UI).",
-    tools: "ELK, Nmap, Gobuster, Nessus, Wireshark.",
-    ats: "Blue Team, MITRE ATT&CK, SIEM/ELK, Incident Response, Threat Hunting, Automatisation, CI/CD",
+      "Cyberdéfense, gestion des incidents, sécurité réseau, gestion des vulnérabilités, SIEM.",
+    systems: "Administration Linux, durcissement, segmentation réseau.",
+    dev: "Automatisation et scripting (Bash, PowerShell, Node.js).",
+    tools: "ELK, Suricata, Wireshark, Git, Docker.",
+    ats: "Rigueur, analyse, curiosité, organisation, communication.",
   },
 
   education: [
     {
-      title: "Mastere Cybersécurité - annee 4",
-      school: "Hetic , Paris",
-      period: "Novembre 2025",
+      title: "Mastère Cybersécurité (Année 4)",
+      school: "Hetic, Paris",
+      period: "Nov. 2025",
     },
     {
       title: "Bac+4 – Administration d’infrastructures sécurisées",
       school: "ALT-RH, Paris",
-      period: "Sept 2024 – Juin 2025",
+      period: "2024 – 2025",
     },
     {
-      title: "Titre RNCP – Développeur Web & Web Mobile (Alternance)",
+      title: "Titre RNCP – Développeur Web & Web Mobile",
       school: "WebForce3, Paris",
-      period: "Oct 2022 – Nov 2023",
+      period: "2022 – 2023",
     },
     {
       title: "Parcours – Développeur Intégrateur Web",
@@ -174,15 +158,16 @@ export const CV_DATA = {
       period: "Avr 2022 – Oct 2022",
     },
     {
-      title: "Master II – Littérature & civilisation américaine & caribéenne",
+      title: "Master II – Littératures américaines et caribéennes",
       school: "UCAD, Dakar",
-      period: "Oct 2011 – Juil 2015",
+      period: "2011 – 2015",
     },
   ],
 
   personal: {
-    languages: "Français • Anglais • Wolof • Malinké • Bambara.",
-    soft: "Rigoureux • Curieux • Organisé • Discret.",
-    hobbies: "Lecture • Taekwondo • Baseball • Course à pied.",
+    languages: "Français(courant), Anglais(courant) Espagnol(intermédiare)",
+    soft: "Rigueur, curiosité, sens de l’analyse, organisation, adaptabilité, Discrétion",
+    hobbies:
+      "Veille sécurité, Programmation, Taekwondo, Course à pied, Baseball, Lecture.",
   },
 };

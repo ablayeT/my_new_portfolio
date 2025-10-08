@@ -1,13 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  ShieldCheck,
-  GraduationCap,
-  User,
-  BookOpen,
-  Globe2,
-} from "lucide-react";
+import { ShieldCheck, GraduationCap, User, BookOpen } from "lucide-react";
 import { CvHero } from "@/components/cv/parts/cvHero";
 import { CvSection } from "@/components/cv/parts/cvSection";
 import { SkillsGrid } from "@/components/cv/parts//SkillsGrid";
@@ -43,10 +37,9 @@ export default function CVPage() {
         icon={<User className="h-5 w-5 text-primary" />}
       >
         <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
-          Étudiant en cybersécurité avec base solide en développement web.
-          Expérience en audit/pentest, outils de sécurité et dev full-stack.
-          Objectif : contribuer à la protection des SI via une approche Purple
-          Team.
+          Je conçois et automatise des solutions de cyberdéfense pour la
+          détection et la réponse aux incidents, afin de renforcer la sécurité
+          réseau et la résilience des SI face aux vulnérabilités.
         </p>
       </CvSection>
 

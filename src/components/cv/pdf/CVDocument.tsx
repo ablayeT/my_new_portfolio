@@ -1,4 +1,3 @@
-// src/components/cv/pdf/CVDocument.tsx
 /* eslint-disable jsx-a11y/alt-text */ // Image de @react-pdf/renderer n'a pas d'alt
 
 import React, { type ReactElement } from "react";
@@ -20,6 +19,7 @@ export type CVData = {
     under_title?: string;
     phone: string;
     email: string;
+    local: string; // ← localisation (ex: "Île-de-France")
     links: {
       linkedin: string;
       github: string;
@@ -87,35 +87,36 @@ export function CVDocument({
               {identity.under_title ? (
                 <Text style={styles.role}>{identity.under_title}</Text>
               ) : null}
+
+              {/* Liens visibles (une ligne, wrap auto) */}
+              <View style={styles.linksInline}>
+                <Link src={identity.links.portfolio} style={styles.linkSmall}>
+                  Portfolio
+                </Link>
+                <Text style={styles.sep}>·</Text>
+                <Link src={identity.links.github} style={styles.linkSmall}>
+                  GitHub
+                </Link>
+                <Text style={styles.sep}>·</Text>
+                <Link src={identity.links.tryhackme} style={styles.linkSmall}>
+                  TryHackMe
+                </Link>
+                <Text style={styles.sep}>·</Text>
+                <Link src={identity.links.linkedin} style={styles.linkSmall}>
+                  LinkedIn
+                </Link>
+              </View>
             </View>
           </View>
 
           <View style={styles.right}>
             <Text>{identity.phone}</Text>
             <Text>{identity.email}</Text>
-            <View style={styles.linksRow}>
-              <Link src={identity.links.portfolio} style={styles.link}>
-                Portfolio
-              </Link>
-              <Text>·</Text>
-              <Link src={identity.links.github} style={styles.link}>
-                GitHub
-              </Link>
-            </View>
-            <View style={styles.linksRow}>
-              {/* <Text>·</Text> */}
-              <Link src={identity.links.tryhackme} style={styles.link}>
-                TryHackMe
-              </Link>
-              <Text>·</Text>
-              <Link src={identity.links.linkedin} style={styles.link}>
-                LinkedIn
-              </Link>
-            </View>
+            <Text>{identity.local}</Text>
           </View>
         </View>
 
-        {/* ===== Profil ===== */}
+        {/* ===== Profil (sous le header) ===== */}
         <Text style={styles.sectionTitle}>Profil</Text>
         <Text style={{ marginBottom: 6 }}>{summary}</Text>
 
@@ -123,11 +124,11 @@ export function CVDocument({
           {/* ===== Colonne gauche : Expériences + Compétences ===== */}
           <View style={styles.col}>
             <Text style={styles.sectionTitle}>
-              Expériences professionnelles
+              Expériences professionnelles en cybersécurité
             </Text>
 
             {experiences.map((exp, i) => (
-              <View key={i} style={{ marginBottom: 6 }}>
+              <View key={i} style={{ marginBottom: 6, gap: 6 }}>
                 <Text style={{ fontWeight: 700 }}>
                   {exp.role} | {exp.company}
                 </Text>
@@ -148,31 +149,21 @@ export function CVDocument({
               </View>
             ))}
 
+            {/* ===== Compétences (savoirs + savoir-être) ===== */}
             <View style={styles.ViewsCol}>
-              <View>
+              <View style={{ gap: 6 }}>
                 <Text style={styles.sectionTitle}>Compétences</Text>
-                <Text style={{ marginBottom: 3 }}>
-                  <Text style={{ fontWeight: 700 }}>Cybersécurité: </Text>
+                <Text style={{ marginBottom: 2 }}>
+                  <Text style={{ fontWeight: 700 }}>
+                    Domaines (savoirs)&nbsp;:{" "}
+                  </Text>
+                  {/* Utilise ton champ 'security' qui contient déjà des notions génériques ATS */}
                   <Text>{skills.security}</Text>
                 </Text>
-              </View>
-              <View>
-                <Text style={{ marginBottom: 3 }}>
-                  <Text style={{ fontWeight: 700 }}>Systèmes: </Text>
-                  <Text>{skills.systems}</Text>
-                </Text>
-              </View>
-              <View>
-                <Text style={{ marginBottom: 3 }}>
-                  <Text style={{ fontWeight: 700 }}>Dev: </Text>
-                  <Text>{skills.dev}</Text>
-                </Text>
-              </View>
-              <View style={{ marginBottom: 8 }}>
-                <Text>
-                  <Text style={{ fontWeight: 700 }}>Outils/ATS: </Text>
+                <Text style={{ marginBottom: 6 }}>
                   <Text>
-                    {skills.tools} • {skills.ats}
+                    <Text style={{ fontWeight: 700 }}>Soft skills: </Text>
+                    {personal.soft || skills.ats}
                   </Text>
                 </Text>
               </View>
@@ -180,17 +171,17 @@ export function CVDocument({
 
             <View>
               <Text>
-                <Text style={styles.sectionTitle}>Centres d’intérêt: </Text>
-                <Text>{personal.hobbies}</Text>
+                <Text style={styles.sectionTitle}>Langues: </Text>
+                <Text> {personal.languages}</Text>
               </Text>
             </View>
           </View>
 
-          {/* ===== Colonne droite : Projets + Formations + Infos ===== */}
+          {/* ===== Colonne droite : Projets + Liens utiles + Formations + Infos ===== */}
           <View style={styles.col}>
             <Text style={styles.sectionTitle}>Projets</Text>
             {featuredProjects.map((p, i) => (
-              <View key={i} style={{ marginBottom: 5 }}>
+              <View key={i} style={{ marginBottom: 4 }}>
                 <Text style={{ fontWeight: 700 }}>{p.name}</Text>
 
                 {p.tags?.length ? (
@@ -211,24 +202,46 @@ export function CVDocument({
               </View>
             ))}
 
+            {/* Liens utiles : cliquables + URL apparentes (impression) */}
+            <Text style={styles.sectionTitle}>Liens utiles</Text>
+            <View style={styles.linkLine}>
+              <Link src={identity.links.portfolio} style={styles.linkLabel}>
+                Portfolio
+              </Link>
+              <Text style={styles.linkUrl}>{identity.links.portfolio}</Text>
+            </View>
+            <View style={styles.linkLine}>
+              <Link src={identity.links.github} style={styles.linkLabel}>
+                GitHub
+              </Link>
+              <Text style={styles.linkUrl}>{identity.links.github}</Text>
+            </View>
+            <View style={styles.linkLine}>
+              <Link src={identity.links.linkedin} style={styles.linkLabel}>
+                LinkedIn
+              </Link>
+              <Text style={styles.linkUrl}>{identity.links.linkedin}</Text>
+            </View>
+            <View style={styles.linkLine}>
+              <Link src={identity.links.tryhackme} style={styles.linkLabel}>
+                TryHackMe
+              </Link>
+              <Text style={styles.linkUrl}>{identity.links.tryhackme}</Text>
+            </View>
+
             <Text style={styles.sectionTitle}>Formations</Text>
             {education.map((e, i) => (
-              <View key={i} style={{ marginBottom: 1 }}>
+              <View key={i} style={{ marginBottom: 2 }}>
                 <Text style={{ fontWeight: 700 }}>{e.title}</Text>
-                <Text style={{ color: "#718096" }}>
+                <Text style={{ color: "#718096", marginBottom: 5 }}>
                   {e.school} | {e.period}
                 </Text>
               </View>
             ))}
 
-            <Text style={styles.sectionTitle}>Infos personnelles</Text>
+            <Text style={styles.sectionTitle}>Centres d’intérêt:</Text>
             <Text>
-              <Text style={{ fontWeight: 700 }}>Langues: </Text>
-              {personal.languages}
-            </Text>
-            <Text style={{ marginBottom: 2 }}>
-              <Text style={{ fontWeight: 700 }}>Soft skills: </Text>
-              {personal.soft}
+              <Text>{personal.hobbies}</Text>
             </Text>
           </View>
         </View>

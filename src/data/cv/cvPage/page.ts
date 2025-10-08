@@ -5,8 +5,8 @@ import type {
   EducationEntry,
 } from "./types";
 
-export const HEADLINE =
-  "Actuellement en recherche d’une alternance en cybersécurité (sept. 2025). Spécialisé en audit, pentest, threat hunting et développement d’outils sécurité.";
+export const HEADLINE = "Analyste en cybersécurité";
+// " j’automatise la détection et la réponse aux incidents (SIEM/ELK, MITRE ATT&CK) pour renforcer la cyberdéfense et réduire les temps de réaction."
 
 export const CONTACT: ContactInfo = {
   location: "Paris, France",
@@ -88,24 +88,24 @@ export const EXPERIENCES: Experience[] = [
       "Qualité (tests) & recettes fonctionnelles/techniques",
     ],
   },
-  {
-    title: "Professeur d’anglais",
-    company: "BEC • Dakar, Sénégal",
-    period: "Sept 2017 — Nov 2019",
-    tasks: [
-      "Création de cours et animation de classes",
-      "Suivi individualisé & évaluations régulières",
-    ],
-  },
-  {
-    title: "Fondateur & gérant",
-    company: "Toure Multi-Services • Sénégal",
-    period: "2017 — 2019",
-    tasks: [
-      "Gestion d’équipe (2 commerciaux, 1 technicien)",
-      "Coordination commerciale/technique et suivi clients",
-    ],
-  },
+  // {
+  //   title: "Professeur d’anglais",
+  //   company: "BEC • Dakar, Sénégal",
+  //   period: "Sept 2017 — Nov 2019",
+  //   tasks: [
+  //     "Création de cours et animation de classes",
+  //     "Suivi individualisé & évaluations régulières",
+  //   ],
+  // },
+  // {
+  //   title: "Fondateur & gérant",
+  //   company: "Toure Multi-Services • Sénégal",
+  //   period: "2017 — 2019",
+  //   tasks: [
+  //     "Gestion d’équipe (2 commerciaux, 1 technicien)",
+  //     "Coordination commerciale/technique et suivi clients",
+  //   ],
+  // },
 ];
 
 export const EDUCATION: EducationEntry[] = [
