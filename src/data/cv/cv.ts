@@ -136,7 +136,7 @@ export const CV_DATA = {
 
   education: [
     {
-      title: "Cybersecurity Analyst Bootcamp",
+      title: "Bac+4 - Cybersecurity Analyst",
       school: "Ironhack, Paris",
       period: "Nov. 2025 – Feb. 2026",
     },
