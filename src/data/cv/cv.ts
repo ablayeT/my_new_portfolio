@@ -136,9 +136,9 @@ export const CV_DATA = {
 
   education: [
     {
-      title: "Bac+4 - Cybersecurity Analyst",
-      school: "Ironhack, Paris",
-      period: "Nov. 2025 – Feb. 2026",
+      title: "Mastère - Cybersecurity Analyst",
+      school: "Paris",
+      period: "2025 –  2026",
     },
     {
       title: "Bac+4 – Administration d’infrastructures sécurisées",
