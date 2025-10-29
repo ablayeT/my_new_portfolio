@@ -136,9 +136,9 @@ export const CV_DATA = {
 
   education: [
     {
-      title: "Mastère - Cybersecurity Analyst",
-      school: "Paris",
-      period: "2025 –  2026",
+      title: "Mastère(Bac+5 En cours) - Expert en cybersécurité",
+      school: "Otéria Cyber School , Genvilliers",
+      period: "2 ans: A partir de Septembre 2025 ",
     },
     {
       title: "Bac+4 – Administration d’infrastructures sécurisées",
