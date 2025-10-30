@@ -31,7 +31,7 @@ export type CVData = {
   experiences: Array<{
     role: string;
     company: string;
-    period: string;
+    period: string; // ex: "Mars 2025 – Juillet 2025 · Stage de fin d’études (validation ALT-RH – Bac+4)"
     bullets: string[];
   }>;
   featuredProjects: Array<{
@@ -97,7 +97,6 @@ export function CVDocument({
     education,
     personal,
     meta,
-    // kpis, // si besoin plus tard
     topChips,
   } = data;
 
@@ -109,17 +108,14 @@ export function CVDocument({
       : deriveChipsFromTools(skills?.tools, CHIP_LIMIT)) ?? [];
   const chips = chipsSource.slice(0, CHIP_LIMIT);
 
-  // Rendu compact des langues
-  const languesParts = [
+  // Langues (pile verticale)
+  const langs = [
     ["Français", personal.langues.francais] as [string, string],
     ["Anglais", personal.langues.anglais] as [string, string],
     personal.langues.espagnol
       ? (["Espagnol", personal.langues.espagnol] as [string, string])
       : null,
   ].filter(Boolean) as Array<[string, string]>;
-  const languesLine = languesParts
-    .map(([n, lvl]) => `${n} (${lvl})`)
-    .join(" · ");
 
   return (
     <Document
@@ -165,7 +161,7 @@ export function CVDocument({
         </View>
 
         {/* ===== Bannière INLINE : under_title, chips ===== */}
-        <View style={styles.banner}>
+        {/* <View style={styles.banner}>
           <View style={styles.bannerRow}>
             <View style={styles.bannerLeft}>
               {identity.under_title ? (
@@ -183,11 +179,11 @@ export function CVDocument({
                 : null}
             </View>
           </View>
-        </View>
+        </View> */}
 
         {/* ===== Profil ===== */}
         <Text style={styles.sectionTitle}>Profil</Text>
-        <Text style={{ marginBottom: 6 }}>{summary}</Text>
+        <Text style={styles.banner}>{summary}</Text>
 
         <View style={styles.row}>
           {/* ===== Colonne gauche : Expériences -> Formations -> Compétences ===== */}
@@ -230,43 +226,17 @@ export function CVDocument({
               </View>
             ))}
 
-            {/* ===== Compétences ===== */}
-            <View style={styles.ViewsCol}>
-              <View style={{ gap: 6 }}>
-                <Text style={styles.sectionTitle}>Compétences</Text>
-                <Text style={{ marginBottom: 2 }}>
-                  <Text style={{ fontWeight: 700 }}>
-                    SOC & Blue Team&nbsp;:{" "}
-                  </Text>
-                  <Text>{skills.security}</Text>
-                </Text>
+            <Text style={styles.sectionTitle}>Centres d’intérêt</Text>
+            <Text>{personal.hobbies}</Text>
 
-                {skills.red ? (
-                  <Text style={{ marginBottom: 2 }}>
-                    <Text style={{ fontWeight: 700 }}>
-                      Pentest & Red Team&nbsp;:{" "}
-                    </Text>
-                    <Text>{skills.red}</Text>
-                  </Text>
-                ) : null}
-
-                <Text style={{ marginBottom: 2 }}>
-                  <Text style={{ fontWeight: 700 }}>
-                    Systèmes / Réseau&nbsp;:{" "}
-                  </Text>
-                  <Text>{skills.systems}</Text>
+            {/* ===== Langues (vertical) ===== */}
+            <Text style={styles.sectionTitle}>Langues</Text>
+            <View style={styles.langList}>
+              {langs.map(([name, level], i) => (
+                <Text key={i} style={styles.langItem}>
+                  • {name} ({level})
                 </Text>
-                <Text style={{ marginBottom: 2 }}>
-                  <Text style={{ fontWeight: 700 }}>
-                    Automatisation / Dev&nbsp;:{" "}
-                  </Text>
-                  <Text>{skills.dev}</Text>
-                </Text>
-                <Text style={{ marginBottom: 6 }}>
-                  <Text style={{ fontWeight: 700 }}>Outils&nbsp;: </Text>
-                  <Text>{skills.tools}</Text>
-                </Text>
-              </View>
+              ))}
             </View>
           </View>
 
@@ -321,13 +291,44 @@ export function CVDocument({
               </Link>
               <Text style={styles.linkUrl}>{identity.links.tryhackme}</Text>
             </View>
+            {/* ===== Compétences ===== */}
+            <View style={styles.ViewsCol}>
+              <View style={{ gap: 6 }}>
+                <Text style={styles.sectionTitle}>Compétences</Text>
+                <Text style={{ marginBottom: 2 }}>
+                  <Text style={{ fontWeight: 700 }}>
+                    SOC & Blue Team&nbsp;:{" "}
+                  </Text>
+                  <Text>{skills.security}</Text>
+                </Text>
 
-            <Text style={styles.sectionTitle}>Centres d’intérêt</Text>
-            <Text>{personal.hobbies}</Text>
+                {skills.red ? (
+                  <Text style={{ marginBottom: 2 }}>
+                    <Text style={{ fontWeight: 700 }}>
+                      Pentest & Red Team&nbsp;:{" "}
+                    </Text>
+                    <Text>{skills.red}</Text>
+                  </Text>
+                ) : null}
 
-            {/* ===== Langues ===== */}
-            <Text style={styles.sectionTitle}>Langues</Text>
-            <Text>{languesLine}</Text>
+                <Text style={{ marginBottom: 2 }}>
+                  <Text style={{ fontWeight: 700 }}>
+                    Systèmes / Réseau&nbsp;:{" "}
+                  </Text>
+                  <Text>{skills.systems}</Text>
+                </Text>
+                <Text style={{ marginBottom: 2 }}>
+                  <Text style={{ fontWeight: 700 }}>
+                    Automatisation / Dev&nbsp;:{" "}
+                  </Text>
+                  <Text>{skills.dev}</Text>
+                </Text>
+                <Text style={{ marginBottom: 6 }}>
+                  <Text style={{ fontWeight: 700 }}>Outils&nbsp;: </Text>
+                  <Text>{skills.tools}</Text>
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
 

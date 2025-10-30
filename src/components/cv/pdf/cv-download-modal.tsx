@@ -77,7 +77,7 @@ export const CVDownloadModal = ({
               CV — Abdoulaye Touré
             </CardTitle>
             <p id="cv-download-description" className="text-sm text-slate-500">
-              Expert en Cybersécurité & Développement Web
+              Analyste en Cybersécurité & Développement Web
             </p>
           </CardHeader>
 

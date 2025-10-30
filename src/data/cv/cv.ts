@@ -67,10 +67,22 @@ export const CV_DATA = {
 
   // === PROFIL (Narratif "double compétence rare")
   summary:
-    "Doté d’une double compétence rare, j’allie une rigueur analytique issue d’un master en littérature (Bac+5) à une expertise technique en développement et en infrastructures sécurisées (Bac+4). Cette perspective me permet de transformer des données brutes (logs, alertes) en renseignements clairs et exploitables. Passionné par la cyberdéfense, je recherche une alternance pour mettre mon esprit d’analyse et mes compétences en automatisation (SOC, Pentest) au service de la protection de votre SI.",
+    "Double compétence lettres/tech. J’automatise la détection et la réponse (ELK, playbooks) et convertis les signaux en insights actionnables. Je cherche une alternance SOC/Pentest pour créer de l’impact immédiat.",
 
-  // === EXPÉRIENCES (hors stage ADVENS : rattaché en formation)
   experiences: [
+    {
+      role: "Stage de fin d’études – Audit & Pentest (validation ALT-RH – Bac+4)",
+      company: "ADVENS • Paris",
+      period:
+        "Mars 2025 – Juillet 2025 · Stage de fin d’études (validation ALT-RH – Bac+4)",
+      bullets: [
+        "Audits techniques (systèmes/réseau/applicatif) et priorisation des risques.",
+        "Tests d’intrusion web & réseau (Burp Suite, Nmap, SQLMap) : OWASP.",
+        "Threat Hunting & corrélation SIEM (ELK/Kibana)",
+        "Industrialisation du reporting (Bash/PowerShell)",
+        "Restitution & recommandations alignées",
+      ],
+    },
     {
       role: "Développeur Web & Web Mobile",
       company: "Entourage • Paris",
@@ -78,7 +90,7 @@ export const CV_DATA = {
       bullets: [
         "Conception et sécurisation d’applications full-stack (Node.js, React) en intégrant les principes de Security by Design.",
         "Réduction de la surface d’attaque des API par des contrôles de sécurité robustes (authentification, gestion des secrets).",
-        "Amélioration de la posture de sécurité du code via des revues OWASP systématiques et la diffusion de standards AppSec.",
+        "Amélioration de la posture de sécurité du code (standards AppSec).",
       ],
     },
   ],
@@ -124,7 +136,7 @@ export const CV_DATA = {
     ats: "Rigueur, analyse, vulgarisation, organisation, adaptabilité, travail d’équipe",
   },
 
-  // === FORMATIONS (ADVENS rattaché au Bac+4 avec compétences mises en avant)
+  // === FORMATIONS (rappel court et renvoi vers Expériences)
   education: [
     {
       title: "Mastère (Bac+5, en cours) – Expert en cybersécurité",
@@ -136,7 +148,7 @@ export const CV_DATA = {
       title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",
       school: "ALT-RH, Paris",
       period: "2024 – 2025",
-      note: "Cursus validé par un stage de 5 mois chez ADVENS (Audit & Pentest) : audits techniques systèmes/réseau/applicatif, tests d’intrusion (Burp, Nmap, SQLMap), Threat Hunting & corrélation SIEM (ELK/Kibana), baselines pour optimiser le ratio signal/bruit, reporting industrialisé (Bash/PowerShell), recommandations alignées MITRE ATT&CK et restitutions aux équipes.",
+      note: "Cursus validé par un stage de 5 mois chez ADVENS — voir Expériences.",
     },
     {
       title: "Bac+3 – Développeur Web & Web Mobile",

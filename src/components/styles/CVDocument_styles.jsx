@@ -9,7 +9,7 @@ const SUBTLE_BG = "#F3F4F6";
 export const styles = StyleSheet.create({
   page: {
     padding: 16,
-    fontSize: 9.5, // compact pour tenir sur 1 page
+    fontSize: 9.6,
     lineHeight: 1.24,
     color: TEXT,
     fontFamily: "Helvetica",
@@ -48,40 +48,34 @@ export const styles = StyleSheet.create({
     marginTop: 8,
   },
 
-  // ==== Bannière d’accroche (INLINE) ====
+  // ==== Bannière (inline) ====
   banner: {
     backgroundColor: SUBTLE_BG,
     border: `1 solid ${BORDER}`,
     borderRadius: 6,
-    paddingVertical: 6, // ↓ padding pour gagner de la hauteur
-    paddingHorizontal: 8,
-    marginTop: 4, // ↓ marges pour éviter le débordement
-    marginBottom: 6,
+    padding: 8,
+    marginTop: 2,
+    fontSize: 11,
+    marginBottom: 4,
   },
   bannerRow: {
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    // wrap de secours si très étroit, tout en restant visuellement "en ligne"
-    flexWrap: "wrap",
+    alignItems: "center",
+    gap: 6,
   },
-  bannerLeft: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: "55%", // l’accroche prend ~la moitié gauche
-    paddingRight: 6,
-  },
+  bannerLeft: { flex: 1 },
   bannerRight: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: "45%",
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "flex-end", // chips à droite
+    justifyContent: "flex-end",
+    gap: 3,
+    maxWidth: 240, // limite pour éviter les débords
   },
   bannerText: {
-    fontSize: 9.2, // un tout petit peu plus compact
+    fontSize: 9.5,
     color: TEXT_MUTED,
+    marginBottom: 0,
   },
 
   // Liens compacts
@@ -95,7 +89,7 @@ export const styles = StyleSheet.create({
   linkSmall: { fontSize: 9, color: BRAND, textDecoration: "none" },
   sep: { color: TEXT_MUTED, fontSize: 9 },
 
-  // Liens “apparents” (impression)
+  // Liens apparents (impression)
   linkLine: {
     flexDirection: "row",
     alignItems: "baseline",
@@ -107,33 +101,31 @@ export const styles = StyleSheet.create({
 
   // ==== Sections ====
   sectionTitle: {
-    fontSize: 11.2,
-    fontWeight: 700,
-    marginTop: 9,
+    fontSize: 14,
+    fontWeight: 800,
+    marginTop: 5,
     marginBottom: 4,
     paddingBottom: 2,
     borderBottom: `1 solid ${BORDER}`,
     borderLeft: `3 solid ${BRAND}`,
     paddingLeft: 5,
   },
-  bullet: { marginBottom: 1.05 },
+  bullet: { marginBottom: 1.1 },
 
   // ==== Layout 2 colonnes ====
   row: { flexDirection: "row", gap: 9 },
-  colLeft: { flex: 1.15, gap: 2 }, // Formations à gauche
+  colLeft: { flex: 1.15, gap: 2 },
   colRight: { flex: 0.85, gap: 2 },
 
   // ==== Chips ====
-  chipRow: { flexDirection: "row", flexWrap: "wrap" },
+  chipRow: { flexDirection: "row", flexWrap: "wrap", gap: 3, marginTop: 2 },
   chip: {
     border: `1 solid ${BORDER}`,
     borderRadius: 4,
     paddingVertical: 1,
     paddingHorizontal: 3,
-    fontSize: 8.3, // un brin plus petit
+    fontSize: 8.5,
     color: TEXT_MUTED,
-    marginLeft: 3, // on évite "gap" ici pour assurer la compatibilité
-    marginBottom: 3,
   },
 
   // ==== KPI Row (optionnel) ====
@@ -166,6 +158,17 @@ export const styles = StyleSheet.create({
     fontSize: 9,
     marginTop: -1,
     marginBottom: 5,
+  },
+
+  // ==== Langues (vertical) ====
+  langList: {
+    flexDirection: "column",
+    gap: 2,
+    marginBottom: 6,
+  },
+  langItem: {
+    fontSize: 9,
+    color: TEXT,
   },
 
   // ==== Footer ====
