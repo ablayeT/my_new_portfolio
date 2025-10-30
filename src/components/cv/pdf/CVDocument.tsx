@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/alt-text */ // Image de @react-pdf/renderer n'a pas d'alt
-
 import React, { type ReactElement } from "react";
 import {
   Document,
@@ -12,14 +11,15 @@ import {
 } from "@react-pdf/renderer";
 import { styles } from "@/components/styles/CVDocument_styles";
 
+// ===== Types =====
 export type CVData = {
   identity: {
     name: string;
     title: string;
-    under_title?: string;
+    under_title?: string; // ex: dispo/localisation/modalité
     phone: string;
     email: string;
-    local: string; // ← localisation (ex: "Île-de-France")
+    local: string;
     links: {
       linkedin: string;
       github: string;
@@ -37,24 +37,52 @@ export type CVData = {
   featuredProjects: Array<{
     name: string;
     bullets: string[];
-    tags?: string[];
+    tags?: string[] | null;
   }>;
   skills: {
-    security: string;
+    security: string; // SOC/Blue Team
+    red?: string; // Pentest/Red Team (optionnel)
     systems: string;
     dev: string;
-    tools: string;
+    tools: string; // "ELK, Suricata, Wireshark, ..."
     ats: string;
   };
-  education: Array<{ title: string; school: string; period: string }>;
-  personal: { languages: string; soft: string; hobbies: string };
+  education: Array<{
+    title: string;
+    school: string;
+    period: string;
+    note?: string;
+  }>;
+  personal: {
+    langues: {
+      francais: string; // "courant"
+      anglais: string; // "courant"
+      espagnol?: string; // "intermédiaire"
+    };
+    soft: string;
+    hobbies: string;
+  };
   meta?: { updatedAt?: string };
+
+  // Optionnels
+  kpis?: Array<{ value: string; label: string }> | null;
+  topChips?: string[] | null;
 };
 
 type Props = {
   data: CVData;
   photoSrc?: string; // data URL injectée par la route
 };
+
+// Utilitaire pour obtenir des chips lisibles depuis "skills.tools"
+function deriveChipsFromTools(tools: string | undefined, max = 6): string[] {
+  if (!tools) return [];
+  return tools
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, max);
+}
 
 export function CVDocument({
   data,
@@ -68,7 +96,30 @@ export function CVDocument({
     skills,
     education,
     personal,
+    meta,
+    // kpis, // si besoin plus tard
+    topChips,
   } = data;
+
+  // Chips : jamais null avant itération
+  const CHIP_LIMIT = 5;
+  const chipsSource: string[] =
+    (topChips && topChips.length > 0
+      ? topChips
+      : deriveChipsFromTools(skills?.tools, CHIP_LIMIT)) ?? [];
+  const chips = chipsSource.slice(0, CHIP_LIMIT);
+
+  // Rendu compact des langues
+  const languesParts = [
+    ["Français", personal.langues.francais] as [string, string],
+    ["Anglais", personal.langues.anglais] as [string, string],
+    personal.langues.espagnol
+      ? (["Espagnol", personal.langues.espagnol] as [string, string])
+      : null,
+  ].filter(Boolean) as Array<[string, string]>;
+  const languesLine = languesParts
+    .map(([n, lvl]) => `${n} (${lvl})`)
+    .join(" · ");
 
   return (
     <Document
@@ -84,9 +135,6 @@ export function CVDocument({
             <View style={styles.ViewsCol}>
               <Text style={styles.name}>{identity.name}</Text>
               <Text style={styles.role}>{identity.title}</Text>
-              {identity.under_title ? (
-                <Text style={styles.role}>{identity.under_title}</Text>
-              ) : null}
 
               {/* Liens visibles (une ligne, wrap auto) */}
               <View style={styles.linksInline}>
@@ -116,15 +164,36 @@ export function CVDocument({
           </View>
         </View>
 
-        {/* ===== Profil (sous le header) ===== */}
+        {/* ===== Bannière INLINE : under_title, chips ===== */}
+        <View style={styles.banner}>
+          <View style={styles.bannerRow}>
+            <View style={styles.bannerLeft}>
+              {identity.under_title ? (
+                <Text style={styles.bannerText}>{identity.under_title}</Text>
+              ) : null}
+            </View>
+
+            <View style={styles.bannerRight}>
+              {chips.length > 0
+                ? chips.map((t, idx) => (
+                    <Text key={idx} style={styles.chip}>
+                      {t}
+                    </Text>
+                  ))
+                : null}
+            </View>
+          </View>
+        </View>
+
+        {/* ===== Profil ===== */}
         <Text style={styles.sectionTitle}>Profil</Text>
         <Text style={{ marginBottom: 6 }}>{summary}</Text>
 
         <View style={styles.row}>
-          {/* ===== Colonne gauche : Expériences + Compétences ===== */}
-          <View style={styles.col}>
+          {/* ===== Colonne gauche : Expériences -> Formations -> Compétences ===== */}
+          <View style={styles.colLeft}>
             <Text style={styles.sectionTitle}>
-              Expériences professionnelles en cybersécurité
+              Expériences et réalisations sélectionnées
             </Text>
 
             {experiences.map((exp, i) => (
@@ -149,44 +218,68 @@ export function CVDocument({
               </View>
             ))}
 
-            {/* ===== Compétences (savoirs + savoir-être) ===== */}
+            {/* ===== Formations (avec note ADVENS) ===== */}
+            <Text style={styles.sectionTitle}>Formations</Text>
+            {education.map((e, i) => (
+              <View key={i} style={{ marginBottom: 2 }}>
+                <Text style={{ fontWeight: 700 }}>{e.title}</Text>
+                <Text style={{ color: "#718096" }}>
+                  {e.school} | {e.period}
+                </Text>
+                {e.note ? <Text style={styles.eduNote}>{e.note}</Text> : null}
+              </View>
+            ))}
+
+            {/* ===== Compétences ===== */}
             <View style={styles.ViewsCol}>
               <View style={{ gap: 6 }}>
                 <Text style={styles.sectionTitle}>Compétences</Text>
                 <Text style={{ marginBottom: 2 }}>
                   <Text style={{ fontWeight: 700 }}>
-                    Domaines (savoirs)&nbsp;:{" "}
+                    SOC & Blue Team&nbsp;:{" "}
                   </Text>
-                  {/* Utilise ton champ 'security' qui contient déjà des notions génériques ATS */}
                   <Text>{skills.security}</Text>
                 </Text>
-                <Text style={{ marginBottom: 6 }}>
-                  <Text>
-                    <Text style={{ fontWeight: 700 }}>Soft skills: </Text>
-                    {personal.soft || skills.ats}
+
+                {skills.red ? (
+                  <Text style={{ marginBottom: 2 }}>
+                    <Text style={{ fontWeight: 700 }}>
+                      Pentest & Red Team&nbsp;:{" "}
+                    </Text>
+                    <Text>{skills.red}</Text>
                   </Text>
+                ) : null}
+
+                <Text style={{ marginBottom: 2 }}>
+                  <Text style={{ fontWeight: 700 }}>
+                    Systèmes / Réseau&nbsp;:{" "}
+                  </Text>
+                  <Text>{skills.systems}</Text>
+                </Text>
+                <Text style={{ marginBottom: 2 }}>
+                  <Text style={{ fontWeight: 700 }}>
+                    Automatisation / Dev&nbsp;:{" "}
+                  </Text>
+                  <Text>{skills.dev}</Text>
+                </Text>
+                <Text style={{ marginBottom: 6 }}>
+                  <Text style={{ fontWeight: 700 }}>Outils&nbsp;: </Text>
+                  <Text>{skills.tools}</Text>
                 </Text>
               </View>
             </View>
-
-            <View>
-              <Text>
-                <Text style={styles.sectionTitle}>Langues: </Text>
-                <Text> {personal.languages}</Text>
-              </Text>
-            </View>
           </View>
 
-          {/* ===== Colonne droite : Projets + Liens utiles + Formations + Infos ===== */}
-          <View style={styles.col}>
+          {/* ===== Colonne droite : Projets -> Liens utiles -> Centres d’intérêt -> Langues ===== */}
+          <View style={styles.colRight}>
             <Text style={styles.sectionTitle}>Projets</Text>
             {featuredProjects.map((p, i) => (
               <View key={i} style={{ marginBottom: 4 }}>
                 <Text style={{ fontWeight: 700 }}>{p.name}</Text>
 
-                {p.tags?.length ? (
+                {(p.tags ?? []).length > 0 ? (
                   <View style={styles.chipRow}>
-                    {p.tags.map((t, idx) => (
+                    {(p.tags ?? []).map((t, idx) => (
                       <Text key={idx} style={styles.chip}>
                         {t}
                       </Text>
@@ -202,7 +295,7 @@ export function CVDocument({
               </View>
             ))}
 
-            {/* Liens utiles : cliquables + URL apparentes (impression) */}
+            {/* Liens utiles */}
             <Text style={styles.sectionTitle}>Liens utiles</Text>
             <View style={styles.linkLine}>
               <Link src={identity.links.portfolio} style={styles.linkLabel}>
@@ -229,25 +322,20 @@ export function CVDocument({
               <Text style={styles.linkUrl}>{identity.links.tryhackme}</Text>
             </View>
 
-            <Text style={styles.sectionTitle}>Formations</Text>
-            {education.map((e, i) => (
-              <View key={i} style={{ marginBottom: 2 }}>
-                <Text style={{ fontWeight: 700 }}>{e.title}</Text>
-                <Text style={{ color: "#718096", marginBottom: 5 }}>
-                  {e.school} | {e.period}
-                </Text>
-              </View>
-            ))}
+            <Text style={styles.sectionTitle}>Centres d’intérêt</Text>
+            <Text>{personal.hobbies}</Text>
 
-            <Text style={styles.sectionTitle}>Centres d’intérêt:</Text>
-            <Text>
-              <Text>{personal.hobbies}</Text>
-            </Text>
+            {/* ===== Langues ===== */}
+            <Text style={styles.sectionTitle}>Langues</Text>
+            <Text>{languesLine}</Text>
           </View>
         </View>
 
         {/* ===== Footer ===== */}
         <View style={styles.divider} />
+        <Text style={styles.footerNote}>
+          Mis à jour : {meta?.updatedAt || "—"}
+        </Text>
       </Page>
     </Document>
   );

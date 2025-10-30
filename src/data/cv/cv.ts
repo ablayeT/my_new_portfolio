@@ -1,9 +1,8 @@
-// src/data/cv/cv.ts
-
+// ==== Asset de téléchargement ====
 export const CV_ASSET = {
   href: "/cv/download",
   filename: "CV_Abdoulaye_Toure_Cybersecurity.pdf",
-  updatedAt: "2025-09",
+  updatedAt: "2025-10",
 };
 
 export type FeaturedProject = {
@@ -53,7 +52,8 @@ export const CV_DATA = {
 
   identity: {
     name: "Abdoulaye Touré",
-    title: "Analyste en Cybersécurité à la recherche d'une alternance",
+    title: "Alternance SOC / Pentest (Mastère cybersécurité – Bac+5)",
+    under_title: "Disponible dès sept. 2025 · Paris/IDF · présentiel/hybride",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
     local: "Local: Île-de-France",
@@ -65,85 +65,78 @@ export const CV_DATA = {
     },
   },
 
-  // Accroche : 1 phrase, posture pro, mots-clés ATS (cyberdéfense, incidents…)
+  // === PROFIL (Narratif "double compétence rare")
   summary:
-    "Analyste en cybersécurité, je conçois et automatise des solutions de cyberdéfense pour la détection et la réponse aux incidents, afin de renforcer la sécurité réseau et la résilience des SI face aux vulnérabilités.",
+    "Doté d’une double compétence rare, j’allie une rigueur analytique issue d’un master en littérature (Bac+5) à une expertise technique en développement et en infrastructures sécurisées (Bac+4). Cette perspective me permet de transformer des données brutes (logs, alertes) en renseignements clairs et exploitables. Passionné par la cyberdéfense, je recherche une alternance pour mettre mon esprit d’analyse et mes compétences en automatisation (SOC, Pentest) au service de la protection de votre SI.",
 
-  // >>> UNIQUEMENT les expériences pertinentes, détaillées (≥5 bullets chacune)
+  // === EXPÉRIENCES (hors stage ADVENS : rattaché en formation)
   experiences: [
-    {
-      role: "Stage – Audit & Pentest",
-      company: "ADVENS • Paris",
-      period: "Mars 2025 – Juillet 2025",
-      bullets: [
-        "Mené des audits techniques (systèmes, sécurité réseau, applications) pour cartographier les risques et prioriser les corrections.",
-        "Conçu et exécuté des tests d’intrusion (XSS, SQLi, bruteforce) avec Burp Suite, Nmap et SQLMap pour valider l’efficacité des contrôles.",
-        "Analysé les journaux avec ELK (Elasticsearch, Logstash, Kibana) afin d’identifier des patterns d’anomalies et de renforcer la détection.",
-        "Automatisé la génération de rapports (Bash/PowerShell), réduisant de ~40 % le temps de production et standardisant les livrables.",
-        "Présenté des recommandations techniques (durcissement, remédiations, baselines) à l’équipe sécurité et suivi de leur implémentation.",
-      ],
-    },
     {
       role: "Développeur Web & Web Mobile",
       company: "Entourage • Paris",
       period: "Oct 2022 – Nov 2023",
       bullets: [
-        "Conçu et développé des plateformes web full-stack (Node.js, React, MySQL) avec une attention particulière à la sécurité applicative.",
-        "Mis en place des architectures sécurisées (authentification, validation des entrées, gestion des secrets) et durci les endpoints API.",
-        "Écrit des tests unitaires/intégration et intégré la CI/CD, réduisant de ~25 % les incidents post-déploiement et accélérant les releases.",
-        "Piloté des choix techniques, réalisé des revues de code et documenté les bonnes pratiques de sécurité (OWASP, gestion des vulnérabilités).",
-        "Collaboré avec produit/UX pour améliorer l’ergonomie et la conformité sécurité (journalisation, traçabilité, gestion des erreurs).",
+        "Conception et sécurisation d’applications full-stack (Node.js, React) en intégrant les principes de Security by Design.",
+        "Réduction de la surface d’attaque des API par des contrôles de sécurité robustes (authentification, gestion des secrets).",
+        "Amélioration de la posture de sécurité du code via des revues OWASP systématiques et la diffusion de standards AppSec.",
       ],
     },
   ],
 
+  // === PROJETS (compacts pour 1 page)
   featuredProjects: [
     {
       name: "Purple Team Lab – Infrastructure de simulation",
       tags: ["MITRE ATT&CK", "Suricata", "ELK"],
       bullets: [
-        "Lab segmenté (Public/DMZ/Privé) pour scénarios ATT&CK mesurables.",
-        "Suricata + ELK : collecte, corrélation et visualisation en temps réel.",
-        "Chaîne automatisée détection → investigation → réponse (playbooks).",
+        "Scénarios mesurables ATT&CK (détection→investigation→réponse) sur lab segmenté (Public/DMZ/Privé).",
+        "Chaîne Suricata + ELK : collecte, corrélation, dashboards par use-cases SOC, playbooks d’investigation.",
       ],
     },
     {
       name: "Dashboard SIEM Personnalisé",
       tags: ["Kibana", "Alerting", "Baselines"],
       bullets: [
-        "Vues par use-cases (phishing, exécution suspecte, latéralisation).",
-        "Règles d’alerting et baselines pour réduire le bruit de détection.",
+        "Vues ciblées (phishing, exécutions suspectes, latéralisation) et indicateurs de priorisation SOC.",
+        "Règles d’alerting + baselines pour optimiser le ratio signal/bruit et réduire les faux positifs.",
       ],
     },
     {
       name: "Plateforme de Simulation Phishing",
       tags: ["GoPhish", "SMTP", "Awareness"],
       bullets: [
-        "Campagnes avec modèles, tracking et tableau de bord d’indicateurs.",
-        "Mesure du taux de clic et plan de sensibilisation continue.",
+        "Campagnes avec modèles, tracking et tableaux de bord (taux de clic, signalement) ; retours d’expérience.",
+        "Industrialisation du reporting pour libérer du temps d’analyse à plus forte valeur ajoutée.",
       ],
     },
   ],
 
+  // === COMPÉTENCES (vendeuses)
   skills: {
     security:
-      "Cyberdéfense, gestion des incidents, sécurité réseau, gestion des vulnérabilités, SIEM.",
-    systems: "Administration Linux, durcissement, segmentation réseau.",
-    dev: "Automatisation et scripting (Bash, PowerShell, Node.js).",
-    tools: "ELK, Suricata, Wireshark, Git, Docker.",
-    ats: "Rigueur, analyse, curiosité, organisation, communication.",
+      "Threat Hunting via SIEM (ELK), ingénierie de la détection (corrélation, baselines), orchestration de la réponse à incident (playbooks), analyse forensique.",
+    red: "Audit d’applications web (OWASP), tests d’intrusion internes/externes, cartographie et réduction de la surface d’attaque.",
+    systems:
+      "Linux (admin/durcissement), segmentation réseau, journalisation, supervision.",
+    dev: "Automatisation & scripting : Bash, PowerShell, Node.js ; CI/CD ; documentation et rapports normalisés.",
+    tools:
+      "Elasticsearch, Logstash, Kibana, Suricata, Wireshark, Nmap, Burp Suite, SQLMap, Git, Docker",
+    ats: "Rigueur, analyse, vulgarisation, organisation, adaptabilité, travail d’équipe",
   },
 
+  // === FORMATIONS (ADVENS rattaché au Bac+4 avec compétences mises en avant)
   education: [
     {
-      title: "Mastère(Bac+5 En cours) - Expert en cybersécurité",
-      school: "Otéria Cyber School , Genvilliers",
-      period: "2 ans: A partir de Septembre 2025 ",
+      title: "Mastère (Bac+5, en cours) – Expert en cybersécurité",
+      school: "Otéria Cyber School, Gennevilliers",
+      period: "2025 – 2027",
+      note: "Recherche d’alternance (SOC / Pentest) pour la rentrée de septembre 2025.",
     },
     {
-      title: "Bac+4 – Administration d’infrastructures sécurisées",
+      title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",
       school: "ALT-RH, Paris",
       period: "2024 – 2025",
+      note: "Cursus validé par un stage de 5 mois chez ADVENS (Audit & Pentest) : audits techniques systèmes/réseau/applicatif, tests d’intrusion (Burp, Nmap, SQLMap), Threat Hunting & corrélation SIEM (ELK/Kibana), baselines pour optimiser le ratio signal/bruit, reporting industrialisé (Bash/PowerShell), recommandations alignées MITRE ATT&CK et restitutions aux équipes.",
     },
     {
       title: "Bac+3 – Développeur Web & Web Mobile",
@@ -153,20 +146,28 @@ export const CV_DATA = {
     {
       title: "Bac+2 – Développeur Intégrateur Web",
       school: "OpenClassrooms, Paris",
-      period: "Avr 2022 – Oct 2022",
+      period: "2022",
     },
     {
       title:
-        "BAc+5 – Littérature & civilisation anglophone (américaine & caribéenne)",
+        "Bac+5 – Littérature & civilisation anglophone (américaine & caribéenne)",
       school: "UCAD, Dakar",
       period: "2011 – 2015",
     },
   ],
 
+  // === PERSONNEL : langues (objet, dot-notation)
   personal: {
-    languages: "Français(courant), Anglais(courant) Espagnol(intermédiare)",
-    soft: "Rigueur, curiosité, sens de l’analyse, organisation, adaptabilité, Discrétion",
+    langues: {
+      francais: "courant",
+      anglais: "courant",
+      espagnol: "intermédiaire",
+    },
+    soft: "Esprit d’analyse, pédagogie/vulgarisation, sens du service, autonomie, discrétion",
     hobbies:
-      "Veille sécurité, Programmation, Taekwondo, Course à pied, Baseball, Lecture.",
+      "Veille sécurité, programmation, TryHackMe/RootMe, Taekwondo, course à pied, lecture",
   },
+
+  // Chips visibles en bannière (sinon déduits de skills.tools)
+  topChips: ["ELK/Kibana", "Suricata", "OWASP", "Burp Suite", "Nmap", "Docker"],
 };
