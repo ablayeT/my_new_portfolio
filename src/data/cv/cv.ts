@@ -177,7 +177,7 @@ export const CV_DATA = {
     },
     soft: "Esprit d’analyse, pédagogie/vulgarisation, sens du service, autonomie, discrétion",
     hobbies:
-      "Veille sécurité, programmation, TryHackMe/RootMe, Taekwondo, course à pied, lecture",
+      "Veille sécurité, programmation, TryHackMe/RootMe, Taekwondo, course à pied, lecture, Baseball",
   },
 
   // Chips visibles en bannière (sinon déduits de skills.tools)
