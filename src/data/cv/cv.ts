@@ -74,7 +74,7 @@ export const CV_DATA = {
       role: "Stage de fin d’études – Audit & Pentest (validation ALT-RH – Bac+4)",
       company: "ADVENS • Paris",
       period:
-        "Mars 2025 – Juillet 2025 · Stage de fin d’études (validation ALT-RH – Bac+4)",
+        "Mars 2025 – Juin 2025 · Stage de fin d’études (validation ALT-RH – Bac+4)",
       bullets: [
         "Audits techniques (systèmes/réseau/applicatif) et priorisation des risques.",
         "Tests d’intrusion web & réseau (Burp Suite, Nmap, SQLMap) : OWASP.",
