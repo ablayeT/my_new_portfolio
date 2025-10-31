@@ -335,7 +335,7 @@ export function CVDocument({
         {/* ===== Footer ===== */}
         <View style={styles.divider} />
         <Text style={styles.footerNote}>
-          Mis à jour : {meta?.updatedAt || "—"}
+          {/* Mis à jour : {meta?.updatedAt || "—"} */}
         </Text>
       </Page>
     </Document>
