@@ -52,7 +52,7 @@ export const CV_DATA = {
 
   identity: {
     name: "Abdoulaye Touré",
-    title: "Alternance SOC / Pentest (Mastère cybersécurité – Bac+5)",
+    title: "Analyste SOC / Audit & Pentest",
     under_title: "Disponible dès sept. 2025 · Paris/IDF · présentiel/hybride",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
@@ -67,7 +67,7 @@ export const CV_DATA = {
 
   // === PROFIL (Narratif "double compétence rare")
   summary:
-    "Double compétence lettres/tech. J’automatise la détection et la réponse (ELK, playbooks) et convertis les signaux en insights actionnables. Je cherche une alternance SOC/Pentest pour créer de l’impact immédiat.",
+    "Double compétence lettres/tech. J’automatise la détection et la réponse (ELK, playbooks) et convertis les signaux en insights actionnables. Je cherche un poste d'analyste ou administrateur systèmes junior pour créer de l’impact immédiat.",
 
   experiences: [
     {
@@ -138,12 +138,6 @@ export const CV_DATA = {
 
   // === FORMATIONS (rappel court et renvoi vers Expériences)
   education: [
-    {
-      title: "Mastère (Bac+5, en cours) – Expert en cybersécurité",
-      school: "Otéria Cyber School, Gennevilliers",
-      period: "2025 – 2027",
-      note: "Recherche d’alternance (SOC / Pentest) pour la rentrée de septembre 2025.",
-    },
     {
       title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",
       school: "ALT-RH, Paris",
