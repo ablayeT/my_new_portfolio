@@ -1,4 +1,4 @@
-import SIEMLogExplainer from "@/components/ai/SIEMLogExplainer";
+import SIEMLogExplainer from "@/components/AI/SIEMLogExplainer";
 import PersonalCopilot from "@/components/ai/PersonalCopilot";
 export default function AIShowcasePage() {
   return (
