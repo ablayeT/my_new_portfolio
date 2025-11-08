@@ -1,6 +1,5 @@
-import SIEMLogExplainer from "@/components/AI/SIEMLogExplainer";
+import SIEMLogExplainer from "@/components/ai/SIEMLogExplainer";
 import PersonalCopilot from "@/components/ai/PersonalCopilot";
-
 export default function AIShowcasePage() {
   return (
     <main className="mx-auto max-w-4xl p-6 space-y-8">
