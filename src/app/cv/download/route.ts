@@ -28,7 +28,7 @@ export async function GET(_req: NextRequest): Promise<Response> {
     photoSrc: photoDataUrl,
   }) as React.ReactElement<DocumentProps>;
 
-  // 3) Solution corrigée : traiter le ReadableStream correctement
+  // 3) Solution : traiter le ReadableStream correctement
   try {
     const pdfStream = await pdf(element).toBuffer();
 

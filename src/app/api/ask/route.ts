@@ -1,3 +1,4 @@
+// src/app/api/ask/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { getOpenRouter } from "@/lib/openrouter";
 import { loadProfile, type Profile } from "@/lib/profile";
@@ -48,25 +49,41 @@ function clampToTokens(s: string, maxTokens: number) {
   return s.slice(-(maxTokens * 4));
 }
 
-/** ✅ Typage corrigé : p: Profile */
-const PROFILE_SYSTEM = (p: Profile) => `
-Tu es le copilot personnel de ${p.identity.fullName}.
-Connais ces données VÉRIFIÉES (ne pas inventer) :
-IDENTITY: ${p.identity.title}, ${p.identity.location}, langues=${p.identity.languages.join(", ")}
-LOOKING_FOR: roles=${p.lookingFor.roles.join(", ")}; contrats=${p.lookingFor.contract.join(", ")}; domaines=${p.lookingFor.domains.join(", ")}
-SKILLS: blue=${p.skills.blueTeam.join(", ")}; red=${p.skills.redTeam.join(", ")}; devSec=${p.skills.devSec.join(", ")}; gov=${p.skills.gouvernance.join(", ")}
-EDU: ${p.education.map((e) => e.label).join(" • ")}
-EXP: ${p.experience.map((e) => `${e.label} @ ${e.org}`).join(" • ")}
-PROJECTS: ${p.projects.map((pr) => `${pr.name} (${pr.url})`).join(" • ")}
-ROUTES: home=${ROUTES.home}, projects=${ROUTES.projects}, purple=${ROUTES.purple}, siem=${ROUTES.siem}, contact=${ROUTES.contact}, cv=${ROUTES.cv}
+/** Persona strict : visiteur ≠ Abdoulaye. Mode propriétaire optionnel. */
+function PROFILE_SYSTEM(p: Profile, ownerMode: boolean) {
+  return `
+Tu es l’assistant officiel du portfolio d'Abdoulaye Touré.
+RÔLE: conseiller les VISITEURS sur le profil d'Abdoulaye (infos carrière, projets, compétences, contact).
 
-Règles:
+IDENTITÉ DU SUJET: "${p.identity.fullName}" — ${p.identity.title}, ${p.identity.location}.
+LANGUES: ${p.identity.languages.join(", ")}.
+CE QUE CHERCHE ABDOULAYE: roles=${p.lookingFor.roles.join(", ")}; contrats=${p.lookingFor.contract.join(", ")}; domaines=${p.lookingFor.domains.join(", ")}.
+COMPÉTENCES: blue=${p.skills.blueTeam.join(", ")}; red=${p.skills.redTeam.join(", ")}; devSec=${p.skills.devSec.join(", ")}; gov=${p.skills.gouvernance.join(", ")}.
+PARCOURS: EDU=[${p.education.map((e) => e.label).join(" • ")}] | EXP=[${p.experience
+    .map((e) => `${e.label} @ ${e.org}`)
+    .join(" • ")}].
+PROJETS: ${p.projects.map((pr) => `${pr.name} (${pr.url})`).join(" • ")}.
+ROUTES: home=${ROUTES.home} | projects=${ROUTES.projects} | purple=${ROUTES.purple} | siem=${
+    ROUTES.siem
+  } | contact=${ROUTES.contact} | cv=${ROUTES.cv}.
+
+RÈGLES PERSONA:
+- NE JAMAIS supposer que l’utilisateur est Abdoulaye.
+- Par défaut, TU t’adresses au VISITEUR et tu parles d’“Abdoulaye” à la 3ᵉ personne.
+- Si l’utilisateur dit "je" à propos de sa vie/expérience, considère-le comme VISITEUR (pas Abdoulaye), sauf si OWNER_MODE=true.
+- Interdiction : ne dis jamais "tu es Abdoulaye", "nous avons fait", etc., sauf OWNER_MODE.
+
+OWNER_MODE: ${ownerMode ? "true" : "false"}.
+- Si OWNER_MODE=true, parle à la 1ʳᵉ personne ("je") en incarnant Abdoulaye. Sinon, utilise la 3ᵉ personne ("Abdoulaye").
+
+STYLE:
 - Réponds dans la langue de l’utilisateur (FR/EN).
-- 5–8 lignes max, direct, professionnel, accueillant. Pas de fluff.
-- Offre un CTA vers une page du portfolio quand pertinent (utilise ROUTES).
-- Si info manquante: pose UNE question ciblée au maximum.
-- Ne JAMAIS inventer d’infos hors du JSON ci-dessus.
-`;
+- 5–8 lignes, direct, pro, accueillant. Pas de fluff.
+- Propose un CTA vers une route pertinente quand utile (utilise ROUTES).
+- Si une info manque, pose UNE question ciblée max.
+- Ne JAMAIS inventer hors des données ci-dessus.
+  `.trim();
+}
 
 async function callOnce(
   model: string,
@@ -110,7 +127,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = (await req.json()) as { q?: unknown };
+    const body = (await req.json()) as { q?: unknown; owner?: boolean };
     const rawQ = sanitizeInput(String(body?.q ?? ""), 4000);
     if (!rawQ)
       return NextResponse.json(
@@ -123,14 +140,15 @@ export async function POST(req: NextRequest) {
         { status: 400, headers: corsHeaders() }
       );
 
-    // ✅ Attente du profil asynchrone
+    // Profil (async) + mode propriétaire (par défaut false pour les visiteurs)
     const profile = await loadProfile();
+    const ownerMode = Boolean(body?.owner);
 
     const messages: Array<{
       role: "system" | "user" | "assistant";
       content: string;
     }> = [
-      { role: "system", content: PROFILE_SYSTEM(profile) },
+      { role: "system", content: PROFILE_SYSTEM(profile, ownerMode) },
       { role: "user", content: clampToTokens(rawQ, 1500) },
     ];
 
@@ -156,9 +174,9 @@ export async function POST(req: NextRequest) {
     if (!text) {
       text =
         "Je n’ai pas pu générer de réponse cette fois. Réessaie avec une question plus précise, ou change de modèle dans la config. Exemples :\n" +
-        "• Présentez Abdoulaye en 30 secondes\n" +
-        "• Ses expériences Purple Team clés ?\n" +
-        "• Comment le contacter ?\n" +
+        "• Présentation d’Abdoulaye en 30 secondes\n" +
+        "• Ses expériences Purple Team clés\n" +
+        "• Comment le contacter\n" +
         "• Ce qu’il recherche actuellement (alternance/CDI)\n" +
         "→ /projects | /contact";
     }

@@ -8,7 +8,7 @@ type Msg = { role: "user" | "assistant"; content: string; ts: number };
 type Pos = { x: number; y: number };
 
 const WELCOME =
-  "Bienvenue dans l’univers d’Abdou ! Mon profil vous intéresse — que puis-je faire pour vous ?";
+  "Bienvenue dans l’univers d’Abdou ! Mon profil vous intéresse ?  Que puis-je faire pour vous ?";
 
 const SUGGESTIONS = [
   "Présentez-moi Abdoulaye en 30 secondes.",
@@ -318,11 +318,19 @@ export default function ChatWidget() {
             onPointerDown={onPointerDownHeader}
           >
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-full bg-black text-white flex items-center justify-center text-xs">
-                A
+              {/* AVATAR */}
+              <div className="relative h-8 w-8 sm:h-9 sm:w-9 rounded-full overflow-hidden ring-1 ring-black/10 dark:ring-white/10 shrink-0">
+                <img
+                  src="/cv/photo.jpeg"
+                  alt="Photo de profil Abdoulaye Touré"
+                  className="h-full w-full object-cover object-top"
+                  draggable={false}
+                />
               </div>
-              <div className="text-sm font-semibold">Personal Copilot</div>
+
+              <div className="text-sm font-semibold">Ask me !</div>
             </div>
+
             <div className="flex gap-2">
               <button
                 onClick={() => {
