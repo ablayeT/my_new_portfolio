@@ -139,6 +139,12 @@ export const CV_DATA = {
   // === FORMATIONS (rappel court et renvoi vers Expériences)
   education: [
     {
+      title: "Formation – Analyste Cybersécurité",
+      school: "Ironhack, Paris",
+      period: "Novembre 2025 – en cours",
+      note: "Formation intensive cybersécurité",
+    },
+    {
       title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",
       school: "ALT-RH, Paris",
       period: "2024 – 2025",

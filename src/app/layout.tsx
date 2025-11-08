@@ -6,6 +6,8 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import Script from "next/script";
+import ChatWidget from "@/components/AI/ChatWidget"; // +++
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -118,6 +120,7 @@ export default function RootLayout({
         <Header />
         <ThemeProvider>{children}</ThemeProvider>
         <Footer />
+        <ChatWidget />
         <Script
           id="json-ld"
           type="application/ld+json"
