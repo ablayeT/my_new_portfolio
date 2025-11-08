@@ -110,7 +110,7 @@ export function Header() {
           {/* Toggle thème (Light/Dark) */}
           <ThemeToggle />
 
-          {/* ✅ CTA Desktop : visible à partir de md, caché sur mobile */}
+          {/* CTA Desktop : visible à partir de md, caché sur mobile */}
 
           <Button asChild size="sm" className="hidden md:inline-flex">
             <Link

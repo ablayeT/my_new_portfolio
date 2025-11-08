@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
@@ -6,7 +5,7 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import Script from "next/script";
-import ChatWidget from "@/components/AI/ChatWidget"; // +++
+import ChatWidget from "@/components/AI/ChatWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,15 +21,12 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://abdou-cyber.dev"),
-
   title: {
     default: "Abdoulaye Touré — Analyste Cybersécurité (Purple Team)",
     template: "%s — Abdoulaye Touré",
   },
-
   description:
     "Analyste en cybersécurité (Purple Team) : détection & réponse, SIEM/ELK, MITRE ATT&CK, automatisation. Basé en Île-de-France.",
-
   keywords: [
     "cybersécurité",
     "purple team",
@@ -52,13 +48,9 @@ export const metadata: Metadata = {
     "alternance",
     "Île-de-France",
   ],
-
   authors: [{ name: "Abdoulaye Touré" }],
   creator: "Abdoulaye Touré",
-  alternates: {
-    canonical: "https://abdou-cyber.dev/",
-  },
-
+  alternates: { canonical: "https://abdou-cyber.dev/" },
   openGraph: {
     type: "website",
     locale: "fr_FR",
@@ -76,16 +68,14 @@ export const metadata: Metadata = {
       },
     ],
   },
-
   twitter: {
     card: "summary_large_image",
-    title: "Abdoulaye Toure — Analyste Cybersécurité (Purple Team)",
+    title: "Abdoulaye Touré — Analyste Cybersécurité (Purple Team)",
     description:
       "Purple Team • Detection & Response • SIEM/ELK • MITRE ATT&CK • Automatisation",
     images: ["/og.jpg"],
-    creator: "@abdoulayetoure", // si tu veux ajouter ton pseudo X/Twitter
+    creator: "@abdoulayetoure",
   },
-
   robots: {
     index: true,
     follow: true,
@@ -116,11 +106,17 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#1e3a5f" />
       </head>
+
       <body className="font-sans antialiased" suppressHydrationWarning>
-        <Header />
-        <ThemeProvider>{children}</ThemeProvider>
-        <Footer />
-        <ChatWidget />
+        {/* ✅ Le provider englobe TOUT */}
+        <ThemeProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <ChatWidget />
+        </ThemeProvider>
+
+        {/* Données structurées JSON-LD */}
         <Script
           id="json-ld"
           type="application/ld+json"
