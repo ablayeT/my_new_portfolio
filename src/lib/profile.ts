@@ -1,23 +1,35 @@
 // src/lib/profile.ts
 
-export type Profile = Record<string, unknown>;
+/** Structure complète du profil (selon ton JSON) */
+export interface Profile {
+  identity: {
+    fullName: string;
+    title: string;
+    location: string;
+    languages: string[];
+  };
+  lookingFor: {
+    roles: string[];
+    contract: string[];
+    domains: string[];
+  };
+  skills: {
+    blueTeam: string[];
+    redTeam: string[];
+    devSec: string[];
+    gouvernance: string[];
+  };
+  education: { label: string }[];
+  experience: { label: string; org: string }[];
+  projects: { name: string; url: string }[];
+}
 
-/**
- * Charge le profil d'Abdou depuis le fichier public/data/profile.json.
- * Compatible standalone / hébergement VPS.
- */
+/** Chargement dynamique du profil depuis /public/data/profile.json */
 export async function loadProfile(): Promise<Profile> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const url = `${base}/data/profile.json`;
 
-  try {
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) {
-      throw new Error(`Échec du chargement : ${res.status} ${res.statusText}`);
-    }
-    return await res.json();
-  } catch (err) {
-    console.error("❌ Impossible de charger profile.json :", err);
-    throw new Error("Failed to load profile.json");
-  }
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to load profile.json from ${url}`);
+  return (await res.json()) as Profile;
 }

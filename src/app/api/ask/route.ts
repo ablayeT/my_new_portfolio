@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getOpenRouter } from "@/lib/openrouter";
-import { loadProfile } from "@/lib/profile";
+import { loadProfile, type Profile } from "@/lib/profile";
 import { ROUTES } from "@/lib/routes";
 import { sanitizeInput, looksSuspicious } from "@/lib/sanitize";
 import { rateLimit } from "@/lib/ratelimit";
@@ -48,7 +48,8 @@ function clampToTokens(s: string, maxTokens: number) {
   return s.slice(-(maxTokens * 4));
 }
 
-const PROFILE_SYSTEM = (p: ReturnType<typeof loadProfile>) => `
+/** ✅ Typage corrigé : p: Profile */
+const PROFILE_SYSTEM = (p: Profile) => `
 Tu es le copilot personnel de ${p.identity.fullName}.
 Connais ces données VÉRIFIÉES (ne pas inventer) :
 IDENTITY: ${p.identity.title}, ${p.identity.location}, langues=${p.identity.languages.join(", ")}
@@ -77,7 +78,6 @@ async function callOnce(
   const res = await client.chat.send({ model, messages, maxTokens });
   console.timeEnd(`llm:${model}`);
 
-  // Log minimal pour debug (sans PII)
   try {
     console.log(
       "LLM used:",
@@ -123,7 +123,9 @@ export async function POST(req: NextRequest) {
         { status: 400, headers: corsHeaders() }
       );
 
-    const profile = loadProfile();
+    // ✅ Attente du profil asynchrone
+    const profile = await loadProfile();
+
     const messages: Array<{
       role: "system" | "user" | "assistant";
       content: string;
@@ -150,7 +152,7 @@ export async function POST(req: NextRequest) {
       modelUsed = second.modelUsed;
     }
 
-    // 3) si toujours vide → message utile (évite “(no content)”)
+    // 3) si toujours vide → message utile
     if (!text) {
       text =
         "Je n’ai pas pu générer de réponse cette fois. Réessaie avec une question plus précise, ou change de modèle dans la config. Exemples :\n" +
