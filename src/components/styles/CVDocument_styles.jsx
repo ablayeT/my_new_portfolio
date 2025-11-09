@@ -162,7 +162,7 @@ export const styles = StyleSheet.create({
 
   // ==== Langues (vertical) ====
   langList: {
-    flexDirection: "column",
+    flexDirection: "row",
     gap: 2,
     marginBottom: 6,
   },

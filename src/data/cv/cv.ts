@@ -67,30 +67,37 @@ export const CV_DATA = {
 
   // === PROFIL (Narratif "double compétence rare")
   summary:
-    "Double compétence lettres/tech. J’automatise la détection et la réponse (ELK, playbooks) et convertis les signaux en insights actionnables. Je cherche un poste d'analyste ou administrateur systèmes junior pour créer de l’impact immédiat.",
+    "Double compétence lettres/tech. J’automatise la détection et la réponse (ELK, playbooks) et convertis les signaux en insights actionnables. Je cherche un poste d'analyste ou administrateur systèmes junior pour créer de l’impact.",
 
   experiences: [
     {
-      role: "Stage de fin d’études – Audit & Pentest (validation ALT-RH – Bac+4)",
-      company: "ADVENS • Paris",
-      period:
-        "Mars 2025 – Juin 2025 · Stage de fin d’études (validation ALT-RH – Bac+4)",
+      role: "Développeur Full Stack Freelance",
+      company: "Skeelfully • Paris",
+      period: "Juillet 2025 – Octobre 2025",
       bullets: [
-        "Audits techniques (systèmes/réseau/applicatif) et priorisation des risques.",
-        "Tests d’intrusion web & réseau (Burp Suite, Nmap, SQLMap) : OWASP.",
-        "Threat Hunting & corrélation SIEM (ELK/Kibana)",
-        "Industrialisation du reporting (Bash/PowerShell)",
-        "Restitution & recommandations alignées",
+        "Développement d’une marketplace connectant porteurs de projet et talents",
+        "Migration vers Node 16 et correctifs de compatibilité Webpack.",
+        "Optimisation CI/CD et durcissement des dépendances NPM.",
+      ],
+    },
+    {
+      role: "Stage – Audit & Pentest",
+      company: "ADVENS • Paris",
+      period: "Mars 2025 – Juin 2025",
+      bullets: [
+        "Audits techniques et tests d’intrusion web/réseau (Burp Suite, Nmap, SQLMap).",
+        "Threat Hunting et corrélation SIEM via ELK/Kibana.",
+        "Automatisation du reporting (Bash/PowerShell) et restitution technique.",
       ],
     },
     {
       role: "Développeur Web & Web Mobile",
       company: "Entourage • Paris",
-      period: "Oct 2022 – Nov 2023",
+      period: "Octobre 2022 – Novembre 2023",
       bullets: [
-        "Conception et sécurisation d’applications full-stack (Node.js, React) en intégrant les principes de Security by Design.",
-        "Réduction de la surface d’attaque des API par des contrôles de sécurité robustes (authentification, gestion des secrets).",
-        "Amélioration de la posture de sécurité du code (standards AppSec).",
+        "Conception d’applications sécurisées (Node.js, React, MySQL).",
+        "Durcissement des API et intégration de la CI/CD.",
+        "Suivi qualité et conformité aux standards AppSec (OWASP).",
       ],
     },
   ],

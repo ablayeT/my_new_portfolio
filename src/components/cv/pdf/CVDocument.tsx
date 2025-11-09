@@ -229,7 +229,7 @@ export function CVDocument({
             <Text style={styles.sectionTitle}>Centres d’intérêt</Text>
             <Text>{personal.hobbies}</Text>
 
-            {/* ===== Langues (vertical) ===== */}
+            {/* ===== Langues ===== */}
             <Text style={styles.sectionTitle}>Langues</Text>
             <View style={styles.langList}>
               {langs.map(([name, level], i) => (
@@ -240,7 +240,7 @@ export function CVDocument({
             </View>
           </View>
 
-          {/* ===== Colonne droite : Projets -> Liens utiles -> Centres d’intérêt -> Langues ===== */}
+          {/* ===== Colonne droite : Projets -> Liens utiles -> Centres d’intérêt ===== */}
           <View style={styles.colRight}>
             <Text style={styles.sectionTitle}>Projets</Text>
             {featuredProjects.map((p, i) => (
