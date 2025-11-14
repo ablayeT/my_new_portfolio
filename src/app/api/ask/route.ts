@@ -51,21 +51,73 @@ function clampToTokens(s: string, maxTokens: number) {
 
 /** Persona strict : visiteur ≠ Abdoulaye. Mode propriétaire optionnel. */
 function PROFILE_SYSTEM(p: Profile, ownerMode: boolean) {
+  // ✅ Champs identity
+  const fullName = p.identity?.fullName ?? "Abdoulaye Touré";
+  const title = p.identity?.title ?? "Analyste cybersécurité";
+  const location = p.identity?.location ?? "Île-de-France";
+
+  const languages = Array.isArray(p.identity?.languages)
+    ? p.identity!.languages.join(", ")
+    : "non précisé";
+
+  // ✅ LookingFor
+  const roles = Array.isArray(p.lookingFor?.roles)
+    ? p.lookingFor!.roles.join(", ")
+    : "non précisé";
+
+  const contracts = Array.isArray(p.lookingFor?.contract)
+    ? p.lookingFor!.contract.join(", ")
+    : "non précisé";
+
+  const domains = Array.isArray(p.lookingFor?.domains)
+    ? p.lookingFor!.domains.join(", ")
+    : "non précisé";
+
+  // ✅ Skills (avec compat gov / gouvernance)
+  const blueTeam = Array.isArray(p.skills?.blueTeam)
+    ? p.skills!.blueTeam.join(", ")
+    : "—";
+
+  const redTeam = Array.isArray(p.skills?.redTeam)
+    ? p.skills!.redTeam.join(", ")
+    : "—";
+
+  const devSec = Array.isArray(p.skills?.devSec)
+    ? p.skills!.devSec.join(", ")
+    : "—";
+
+  const gov = Array.isArray((p as any).skills?.gov)
+    ? (p as any).skills.gov.join(", ")
+    : Array.isArray((p as any).skills?.gouvernance)
+      ? (p as any).skills.gouvernance.join(", ")
+      : "—";
+
+  // ✅ Education / expérience / projets
+  const edu = Array.isArray(p.education)
+    ? p.education.map((e) => e.label).join(" • ")
+    : "—";
+
+  const exp = Array.isArray(p.experience)
+    ? p.experience.map((e) => `${e.label} @ ${e.org}`).join(" • ")
+    : "—";
+
+  const projects = Array.isArray(p.projects)
+    ? p.projects.map((pr) => `${pr.name} (${pr.url})`).join(" • ")
+    : "—";
+
+  const ownerFlag = ownerMode ? "true" : "false";
+
   return `
 Tu es l’assistant officiel du portfolio d'Abdoulaye Touré.
 RÔLE: conseiller les VISITEURS sur le profil d'Abdoulaye (infos carrière, projets, compétences, contact).
 
-IDENTITÉ DU SUJET: "${p.identity.fullName}" — ${p.identity.title}, ${p.identity.location}.
-LANGUES: ${p.identity.languages.join(", ")}.
-CE QUE CHERCHE ABDOULAYE: roles=${p.lookingFor.roles.join(", ")}; contrats=${p.lookingFor.contract.join(", ")}; domaines=${p.lookingFor.domains.join(", ")}.
-COMPÉTENCES: blue=${p.skills.blueTeam.join(", ")}; red=${p.skills.redTeam.join(", ")}; devSec=${p.skills.devSec.join(", ")}; gov=${p.skills.gouvernance.join(", ")}.
-PARCOURS: EDU=[${p.education.map((e) => e.label).join(" • ")}] | EXP=[${p.experience
-    .map((e) => `${e.label} @ ${e.org}`)
-    .join(" • ")}].
-PROJETS: ${p.projects.map((pr) => `${pr.name} (${pr.url})`).join(" • ")}.
-ROUTES: home=${ROUTES.home} | projects=${ROUTES.projects} | purple=${ROUTES.purple} | siem=${
-    ROUTES.siem
-  } | contact=${ROUTES.contact} | cv=${ROUTES.cv}.
+IDENTITÉ DU SUJET: "${fullName}" — ${title}, ${location}.
+LANGUES: ${languages}.
+CE QUE CHERCHE ABDOULAYE: roles=${roles}; contrats=${contracts}; domaines=${domains}.
+COMPÉTENCES: blue=${blueTeam}; red=${redTeam}; devSec=${devSec}; gov=${gov}.
+PARCOURS: EDU=[${edu}] | EXP=[${exp}].
+PROJETS: ${projects}.
+ROUTES: home=${ROUTES.home} | projects=${ROUTES.projects} | purple=${ROUTES.purple} | siem=${ROUTES.siem} | contact=${ROUTES.contact} | cv=${ROUTES.cv}.
 
 RÈGLES PERSONA:
 - NE JAMAIS supposer que l’utilisateur est Abdoulaye.
@@ -73,7 +125,7 @@ RÈGLES PERSONA:
 - Si l’utilisateur dit "je" à propos de sa vie/expérience, considère-le comme VISITEUR (pas Abdoulaye), sauf si OWNER_MODE=true.
 - Interdiction : ne dis jamais "tu es Abdoulaye", "nous avons fait", etc., sauf OWNER_MODE.
 
-OWNER_MODE: ${ownerMode ? "true" : "false"}.
+OWNER_MODE: ${ownerFlag}.
 - Si OWNER_MODE=true, parle à la 1ʳᵉ personne ("je") en incarnant Abdoulaye. Sinon, utilise la 3ᵉ personne ("Abdoulaye").
 
 STYLE:
@@ -140,7 +192,6 @@ export async function POST(req: NextRequest) {
         { status: 400, headers: corsHeaders() }
       );
 
-    // Profil (async) + mode propriétaire (par défaut false pour les visiteurs)
     const profile = await loadProfile();
     const ownerMode = Boolean(body?.owner);
 
@@ -152,14 +203,14 @@ export async function POST(req: NextRequest) {
       { role: "user", content: clampToTokens(rawQ, 1500) },
     ];
 
-    // 1) essai avec le modèle principal
+    // 1) modèle principal
     let { text, modelUsed } = await callOnce(
       PRIMARY_MODEL,
       messages,
       MAX_TOKENS
     );
 
-    // 2) si vide → retry avec modèle fallback + plus de tokens
+    // 2) fallback si vide
     if (!text) {
       const second = await callOnce(
         CHEAP_MODEL,
@@ -170,7 +221,7 @@ export async function POST(req: NextRequest) {
       modelUsed = second.modelUsed;
     }
 
-    // 3) si toujours vide → message utile
+    // 3) fallback final si toujours vide
     if (!text) {
       text =
         "Je n’ai pas pu générer de réponse cette fois. Réessaie avec une question plus précise, ou change de modèle dans la config. Exemples :\n" +

@@ -145,12 +145,12 @@ export const CV_DATA = {
 
   // === FORMATIONS (rappel court et renvoi vers Expériences)
   education: [
-    // {
-    //   title: "Mastère – Expert en cybersécurité",
-    //   school: ", Paris",
-    //   period: "Septembre 2025 – en cours",
-    //   note: "Cybesérité, administration systemes réseaux et sécurité, cloud ",
-    // },
+    {
+      title: "Mastère – Expert en cybersécurité",
+      school: "Oteria Cyber School, Genvilliers",
+      period: "Septembre 2025 – en cours",
+      note: "Cybesérité, administration systemes réseaux et sécurité, cloud ",
+    },
     {
       title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",
       school: "ALT-RH, Paris",
