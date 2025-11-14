@@ -52,7 +52,7 @@ export const CV_DATA = {
 
   identity: {
     name: "Abdoulaye Touré",
-    title: "Analyste SOC / Audit & Pentest",
+    title: "Administrateur Système et réseaux",
     under_title: "Disponible dès sept. 2025 · Paris/IDF · présentiel/hybride",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
@@ -145,12 +145,12 @@ export const CV_DATA = {
 
   // === FORMATIONS (rappel court et renvoi vers Expériences)
   education: [
-    {
-      title: "Formation – Analyste Cybersécurité",
-      school: ", Paris",
-      period: "Novembre 2025 – en cours",
-      note: "Formation  cybersécurité",
-    },
+    // {
+    //   title: "Mastère – Expert en cybersécurité",
+    //   school: ", Paris",
+    //   period: "Septembre 2025 – en cours",
+    //   note: "Cybesérité, administration systemes réseaux et sécurité, cloud ",
+    // },
     {
       title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",
       school: "ALT-RH, Paris",

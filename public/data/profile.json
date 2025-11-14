@@ -1,43 +1,104 @@
 {
   "identity": {
     "fullName": "Abdoulaye Touré",
-    "title": "Analyste Cybersécurité – Purple Team",
+    "title": "Analyste Cybersécurité – SOC / Administrateur systèmes & réseaux, Auditeur/Pentester",
     "location": "Île-de-France",
-    "languages": ["français (C2)", "anglais (C1)"]
+    "languages": [
+      "français (courant)",
+      "anglais (courant)",
+      "espagnol (intermédiaire)"
+    ]
   },
-  "about": "Analyste SOC/Purple Team, ex-dev, focus détection & réponse, MITRE ATT&CK, ELK/Suricata, automatisation.",
+
+  "about": "Profil hybride rare mêlant cybersécurité opérationnelle, développement et infrastructures sécurisées. Spécialisé en SOC, threat hunting, détection MITRE ATT&CK et analyse avancée de logs, avec une forte appétence offensive/défensive (Purple Team). Conçoit et déploie des environnements d’entraînement réalistes, automatise la détection, et développe des agents IA appliqués à la cybersécurité pour renforcer les capacités d’analyse et de réponse.",
+
   "contact": {
     "email": "contact@abdou-cyber.dev",
     "linkedin": "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
-    "github": "https://github.com/ablayeT"
+    "github": "https://github.com/ablayeT",
+    "portfolio": "https://abdou-cyber.dev"
   },
+
   "lookingFor": {
     "roles": [
       "Analyste SOC",
       "Threat Hunter",
+      "Analyste Sécurité",
       "Pentester junior",
-      "Purple Team"
+      "Purple Team / Blue Team Engineer"
     ],
     "contract": ["alternance", "CDD", "CDI"],
-    "domains": ["santé", "fintech", "industrie", "conseil"]
+    "domains": ["santé", "fintech", "industrie", "ESN", "conseil"]
   },
+
   "skills": {
     "blueTeam": [
-      "ELK/Kibana",
-      "Suricata",
-      "Winlogbeat/Filebeat",
+      "SIEM (Elastic Stack : Elasticsearch, Kibana, Logstash, Beats)",
+      "Suricata IDS/IPS",
+      "Sysmon / journaux Windows",
+      "Analyse de journaux Linux",
+      "Threat Hunting (MITRE ATT&CK)",
+      "Use cases & règles de détection",
       "Sigma rules",
-      "Threat Hunting"
+      "Incident Response (triage, containment, lessons learned)"
     ],
-    "redTeam": ["Nmap", "Burp Suite", "SQLi/XSS", "TryHackMe"],
-    "devSec": ["Next.js/TypeScript", "Node.js", "Tailwind", "API sécurisées"],
-    "gouvernance": ["OWASP ASVS", "ISO 27001 (bases)", "RGPD (bases)"]
+    "redTeam": [
+      "Nmap (reconnaissance réseau)",
+      "Burp Suite (tests applicatifs web)",
+      "SQLMap (injections SQL)",
+      "XSS / CSRF / upload vulnérables",
+      "Bypass de filtrages simples",
+      "TryHackMe – web hacking, RCE, privilege escalation"
+    ],
+    "infra": [
+      "Administration Windows Server & Active Directory (domaine, GPO, comptes)",
+      "Administration Linux (Debian, Ubuntu, Kali) et durcissement de base",
+      "Réseaux TCP/IP (adressage, VLAN, routage simple, firewalling)",
+      "DNS, DHCP, NAT, segmentation réseau",
+      "Labs virtualisés (Hyper-V, VMware Workstation, VirtualBox)",
+      "DMZ sécurisée (pfSense, Guacamole, reverse proxy, bases de données)",
+      "Supervision via ELK, Filebeat, Winlogbeat, Sysmon, journaux Linux",
+      "Sauvegardes, snapshots, restauration",
+      "Scripts d’automatisation (Bash, PowerShell) pour tâches récurrentes"
+    ],
+    "devSec": [
+      "Développement web : Next.js, React, Node.js, TailwindCSS",
+      "APIs sécurisées, authentification JWT",
+      "CI/CD (GitHub Actions, déploiement VPS Contabo, Caddy)",
+      "Gestion des secrets et dépendances",
+      "Création d’outils internes orientés cybersécurité"
+    ],
+    "gov": [
+      "OWASP ASVS (audit applicatif)",
+      "ISO 27001 (bases)",
+      "RGPD (bases)",
+      "Analyse de risques et recommandations",
+      "Rédaction de rapports techniques clients"
+    ],
+    "ailab": [
+      "Conception de chatbots personnalisés (OpenRouter, OpenAI, Mistral, Anthropic)",
+      "Agents IA métier (analyse de fiches de poste, matching profil ↔ besoin)",
+      "Intégration IA dans un portfolio (Next.js, API sécurisées)",
+      "Sécurisation d’API IA (rate limiting, CORS, filtrage d’entrée, logs)",
+      "Production de sorties JSON strictes pour intégration front"
+    ]
   },
+
   "education": [
     {
       "label": "Bac+4 – Administrateur d’Infrastructures Sécurisées",
       "org": "ALT-RH (Paris)",
-      "year": "2025"
+      "year": "2025",
+      "topics": [
+        "Administration d’une infrastructure réseaux Windows / GNU Linux",
+        "Sécurisation d’un réseau informatique",
+        "Administration et sécurisation d’environnements systèmes hétérogènes",
+        "Administration et sécurisation d’une infrastructure de serveurs virtualisée",
+        "Scripts d’automatisation (PowerShell, Bash)",
+        "Supervision, performances, qualité de service",
+        "Mesure et analyse du niveau de sécurité d’une infrastructure",
+        "Participation à la politique de sécurité et gestion de projets"
+      ]
     },
     {
       "label": "Bac+3 – Développeur Web & Web Mobile",
@@ -45,36 +106,217 @@
       "year": "2023"
     },
     {
+      "label": "Bac+2 – Développeur Intégrateur Web",
+      "org": "OpenClassrooms (Paris)",
+      "year": "2022"
+    },
+    {
       "label": "Bac+5 – Littérature & civilisation anglophone",
       "org": "UCAD",
-      "year": "—"
+      "year": "2015"
     }
   ],
+
+  "certifications": [
+    {
+      "name": "CompTIA Security+ (SY0-701)",
+      "level": "critique",
+      "status": "préparation",
+      "focus": [
+        "Sécurité opérationnelle",
+        "Gestion des risques",
+        "Architecture sécurisée",
+        "Opérations SOC de base"
+      ]
+    },
+    {
+      "name": "Microsoft Certified : Security, Compliance, and Identity Fundamentals (SC-900)",
+      "level": "haute",
+      "status": "en cours",
+      "focus": [
+        "Fondamentaux sécurité Microsoft 365 / Azure",
+        "Compliance & identity",
+        "Zero Trust & gouvernance de l’identité"
+      ]
+    },
+    {
+      "name": "AWS Certified Cloud Practitioner (CLF-C02)",
+      "level": "haute",
+      "status": "cible",
+      "focus": [
+        "Bases des services AWS",
+        "Responsabilité partagée",
+        "Sécurité & conformité cloud",
+        "Coût, gouvernance et bonnes pratiques"
+      ]
+    }
+  ],
+
+  "growthAreas": [
+    "Monter en puissance sur la gestion de services d’infrastructure à grande échelle (production 24/7, multi-sites, SLA stricts).",
+    "Renforcer la pratique de la virtualisation haute disponibilité (clusters, réplication, failover).",
+    "Approfondir la sécurité cloud managée (Azure / AWS) au-delà des fondamentaux."
+  ],
+
+  "productionExperience": {
+    "summary": "Abdoulaye dispose d’une exposition réelle à des environnements de production grâce à ses projets encadrés, à ses déploiements sur VPS, à ses travaux pratiques en conditions proches de la production et à la mise en place de services critiques (DMZ, reverse proxy, SIEM, supervision).",
+    "highlights": [
+      "Déploiement et maintien d’un portfolio complet en production sur VPS (Linux, Caddy, GitHub Actions, journaux et supervision).",
+      "Mise en place d’une DMZ sécurisée (pfSense, Guacamole, reverse proxy, bases de données) et gestion de la sécurité réseau associée.",
+      "Environnements virtualisés complets (Hyper-V, VMware) avec Active Directory, serveurs Windows/Linux et segmentation réseau.",
+      "Mise en production de pipelines ELK/Beats avec TLS et monitoring des logs Windows + Linux.",
+      "Gestion pratique d’incidents dans un environnement encadré (projets ALT-RH + stage Advens)."
+    ],
+    "status": "Débutant–intermédiaire : en montée en compétences vers des environnements de production de plus grande échelle (clusters, haute disponibilité, SLA stricts)."
+  },
+
+  "iaSkillMatrix": [
+    {
+      "dimension": "Design d’agents & prompts",
+      "level": "intermédiaire+",
+      "keywords": [
+        "system prompts structurés",
+        "règles métier",
+        "personas contrôlés",
+        "gestion des sorties JSON"
+      ],
+      "examples": [
+        "Conception d’un agent de matching de postes orienté recruteurs",
+        "Définition de règles pour éviter l’hallucination sur les expériences"
+      ]
+    },
+    {
+      "dimension": "Intégration & MLOps léger",
+      "level": "intermédiaire",
+      "keywords": [
+        "Next.js",
+        "OpenRouter SDK",
+        "APIs sécurisées",
+        "CI/CD",
+        "observabilité"
+      ],
+      "examples": [
+        "Intégration d’API IA dans un portfolio avec Next.js",
+        "Déploiement continu sur VPS (CI/CD GitHub Actions + Caddy)"
+      ]
+    },
+    {
+      "dimension": "Sécurité & gouvernance des usages IA",
+      "level": "intermédiaire",
+      "keywords": [
+        "rate limiting",
+        "CORS",
+        "filtrage d’entrée",
+        "journalisation",
+        "non-rétention des prompts"
+      ],
+      "examples": [
+        "Mise en place de contrôles anti-abus sur l’API agent-career",
+        "Filtrage et sanitation d’entrée avant appel LLM"
+      ]
+    },
+    {
+      "dimension": "Usage IA pour la cybersécurité",
+      "level": "intermédiaire",
+      "keywords": [
+        "explication de logs SIEM",
+        "aide au threat hunting",
+        "génération guidée de use cases"
+      ],
+      "examples": [
+        "Agent d’explication de logs SIEM basé sur Elastic / Suricata",
+        "Utilisation d’IA pour synthétiser des résultats de labs TryHackMe / Purple Team"
+      ]
+    }
+  ],
+
   "experience": [
     {
       "label": "Audit & Pentest (5 mois)",
       "org": "Advens (Paris)",
       "highlights": [
-        "Audit applicatif/infra",
-        "Pentest encadré",
-        "Rapports & remédiations"
+        "Audit applicatif et infrastructure",
+        "Pentest web & API encadré (Burp, Nmap, SQLMap)",
+        "Cartographie des vulnérabilités et recommandations",
+        "Corrélation de logs et support à la détection",
+        "Rédaction de rapports techniques clients"
+      ]
+    },
+    {
+      "label": "Développeur Node.js / React – Freelance",
+      "org": "Skeelfully",
+      "highlights": [
+        "Développement et maintenance d’une plateforme web",
+        "Migration Node et correction de problèmes Webpack",
+        "Sécurisation d’APIs et optimisation de la CI/CD",
+        "Travail avec une équipe produit / tech"
+      ]
+    },
+    {
+      "label": "Développeur Web & Web Mobile",
+      "org": "Entourage",
+      "highlights": [
+        "Développement d’applications web",
+        "Intégration d’APIs",
+        "Sensibilisation aux bonnes pratiques OWASP"
       ]
     }
   ],
+
   "projects": [
     {
       "slug": "purple-team-lab",
       "name": "Purple Team Lab",
-      "stack": ["ELK", "Suricata", "GoPhish"],
-      "kpis": ["Détections MITRE", "Dashboards GeoIP", "Playbooks IR"],
-      "url": "/projects/purple-team-lab"
+      "stack": ["ELK", "Suricata", "GoPhish", "Kali", "Ubuntu", "Sysmon"],
+      "url": "/projects/purple-team-lab",
+      "focus": [
+        "Scénarios d’attaques MITRE ATT&CK",
+        "Chaîne de détection Blue Team de bout en bout",
+        "Dashboards SOC et KPIs de détection",
+        "Playbooks d’investigation et de réponse"
+      ]
     },
     {
       "slug": "siem-dashboard",
       "name": "Dashboard SIEM personnalisé",
-      "stack": ["Elastic", "Beats", "TLS"],
-      "url": "/projects/siem-dashboard"
+      "stack": ["Elastic", "Winlogbeat", "Filebeat", "TLS"],
+      "url": "/projects/siem-dashboard",
+      "focus": [
+        "Dashboards par type de menace",
+        "Réduction du bruit et priorisation des alertes",
+        "Baselines et tuning d’alerting"
+      ]
+    },
+    {
+      "slug": "dmz-secure-lab",
+      "name": "DMZ sécurisée & accès distant",
+      "stack": ["pfSense", "Hyper-V", "Guacamole", "Debian", "MariaDB"],
+      "url": "/projects/dmz-secure-lab",
+      "focus": [
+        "Conception d’une DMZ segmentée",
+        "Publication sécurisée de services via Guacamole",
+        "Filtrage, NAT et journalisation sur pfSense",
+        "Durcissement des services exposés"
+      ]
+    },
+    {
+      "slug": "ai-career-agent",
+      "name": "AI Career Matching Agent",
+      "stack": ["Next.js", "OpenRouter", "LLM agents"],
+      "url": "/agent-lab",
+      "focus": [
+        "Agent IA pour recruteurs",
+        "Sortie JSON strict (score, forces, risques, questions)",
+        "Utilisation de profile.json comme graphe de connaissances",
+        "Sécurisation d’API (CORS, rate limiting, filtrage d’entrée)"
+      ]
     }
   ],
-  "hobbies": ["sport", "communauté/associatif", "création de contenu"]
+
+  "hobbies": [
+    "TryHackMe / labs cybersécurité",
+    "Projets associatifs",
+    "Création de contenu",
+    "Sport : baseball, course à pied, taekwondo"
+  ]
 }
