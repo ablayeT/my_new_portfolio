@@ -52,7 +52,7 @@ export const CV_DATA = {
 
   identity: {
     name: "Abdoulaye Touré",
-    title: "Administrateur Système et réseaux",
+    title: "​Administrateur Systèmes,réseaux et sécurité",
     under_title: "Disponible dès sept. 2025 · Paris/IDF · présentiel/hybride",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
@@ -146,10 +146,10 @@ export const CV_DATA = {
   // === FORMATIONS (rappel court et renvoi vers Expériences)
   education: [
     {
-      title: "Mastère – Expert en cybersécurité",
-      school: "Oteria Cyber School, Genvilliers",
-      period: "Septembre 2025 – en cours",
-      note: "Cybesérité, administration systemes réseaux et sécurité, cloud ",
+      title: "Mastère administrateur système, réseaux & sécurité",
+      school: " Paris",
+      period: "2025-2027",
+      note: "Cybesérité, Haute disponibilité, virtualisation, automatisation, Github CI/CD, cloud (Azure, AWS), etc ",
     },
     {
       title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",

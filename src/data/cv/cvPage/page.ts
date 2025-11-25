@@ -5,7 +5,7 @@ import type {
   EducationEntry,
 } from "./types";
 
-export const HEADLINE = "Analyste en cybersécurité";
+export const HEADLINE = "Administrateur Systèmes,réseaux et sécurité";
 // " j’automatise la détection et la réponse aux incidents (SIEM/ELK, MITRE ATT&CK) pour renforcer la cyberdéfense et réduire les temps de réaction."
 
 export const CONTACT: ContactInfo = {
@@ -66,6 +66,16 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 ];
 
 export const EXPERIENCES: Experience[] = [
+  {
+    title: "Développeur Full Stack Freelance",
+    company: "Skeelfully • Paris",
+    period: "Juillet 2025 – Octobre 2025",
+    tasks: [
+      "Développement d’une marketplace connectant porteurs de projet et talents",
+      "Migration vers Node 16 et correctifs de compatibilité Webpack.",
+      "Optimisation CI/CD et durcissement des dépendances NPM.",
+    ],
+  },
   {
     title: "Stage : Audit & Pentest",
     company: "ADVENS • Paris",
