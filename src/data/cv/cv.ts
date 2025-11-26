@@ -67,7 +67,7 @@ export const CV_DATA = {
 
   // === PROFIL (Narratif "double compétence rare")
   summary:
-    "Double compétence lettres/tech. J’automatise la détection et la réponse (ELK, playbooks) et convertis les signaux en insights actionnables. Je cherche un poste d'analyste ou administrateur systèmes junior pour créer de l’impact.",
+    "Esprit de synthèse et technique, j'automatise la sécurité (ELK, Playbooks) pour protéger vos infrastructures je recherche un poste d'Administrateur Sécurité pour renforcer durablement vos infrastructures",
 
   experiences: [
     {

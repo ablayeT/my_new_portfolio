@@ -120,6 +120,13 @@ export const EXPERIENCES: Experience[] = [
 
 export const EDUCATION: EducationEntry[] = [
   {
+    title: "Mastère administrateur système, réseaux & sécurité",
+    school: " Paris",
+    period: "2025-2027",
+    details:
+      "Cybesérité, Haute disponibilité, virtualisation, automatisation, Github CI/CD, cloud (Azure, AWS), etc ",
+  },
+  {
     title: "Bac+4 : Administration d’infrastructures sécurisées",
     school: "ALT-RH • Paris",
     period: "Sept 2024 — Juin 2025",

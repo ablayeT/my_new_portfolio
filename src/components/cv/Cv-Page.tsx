@@ -37,9 +37,9 @@ export default function CVPage() {
         icon={<User className="h-5 w-5 text-primary" />}
       >
         <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
-          Je conçois et automatise des solutions de cyberdéfense pour la
-          détection et la réponse aux incidents, afin de renforcer la sécurité
-          réseau et la résilience des SI face aux vulnérabilités.
+          Je conçois et automatise l'architecture de sécurité pour détecter les
+          menaces et répondre aux incidents, en anticipant les vulnérabilités
+          par une approche offensive.
         </p>
       </CvSection>
 
