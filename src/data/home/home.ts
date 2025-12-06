@@ -8,7 +8,7 @@ export const THEME = {
 } as const;
 
 export const HERO = {
-  title: "INGÉNIEUR CYBERSÉCURITÉ & PURPLE TEAM",
+  title: "INGÉNIEUR CYBERSÉCURITÉ",
   subtitle:
     "De l'administration système à la sécurité offensive.J'aide les entreprises à sécuriser leurs infrastructures en combinant l'automatisation défensive et les techniques d'audit offensif (Pentest & Threat Hunting).",
   ctaPrimaryLabel: "Voir le projet Purple Team",
