@@ -1,4 +1,4 @@
-name: "CI/CD — deploy to VPS (Caddy)"
+name: "CI/CD — deploy to VPS (PM2)"
 
 on:
   push:
@@ -8,19 +8,10 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Check required secrets
-        run: |
-          test -n "${{ secrets.VPS_HOST }}" || { echo "❌ Missing secret: VPS_HOST"; exit 1; }
-          test -n "${{ secrets.DEPLOY_SSH_KEY }}" || { echo "❌ Missing secret: DEPLOY_SSH_KEY"; exit 1; }
-          test -n "${{ secrets.SSH_KNOWN_HOSTS }}" || { echo "❌ Missing secret: SSH_KNOWN_HOSTS"; exit 1; }
-          echo "✅ All required secrets present"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -37,7 +28,9 @@ jobs:
       - name: Prepare artifact
         run: |
           mkdir -p deploy
+          # On copie tout sauf .git et node_modules (on réinstalle là-bas pour être propre)
           cp -r .next package.json package-lock.json next.config.* public deploy/ 2>/dev/null || true
+          # Si vous avez un dossier 'public' ou d'autres fichiers config, assurez-vous qu'ils sont copiés
 
       - name: Deploy via rsync/ssh
         env:
@@ -47,27 +40,52 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Configuration SSH temporaire pour l'action
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
+          # Définition des dossiers (Dossier utilisateur = pas besoin de sudo)
           TS="$(date -u +%Y%m%dT%H%M%SZ)"
-          REMOTE="/var/www/abdou-cyber/releases/$TS"
+          # On crée un dossier 'deployments' séparé de 'apps' pour gérer les versions
+          REMOTE_BASE="/home/abdou-deploy/deployments"
+          REMOTE_RELEASE="$REMOTE_BASE/releases/$TS"
 
-          echo "📂 Creating remote release dir: $REMOTE"
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "mkdir -p $REMOTE"
+          echo "📂 Creating remote release dir..."
+          ssh -i ~/.ssh/deploy_key abdou-deploy@$VPS_HOST "mkdir -p $REMOTE_RELEASE"
 
           echo "⏫ Uploading files via rsync..."
-          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" deploy/ abdou-deploy@$VPS_HOST:$REMOTE/
+          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" deploy/ abdou-deploy@$VPS_HOST:$REMOTE_RELEASE/
 
-          echo "🔁 Installing production deps & switching symlink..."
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes abdou-deploy@$VPS_HOST "
+          echo "🔁 Switching symlink & Reloading PM2..."
+          ssh -i ~/.ssh/deploy_key abdou-deploy@$VPS_HOST "
             set -e
-            cd $REMOTE
+            
+            # 1. Aller dans le nouveau dossier et installer les dépendances de prod
+            cd $REMOTE_RELEASE
             npm ci --omit=dev
-            ln -sfn $REMOTE /var/www/abdou-cyber/current
-            sudo systemctl restart abdou-cyber
+
+            # 2. Créer/Mettre à jour le lien symbolique 'current'
+            # Cela permet de pointer '~/deployments/current' vers la nouvelle version
+            ln -sfn $REMOTE_RELEASE $REMOTE_BASE/current
+            
+            # 3. Copier le fichier .env (qui doit rester sur le serveur pour sécurité)
+            # On suppose que vous avez mis le .env dans ~/apps/my_new_portfolio/.env
+            # On le copie vers la nouvelle version pour qu'elle ait les secrets
+            cp /home/abdou-deploy/apps/my_new_portfolio/.env $REMOTE_RELEASE/.env || true
+
+            # 4. Redémarrer PM2
+            # La première fois, cela peut ne rien faire si PM2 pointe encore sur l'ancien dossier
+            # Mais la commande reload met à jour sans coupure
+            pm2 reload portfolio --update-env || pm2 start npm --name 'portfolio' -- start
+            
+            # 5. Sauvegarder l'état PM2
+            pm2 save
+            
+            # Nettoyage : garder seulement les 5 dernières versions pour ne pas remplir le disque
+            cd $REMOTE_BASE/releases
+            ls -dt * | tail -n +6 | xargs -r rm -rf
           "
 
           echo "✅ Deploy done"
