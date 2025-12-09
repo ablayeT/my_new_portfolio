@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react"; // 1. Ajout de useEffect
 import { Menu, Download, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,14 @@ const navigation = [
 export function Header() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+  // 2. État pour détecter si on est sur le navigateur (Client)
+  const [mounted, setMounted] = useState(false);
+
+  // 3. Au chargement du composant, on passe mounted à true
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === href : pathname.startsWith(href);
@@ -112,7 +120,6 @@ export function Header() {
           <ThemeToggle />
 
           {/* CTA Desktop : visible à partir de md, caché sur mobile */}
-
           <Button asChild size="sm" className="hidden md:inline-flex">
             <Link
               href={CV_ASSET.href}
@@ -124,62 +131,64 @@ export function Header() {
             </Link>
           </Button>
 
-          {/* Menu mobile */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                className="md:hidden h-9 w-9 px-0"
-                aria-label="Ouvrir le menu"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-
-            <SheetContent
-              side="right"
-              contained
-              overlay="dim"
-              panel="white"
-              aria-label="Menu principal"
-            >
-              <SheetHeader className="px-6 pt-6 pb-2">
-                <SheetTitle className="sr-only">Menu principal</SheetTitle>
-                <Link
-                  href="/"
-                  className="flex items-center gap-2"
-                  onClick={() => setIsOpen(false)}
+          {/* Menu mobile - FIX: Ne s'affiche que si mounted est true */}
+          {mounted && (
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="md:hidden h-9 w-9 px-0"
+                  aria-label="Ouvrir le menu"
                 >
-                  {brand}
-                </Link>
-              </SheetHeader>
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
 
-              <div className="px-6 pb-6">
-                <nav className="mt-4 flex flex-col">
-                  <NavItems mobile />
-                </nav>
-
-                {/* CTA Mobile dans le drawer */}
-                <div className="mt-6 border-t pt-4">
-                  <Button
-                    asChild
-                    size="sm"
-                    className="w-full"
+              <SheetContent
+                side="right"
+                contained
+                overlay="dim"
+                panel="white"
+                aria-label="Menu principal"
+              >
+                <SheetHeader className="px-6 pt-6 pb-2">
+                  <SheetTitle className="sr-only">Menu principal</SheetTitle>
+                  <Link
+                    href="/"
+                    className="flex items-center gap-2"
                     onClick={() => setIsOpen(false)}
                   >
-                    <Link
-                      href="/cv/Abdoulaye-Toure.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    {brand}
+                  </Link>
+                </SheetHeader>
+
+                <div className="px-6 pb-6">
+                  <nav className="mt-4 flex flex-col">
+                    <NavItems mobile />
+                  </nav>
+
+                  {/* CTA Mobile dans le drawer */}
+                  <div className="mt-6 border-t pt-4">
+                    <Button
+                      asChild
+                      size="sm"
+                      className="w-full"
+                      onClick={() => setIsOpen(false)}
                     >
-                      <Download className="mr-2 h-4 w-4" />
-                      Télécharger CV
-                    </Link>
-                  </Button>
+                      <Link
+                        href="/cv/Abdoulaye-Toure.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Download className="mr-2 h-4 w-4" />
+                        Télécharger CV
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetContent>
+            </Sheet>
+          )}
         </div>
       </div>
     </header>
