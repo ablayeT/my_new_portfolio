@@ -28,9 +28,8 @@ jobs:
       - name: Prepare artifact
         run: |
           mkdir -p deploy
-          # On copie tout sauf .git et node_modules (on réinstalle là-bas pour être propre)
+          # On copie tout sauf .git et node_modules
           cp -r .next package.json package-lock.json next.config.* public deploy/ 2>/dev/null || true
-          # Si vous avez un dossier 'public' ou d'autres fichiers config, assurez-vous qu'ils sont copiés
 
       - name: Deploy via rsync/ssh
         env:
@@ -40,15 +39,14 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Configuration SSH temporaire pour l'action
+          # Configuration SSH
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
 
-          # Définition des dossiers (Dossier utilisateur = pas besoin de sudo)
+          # Variables de déploiement
           TS="$(date -u +%Y%m%dT%H%M%SZ)"
-          # On crée un dossier 'deployments' séparé de 'apps' pour gérer les versions
           REMOTE_BASE="/home/abdou-deploy/deployments"
           REMOTE_RELEASE="$REMOTE_BASE/releases/$TS"
 
@@ -62,28 +60,30 @@ jobs:
           ssh -i ~/.ssh/deploy_key abdou-deploy@$VPS_HOST "
             set -e
             
-            # 1. Aller dans le nouveau dossier et installer les dépendances de prod
+            # 1. Installation des dépendances de prod
             cd $REMOTE_RELEASE
             npm ci --omit=dev
 
-            # 2. Créer/Mettre à jour le lien symbolique 'current'
-            # Cela permet de pointer '~/deployments/current' vers la nouvelle version
+            # 2. Copie du BON fichier .env (depuis la version courante qui marche)
+            # C'est ici qu'on sécurise la config
+            if [ -f $REMOTE_BASE/current/.env ]; then
+              cp $REMOTE_BASE/current/.env $REMOTE_RELEASE/.env
+              echo '✅ .env copied from current release'
+            else
+              echo '⚠️ WARNING: No .env found in current release!'
+            fi
+
+            # 3. Mise à jour du lien symbolique 'current'
             ln -sfn $REMOTE_RELEASE $REMOTE_BASE/current
             
-            # 3. Copier le fichier .env (qui doit rester sur le serveur pour sécurité)
-            # On suppose que vous avez mis le .env dans ~/apps/my_new_portfolio/.env
-            # On le copie vers la nouvelle version pour qu'elle ait les secrets
-            cp /home/abdou-deploy/apps/my_new_portfolio/.env $REMOTE_RELEASE/.env || true
-
-            # 4. Redémarrer PM2
-            # La première fois, cela peut ne rien faire si PM2 pointe encore sur l'ancien dossier
-            # Mais la commande reload met à jour sans coupure
-            pm2 reload portfolio --update-env || pm2 start npm --name 'portfolio' -- start
+            # 4. Redémarrer PM2 avec la méthode 'Direct Binary' (Stable)
+            # Si le reload échoue, on démarre proprement sans passer par npm
+            pm2 reload portfolio --update-env || pm2 start node_modules/next/dist/bin/next --name 'portfolio' -- start
             
             # 5. Sauvegarder l'état PM2
             pm2 save
             
-            # Nettoyage : garder seulement les 5 dernières versions pour ne pas remplir le disque
+            # Nettoyage : garder seulement les 5 dernières versions
             cd $REMOTE_BASE/releases
             ls -dt * | tail -n +6 | xargs -r rm -rf
           "
