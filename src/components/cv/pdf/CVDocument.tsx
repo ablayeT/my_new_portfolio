@@ -46,6 +46,7 @@ export type CVData = {
     dev: string;
     tools: string; // "ELK, Suricata, Wireshark, ..."
     ats: string;
+    language: string;
   };
   education: Array<{
     title: string;
@@ -305,6 +306,10 @@ export function CVDocument({
                 <Text style={{ marginBottom: 6 }}>
                   <Text style={{ fontWeight: 700 }}>Outils&nbsp;: </Text>
                   <Text>{skills.tools}</Text>
+                </Text>
+                <Text style={{ marginBottom: 6 }}>
+                  <Text style={{ fontWeight: 700 }}>Languages&nbsp;: </Text>
+                  <Text>{skills.language}</Text>
                 </Text>
               </View>
             </View>

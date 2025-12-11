@@ -140,6 +140,7 @@ export const CV_DATA = {
     tools:
       "Elasticsearch, Kibana, PowerBI, Suricata, Wireshark, Nmap, Burp Suite, SQLMap, Git, Docker",
     ats: "Rigueur, analyse, vulgarisation, organisation, adaptabilité, travail d’équipe",
+    language: "Python, Javascript, React JS, Angular, Node js, MySQL, MongoDB",
   },
 
   // === FORMATIONS

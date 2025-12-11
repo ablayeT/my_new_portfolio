@@ -121,7 +121,11 @@ export function Header() {
 
           {/* CTA Desktop : visible à partir de md, caché sur mobile */}
           <Button asChild size="sm" className="hidden md:inline-flex">
-            <Link href="/cv/download" target="_blank" rel="noopener noreferrer">
+            <Link
+              href={CV_ASSET.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Download className="mr-2 h-4 w-4" />
               Télécharger mon CV
             </Link>
@@ -172,7 +176,7 @@ export function Header() {
                       onClick={() => setIsOpen(false)}
                     >
                       <Link
-                        href="/cv/download"
+                        href="/cv/Abdoulaye-Toure.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
