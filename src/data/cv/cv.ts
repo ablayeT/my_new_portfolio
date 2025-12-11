@@ -51,7 +51,7 @@ export const CV_DATA = {
 
   identity: {
     name: "Abdoulaye Touré",
-    title: "​Analyste Cybersécurité / Ingénieur Sécurité Junior",
+    title: "​Analyste Cybersécurité / Ingénieur Sécurité",
     under_title: "Disponible dès sept. 2025 · Paris/IDF · présentiel/hybride",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
