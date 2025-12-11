@@ -273,7 +273,7 @@ export function CVDocument({
             </View>
             {/* ===== Compétences ===== */}
             <View style={styles.ViewsCol}>
-              <View style={{ gap: 6 }}>
+              <View style={{ gap: 5 }}>
                 <Text style={styles.sectionTitle}>Compétences</Text>
                 <Text style={{ marginBottom: 2 }}>
                   <Text style={{ fontWeight: 700 }}>
@@ -303,11 +303,11 @@ export function CVDocument({
                   </Text>
                   <Text>{skills.dev}</Text>
                 </Text>
-                <Text style={{ marginBottom: 6 }}>
+                <Text style={{ marginBottom: 2 }}>
                   <Text style={{ fontWeight: 700 }}>Outils&nbsp;: </Text>
                   <Text>{skills.tools}</Text>
                 </Text>
-                <Text style={{ marginBottom: 6 }}>
+                <Text style={{ marginBottom: 2 }}>
                   <Text style={{ fontWeight: 700 }}>Languages&nbsp;: </Text>
                   <Text>{skills.language}</Text>
                 </Text>
