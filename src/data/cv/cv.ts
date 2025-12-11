@@ -45,14 +45,13 @@ export const CONTACT = {
   email: "ablayetoure2014@gmail.com",
   phone: "+33 644 93 26 27",
 };
-
 // ===== Données PDF =====
 export const CV_DATA = {
   meta: { updatedAt: "2025-10" },
 
   identity: {
     name: "Abdoulaye Touré",
-    title: "​Administrateur Systèmes,réseaux et sécurité",
+    title: "​Analyste Cybersécurité / Ingénieur Sécurité Junior",
     under_title: "Disponible dès sept. 2025 · Paris/IDF · présentiel/hybride",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
@@ -65,9 +64,9 @@ export const CV_DATA = {
     },
   },
 
-  // === PROFIL (Narratif "double compétence rare")
+  // === PROFIL
   summary:
-    "Esprit de synthèse et technique, j'automatise la sécurité (ELK, Playbooks) pour protéger vos infrastructures je recherche un poste d'Administrateur Sécurité pour renforcer durablement vos infrastructures",
+    "Esprit de synthèse et technique, j'automatise la sécurité (ELK, Playbooks) pour protéger vos infrastructures. Je recherche un poste d'Administrateur Sécurité pour renforcer durablement vos systèmes.",
 
   experiences: [
     {
@@ -87,7 +86,7 @@ export const CV_DATA = {
       bullets: [
         "Audits techniques et tests d’intrusion web/réseau (Burp Suite, Nmap, SQLMap).",
         "Threat Hunting et corrélation SIEM via ELK/Kibana.",
-        "Automatisation du reporting (Bash/PowerShell) et restitution technique.",
+        "Automatisation du reporting (Bash/PowerShell/PowerBI) et restitution technique.",
       ],
     },
     {
@@ -102,54 +101,54 @@ export const CV_DATA = {
     },
   ],
 
-  // === PROJETS (compacts pour 1 page)
+  // === PROJETS
   featuredProjects: [
     {
       name: "Purple Team Lab – Infrastructure de simulation",
       tags: ["MITRE ATT&CK", "Suricata", "ELK"],
       bullets: [
-        "Scénarios mesurables ATT&CK (détection→investigation→réponse) sur lab segmenté (Public/DMZ/Privé).",
-        "Chaîne Suricata + ELK : collecte, corrélation, dashboards par use-cases SOC, playbooks d’investigation.",
+        "Simulation d'attaques réelles (MITRE) sur lab segmenté et détection Blue Team (Suricata/ELK).",
+        "Création de Playbooks de réponse et dashboards de corrélation pour accélérer l'investigation.",
       ],
     },
     {
-      name: "Dashboard SIEM Personnalisé",
-      tags: ["Kibana", "Alerting", "Baselines"],
+      name: "Dashboard SIEM & Optimisation SOC",
+      tags: ["Kibana", "Detection Engineering", "Baselines"],
       bullets: [
-        "Vues ciblées (phishing, exécutions suspectes, latéralisation) et indicateurs de priorisation SOC.",
-        "Règles d’alerting + baselines pour optimiser le ratio signal/bruit et réduire les faux positifs.",
+        "Conception de vues tactiques (phishing, latéralisation) pour la priorisation des tickets SOC.",
+        "Affinage des règles (Tuning) et baselines pour maximiser le ratio signal/bruit (réduction des faux positifs).",
       ],
     },
     {
-      name: "Plateforme de Simulation Phishing",
-      tags: ["GoPhish", "SMTP", "Awareness"],
+      name: "Campagnes de Phishing & Reporting",
+      tags: ["GoPhish", "PowerBI", "Awareness"],
       bullets: [
-        "Campagnes avec modèles, tracking et tableaux de bord (taux de clic, signalement) ; retours d’expérience.",
-        "Industrialisation du reporting pour libérer du temps d’analyse à plus forte valeur ajoutée.",
+        "Pilotage de campagnes de sensibilisation : scénarios, tracking des clics et analyse comportementale.",
+        "Automatisation des KPIs et restitution via PowerBI pour libérer du temps d’analyse technique.",
       ],
     },
   ],
 
-  // === COMPÉTENCES (vendeuses)
+  // === COMPÉTENCES
   skills: {
     security:
       "Threat Hunting via SIEM (ELK), ingénierie de la détection (corrélation, baselines), orchestration de la réponse à incident (playbooks), analyse forensique.",
     red: "Audit d’applications web (OWASP), tests d’intrusion internes/externes, cartographie et réduction de la surface d’attaque.",
     systems:
       "Linux (admin/durcissement), segmentation réseau, journalisation, supervision.",
-    dev: "Automatisation & scripting : Bash, PowerShell, Node.js ; CI/CD ; documentation et rapports normalisés.",
+    dev: "Automatisation & scripting : Bash, PowerShell, Node.js ; CI/CD ; documentation et Data Viz (PowerBI).",
     tools:
-      "Elasticsearch, Logstash, Kibana, Suricata, Wireshark, Nmap, Burp Suite, SQLMap, Git, Docker",
+      "Elasticsearch, Kibana, PowerBI, Suricata, Wireshark, Nmap, Burp Suite, SQLMap, Git, Docker",
     ats: "Rigueur, analyse, vulgarisation, organisation, adaptabilité, travail d’équipe",
   },
 
-  // === FORMATIONS (rappel court et renvoi vers Expériences)
+  // === FORMATIONS
   education: [
     {
-      title: "Mastère administrateur système, réseaux & sécurité",
-      school: " Paris",
-      period: "2025-2027",
-      note: "Cybesérité, Haute disponibilité, virtualisation, automatisation, Github CI/CD, cloud (Azure, AWS), etc ",
+      title: "Certification Microsoft SC-900",
+      school: "Microsoft",
+      period: "2025",
+      note: "Security, Compliance, and Identity Fundamentals (Cloud Azure & Microsoft 365).",
     },
     {
       title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",
@@ -175,7 +174,7 @@ export const CV_DATA = {
     },
   ],
 
-  // === PERSONNEL : langues (objet, dot-notation)
+  // === PERSONNEL
   personal: {
     langues: {
       francais: "courant",
@@ -187,6 +186,13 @@ export const CV_DATA = {
       "Veille sécurité, programmation, TryHackMe/RootMe, Taekwondo, course à pied, lecture, Baseball",
   },
 
-  // Chips visibles en bannière (sinon déduits de skills.tools)
-  topChips: ["ELK/Kibana", "Suricata", "OWASP", "Burp Suite", "Nmap", "Docker"],
+  // Chips
+  topChips: [
+    "ELK/Kibana",
+    "PowerBI",
+    "Suricata",
+    "OWASP",
+    "Burp Suite",
+    "Docker",
+  ],
 };

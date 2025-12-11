@@ -160,27 +160,6 @@ export function CVDocument({
           </View>
         </View>
 
-        {/* ===== Bannière INLINE : under_title, chips ===== */}
-        {/* <View style={styles.banner}>
-          <View style={styles.bannerRow}>
-            <View style={styles.bannerLeft}>
-              {identity.under_title ? (
-                <Text style={styles.bannerText}>{identity.under_title}</Text>
-              ) : null}
-            </View>
-
-            <View style={styles.bannerRight}>
-              {chips.length > 0
-                ? chips.map((t, idx) => (
-                    <Text key={idx} style={styles.chip}>
-                      {t}
-                    </Text>
-                  ))
-                : null}
-            </View>
-          </View>
-        </View> */}
-
         {/* ===== Profil ===== */}
         <Text style={styles.sectionTitle}>Profil</Text>
         <Text style={styles.banner}>{summary}</Text>
