@@ -1,5 +1,4 @@
-// src/app/blog/[slug]/page.tsx
-import "@/polyfills/url-canparse"; // <= DOIT être la 1ère ligne
+import "@/polyfills/url-canparse";
 
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -20,13 +19,17 @@ export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
 }
 
+// CORRECTION 1: Typage de params en Promise et utilisation de await
 export async function generateMetadata({
   params,
 }: {
-  params: Params;
+  params: Promise<Params>;
 }): Promise<Metadata> {
-  const post = getPostBySlug(params.slug);
+  const { slug } = await params; // On attend la résolution de la promesse ici
+  const post = getPostBySlug(slug);
+
   if (!post) return {};
+
   return {
     title: `${post.title} — Blog`,
     description: post.excerpt,
@@ -39,8 +42,15 @@ export async function generateMetadata({
   };
 }
 
-export default function BlogArticlePage({ params }: { params: Params }) {
-  const post = getPostBySlug(params.slug);
+// CORRECTION 2: Le composant devient async et params est une Promise
+export default async function BlogArticlePage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { slug } = await params; // On attend la résolution de la promesse ici
+  const post = getPostBySlug(slug);
+
   if (!post) {
     notFound();
   }
