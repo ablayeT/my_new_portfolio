@@ -53,10 +53,10 @@ export const styles = StyleSheet.create({
     backgroundColor: SUBTLE_BG,
     border: `1 solid ${BORDER}`,
     borderRadius: 6,
-    padding: 8,
+    padding: 2,
     marginTop: 2,
-    fontSize: 11,
-    marginBottom: 4,
+    fontSize: 8,
+    marginBottom: 2,
   },
   bannerRow: {
     flexDirection: "row",

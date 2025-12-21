@@ -5,8 +5,7 @@ import type {
   EducationEntry,
 } from "./types";
 
-export const HEADLINE = "Administrateur Systèmes,réseaux et sécurité";
-// " j’automatise la détection et la réponse aux incidents (SIEM/ELK, MITRE ATT&CK) pour renforcer la cyberdéfense et réduire les temps de réaction."
+export const HEADLINE = "Ingénieur Réseau & Automatisation (Junior)";
 
 export const CONTACT: ContactInfo = {
   location: "Paris, France",
@@ -15,143 +14,128 @@ export const CONTACT: ContactInfo = {
   github: "https://github.com/ablayeT?tab=repositories",
   linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
   tryhackme: "https://tryhackme.com/p/ablaye.toure0",
-  entourage:
-    "https://www.entourage-pro.fr/cv/abdoulaye-2e32086a?hideShareOptions=false",
 };
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    title: "Sécurité informatique",
+    title: "Réseaux & Systèmes",
     skills: [
-      { name: "Contrôle d’accès (AuthN/Z)", level: "advanced" },
-      { name: "Chiffrement", level: "advanced" },
-      { name: "Validation/Nettoyage des entrées", level: "advanced" },
-      { name: "Gestion vulnérabilités", level: "advanced" },
-      { name: "Audit & Pentest (XSS, SQLi)", level: "expert" },
-      { name: "Analyse logs / IOC", level: "advanced" },
+      { name: "Protocoles (BGP, OSPF, STP)", level: "intermediate" },
+      { name: "Architecture LAN/WAN", level: "intermediate" },
+      { name: "Linux (RHEL/Debian) Admin", level: "advanced" },
+      { name: "TCP/IP & Wireshark", level: "advanced" },
+      { name: "Virtualisation / Docker", level: "intermediate" },
+      { name: "Segmentation / VLAN / VxLAN", level: "advanced" },
     ],
   },
   {
-    title: "Outils & Plateformes",
+    // CATEGORIE 2 : L'atout différenciant (NetDevOps)
+    title: "Automatisation & DevOps",
     skills: [
-      { name: "Linux / Bash (admin)", level: "expert" },
-      { name: "Kali Linux", level: "expert" },
-      { name: "ELK (Filebeat, Logstash, Kibana)", level: "advanced" },
-      { name: "Nmap, Gobuster", level: "expert" },
-      { name: "Wireshark, Nessus", level: "advanced" },
-      { name: "MySQL", level: "advanced" },
+      { name: "Python (Scripting Réseau)", level: "advanced" },
+      { name: "Ansible (Configuration)", level: "intermediate" },
+      { name: "PowerBI (Data Viz)", level: "advanced" }, // <--- AJOUTÉ ICI
+      { name: "Bash / PowerShell", level: "advanced" },
+      { name: "Git / CI/CD (Pipelines)", level: "intermediate" },
+      { name: "Centreon (Supervision)", level: "intermediate" },
+      { name: "ELK (Monitoring Logs)", level: "intermediate" },
     ],
   },
   {
-    title: "Langages & Frameworks",
+    title: "Sécurité & Conformité",
     skills: [
-      { name: "JavaScript / Node.js", level: "expert" },
-      { name: "React", level: "expert" },
-      { name: "Python", level: "expert" },
-      { name: "PHP", level: "advanced" },
-      { name: "Material UI", level: "advanced" },
+      { name: "Audit de configurations", level: "intermediate" },
+      { name: "Analyse de flux / Logs", level: "advanced" },
+      { name: "Durcissement (Hardening)", level: "intermediate" },
+      { name: "Gestion des vulnérabilités", level: "intermediate" },
+      { name: "Firewalling & NAC", level: "intermediate" },
     ],
   },
   {
     title: "Langues",
     skills: [
-      { name: "Français (courant)", level: "expert" },
-      { name: "Anglais (courant)", level: "expert" },
-      { name: "Espagnol (intermédiaire)", level: "advanced" },
-      { name: "Wolof (courant)", level: "expert" },
-      { name: "Malinké (courant)", level: "expert" },
-      { name: "Bambara (courant)", level: "expert" },
+      { name: "Anglais (Professionnel/Courant)", level: "advanced" },
+      { name: "Français (Langue maternelle)", level: "expert" },
+      { name: "Espagnol (Intermédiaire)", level: "intermediate" },
     ],
   },
 ];
 
 export const EXPERIENCES: Experience[] = [
   {
-    title: "Développeur Full Stack Freelance",
+    title: "Développeur Full Stack / DevOps (Freelance)",
     company: "Skeelfully • Paris",
     period: "Juillet 2025 – Octobre 2025",
     tasks: [
-      "Développement d’une marketplace connectant porteurs de projet et talents",
-      "Migration vers Node 16 et correctifs de compatibilité Webpack.",
-      "Optimisation CI/CD et durcissement des dépendances NPM.",
+      "Administration système et déploiement d'une marketplace sur Linux",
+      "Mise en place de pipelines CI/CD pour automatiser les livraisons",
+      "Scripting de maintenance et migration d'environnement (Node.js)",
     ],
   },
   {
-    title: "Stage : Audit & Pentest",
+    title: "Consultant Technique – Audit & Infra",
     company: "ADVENS • Paris",
     period: "Mars 2025 — Mai 2025",
     tasks: [
-      "Audits techniques (systèmes, réseaux, applications)",
-      "Pentest (XSS, SQLi, brute force) — Burp, Nmap, SQLMap",
-      "Détection/analyses via ELK (Filebeat, Logstash, Kibana)",
-      "Automatisation (Bash / PowerShell) & rapports",
-      "Collaboration avec équipes techniques",
+      "Cartographie d'architectures réseaux et analyse de flux",
+      "Audit de configuration des équipements (Switchs/Routeurs)",
+      "Mise en place de supervision (ELK) et détection d'anomalies",
+      "Automatisation du reporting technique via scripting et PowerBI", // <--- Mis à jour pour refléter la compétence
+      "Restitution technique auprès des équipes infrastructure",
     ],
   },
   {
-    title: "Développeur Web & Web Mobile",
+    title: "Développeur Web & Intégrateur",
     company: "Entourage • Paris",
     period: "Oct 2022 — Nov 2023",
     tasks: [
-      "Évolutions de plateformes web (front/back)",
-      "Architecture & choix techniques",
-      "Qualité (tests) & recettes fonctionnelles/techniques",
+      "Conception d'applications web haute disponibilité",
+      "Gestion de base de données (MySQL) et optimisation",
+      "Travail en méthodologie Agile (Jira) et respect des procédures",
     ],
   },
-  // {
-  //   title: "Professeur d’anglais",
-  //   company: "BEC • Dakar, Sénégal",
-  //   period: "Sept 2017 — Nov 2019",
-  //   tasks: [
-  //     "Création de cours et animation de classes",
-  //     "Suivi individualisé & évaluations régulières",
-  //   ],
-  // },
-  // {
-  //   title: "Fondateur & gérant",
-  //   company: "Toure Multi-Services • Sénégal",
-  //   period: "2017 — 2019",
-  //   tasks: [
-  //     "Gestion d’équipe (2 commerciaux, 1 technicien)",
-  //     "Coordination commerciale/technique et suivi clients",
-  //   ],
-  // },
 ];
 
 export const EDUCATION: EducationEntry[] = [
   {
-    title: "Mastère administrateur système, réseaux & sécurité",
-    school: " Paris",
-    period: "2025-2027",
+    title: "Certification Microsoft SC-900",
+    school: "Microsoft",
+    period: "2025",
     details:
-      "Cybesérité, Haute disponibilité, virtualisation, automatisation, Github CI/CD, cloud (Azure, AWS), etc ",
+      "Fondamentaux Sécurité, Conformité et Identité (Scope Azure/M365).",
   },
   {
-    title: "Bac+4 : Administration d’infrastructures sécurisées",
+    title: "Bac+4 : Administrateur d’infrastructures sécurisées",
     school: "ALT-RH • Paris",
     period: "Sept 2024 — Juin 2025",
-    details: "Systèmes, réseaux, sécurité des infrastructures.",
+    details:
+      "Administration Réseau (Cisco), Virtualisation, Scripting & Sécurité.",
   },
   {
-    title: "Bac+2: Développeur intégrateur web",
-    school: "WebForce3 • Paris",
-    period: "Avr 2022 — Oct 2022",
-    details: "Front-end & back-end, intégration, bonnes pratiques.",
-  },
-  {
-    title: "Bac+3: Développeur web & web mobile (alternance)",
+    title: "Bac+3: Développeur web & web mobile",
     school: "WebForce3 • Paris",
     period: "Oct 2022 — Nov 2023",
-    details:
-      "Alternance (Entourage) : développement full-stack, architecture, tests.",
+    details: "Alternance chez Entourage : Développement, API et CI/CD.",
   },
   {
-    title:
-      "Bac+5 : Littérature & civilisation anglophone (américaine & caribéenne)",
-    school: "UCAD • Dakar, Sénégal",
-    period: "Oct 2011 — Juil 2015",
+    title: "Bac+5 : Littérature & civilisation anglophone",
+    school: "UCAD • Dakar",
+    period: "2011 — 2015",
+    details:
+      "Maîtrise complète de l'anglais (écrit/oral) en contexte académique.",
   },
 ];
 
-export const SOFT_SKILLS = ["Rigoureux", "Curieux", "Organisé", "Discret"];
-export const INTERESTS = ["Lecture", "Taekwondo", "Baseball", "Course à pied"];
+export const SOFT_SKILLS = [
+  "Rigueur",
+  "Esprit d'analyse",
+  "Sens du service",
+  "Travail d'équipe",
+  "Curiosité technique",
+];
+export const INTERESTS = [
+  "Veille Tech (Réseau/Cloud)",
+  "Automatisation",
+  "Taekwondo",
+  "Running",
+];

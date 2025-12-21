@@ -45,14 +45,15 @@ export const CONTACT = {
   email: "ablayetoure2014@gmail.com",
   phone: "+33 644 93 26 27",
 };
+
 // ===== Données PDF =====
 export const CV_DATA = {
   meta: { updatedAt: "2025-10" },
 
   identity: {
-    name: "Abdoulaye Touré",
-    title: "​Analyste Cybersécurité / Ingénieur Sécurité",
-    under_title: "Disponible dès sept. 2025 · Paris/IDF · présentiel/hybride",
+    name: "Abdoulaye Toure",
+    title: "Ingénieur Réseau & Automatisation (Junior)",
+    under_title: "Disponible immédiatement · Paris/IDF · Anglais Courant",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
     local: "Local: Île-de-France",
@@ -65,82 +66,90 @@ export const CV_DATA = {
   },
 
   // === PROFIL
+
   summary:
-    "Esprit de synthèse et technique, j'automatise la sécurité (ELK, Playbooks) pour protéger vos infrastructures. Je recherche un poste d'Administrateur Sécurité pour renforcer durablement vos systèmes.",
+    "Ingénieur Réseau junior rigoureux, je combine une expertise en administration d'infrastructures LAN/WAN avec de solides compétences en automatisation (Python, Scripting).",
 
   experiences: [
     {
-      role: "Développeur Full Stack Freelance",
+      role: "Développeur Full Stack / DevOps (Freelance)",
       company: "Skeelfully • Paris",
-      period: "Juillet 2025 – Octobre 2025",
+      period: "Juillet 2025 – Novembre 2025",
       bullets: [
-        "Développement d’une marketplace connectant porteurs de projet et talents",
-        "Migration vers Node 16 et correctifs de compatibilité Webpack.",
-        "Optimisation CI/CD et durcissement des dépendances NPM.",
+        "Administration système et déploiement d'une marketplace sur serveurs Linux.",
+        "Mise en place de pipelines CI/CD (Git) pour des déploiements.",
+        "Scripting de maintenance et migration de l'environnement d'exécution.",
       ],
     },
     {
-      role: "Stage – Audit & Pentest",
+      role: "Audit Infrastructure /Pentest",
       company: "ADVENS • Paris",
       period: "Mars 2025 – Juin 2025",
       bullets: [
-        "Audits techniques et tests d’intrusion web/réseau (Burp Suite, Nmap, SQLMap).",
-        "Threat Hunting et corrélation SIEM via ELK/Kibana.",
-        "Automatisation du reporting (Bash/PowerShell/PowerBI) et restitution technique.",
+        "Cartographie et audit d'architectures réseau (Analyse de flux, topologie LAN).",
+        "Diagnostic de conformité réseau et recommandations de durcissement (Switchs/Routeurs).",
+        "Automatisation du reporting et traitement de données via (Bash/PowerShell).",
       ],
     },
     {
-      role: "Développeur Web & Web Mobile",
+      role: "Développeur & Intégrateur Web",
       company: "Entourage • Paris",
       period: "Octobre 2022 – Novembre 2023",
       bullets: [
-        "Conception d’applications sécurisées (Node.js, React, MySQL).",
-        "Durcissement des API et intégration de la CI/CD.",
-        "Suivi qualité et conformité aux standards AppSec (OWASP).",
+        "Conception d’applications web avec contraintes de haute disponibilité.",
+        "Gestion de bases de données (MySQL) et optimisation des requêtes.",
+        "Collaboration en méthode Agile et utilisation de Jira.",
       ],
     },
   ],
 
   // === PROJETS
+
   featuredProjects: [
     {
-      name: "Purple Team Lab – Infrastructure de simulation",
-      tags: ["MITRE ATT&CK", "Suricata", "ELK"],
+      name: "Lab d'Infrastructure Réseau Sécurisé",
+      tags: ["Segmentation", "Linux", "Virtualisation"],
       bullets: [
-        "Simulation d'attaques réelles (MITRE) sur lab segmenté et détection Blue Team (Suricata/ELK).",
-        "Création de Playbooks de réponse et dashboards de corrélation pour accélérer l'investigation.",
+        "Déploiement d'une architecture segmentée : configuration VLANs, adressage IP et routage.",
+        "Mise en place de règles de filtrage et journalisation centralisée (ELK) pour la supervision.",
       ],
     },
     {
-      name: "Dashboard SIEM & Optimisation SOC",
-      tags: ["Kibana", "Detection Engineering", "Baselines"],
+      name: "Dashboard de Supervision & Monitoring",
+      tags: ["Kibana", "Data Viz", "Analyse de logs"],
       bullets: [
-        "Conception de vues tactiques (phishing, latéralisation) pour la priorisation des tickets SOC.",
-        "Affinage des règles (Tuning) et baselines pour maximiser le ratio signal/bruit (réduction des faux positifs).",
+        "Conception de tableaux de bord pour le suivi d'activité et la détection d'anomalies.",
+        "Affinage des seuils d'alerte (Tuning) pour réduire les faux positifs et optimiser le MCO.",
       ],
     },
     {
-      name: "Campagnes de Phishing & Reporting",
-      tags: ["GoPhish", "PowerBI", "Awareness"],
+      name: "Automatisation de Reporting KPI",
+      tags: ["PowerBI", "Scripting", "Python"],
       bullets: [
-        "Pilotage de campagnes de sensibilisation : scénarios, tracking des clics et analyse comportementale.",
-        "Automatisation des KPIs et restitution via PowerBI pour libérer du temps d’analyse technique.",
+        "Automatisation de la collecte de données techniques et transformation pour restitution.",
+        "Création de visuels décisionnels pour le suivi des indicateurs de performance.",
       ],
     },
   ],
 
   // === COMPÉTENCES
+
   skills: {
     security:
-      "Threat Hunting via SIEM (ELK), ingénierie de la détection (corrélation, baselines), orchestration de la réponse à incident (playbooks), analyse forensique.",
-    red: "Audit d’applications web (OWASP), tests d’intrusion internes/externes, cartographie et réduction de la surface d’attaque.",
+      "Supervision réseau, Analyse de flux (Wireshark), NAC, Firewalling, Gestion des incidents, Centreon.",
+
+    red: "",
+
     systems:
-      "Linux (admin/durcissement), segmentation réseau, journalisation, supervision.",
-    dev: "Automatisation & scripting : Bash, PowerShell, Node.js ; CI/CD ; documentation et Data Viz (PowerBI).",
+      "Protocoles : BGP, OSPF, STP, VxLAN, EVPN, TCP/IP. Admin Linux (Debian/RedHat), Windows Server.",
+
+    dev: "Python (Scripting réseau), Ansible, Bash, PowerShell, Git/BitBucket, CI/CD.",
+
     tools:
-      "Elasticsearch, Kibana, PowerBI, Suricata, Wireshark, Nmap, Burp Suite, SQLMap, Git, Docker",
-    ats: "Rigueur, analyse, vulgarisation, organisation, adaptabilité, travail d’équipe",
-    language: "Python, Javascript, React JS, Angular, Node js, MySQL, MongoDB",
+      "Centreon, Wireshark, Jira, Docker, Git, VS Code, Nmap, PowerBI, Excel",
+
+    ats: "Rigueur, Respect des procédures, Travail d’équipe, Anglais technique, Veille techno",
+    language: "Python, Bash, SQL, JavaScript",
   },
 
   // === FORMATIONS
@@ -149,13 +158,13 @@ export const CV_DATA = {
       title: "Certification Microsoft SC-900",
       school: "Microsoft",
       period: "2025",
-      note: "Security, Compliance, and Identity Fundamentals (Cloud Azure & Microsoft 365).",
+      note: "Fondamentaux Sécurité & Conformité (Utile pour le contexte bancaire).",
     },
     {
-      title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP 37680)",
+      title: "Bac+4 – Administrateur d’infrastructures sécurisées (RNCP)",
       school: "ALT-RH, Paris",
       period: "2024 – 2025",
-      note: "Cursus validé par un stage de 5 mois chez ADVENS — voir Expériences.",
+      note: "Architecture Réseau, Routage/Commutation, Virtualisation, Sécurité des SI.",
     },
     {
       title: "Bac+3 – Développeur Web & Web Mobile",
@@ -168,8 +177,7 @@ export const CV_DATA = {
       period: "2022",
     },
     {
-      title:
-        "Bac+5 – Littérature & civilisation anglophone (américaine & caribéenne)",
+      title: "Bac+5 – Littérature & civilisation anglophone",
       school: "UCAD, Dakar",
       period: "2011 – 2015",
     },
@@ -179,21 +187,21 @@ export const CV_DATA = {
   personal: {
     langues: {
       francais: "courant",
-      anglais: "courant",
+      anglais: "courant (C1/C2)",
       espagnol: "intermédiaire",
     },
-    soft: "Esprit d’analyse, pédagogie/vulgarisation, sens du service, autonomie, discrétion",
+    soft: "Rigueur, Sens du service client, Capacité d'analyse, Esprit d'équipe",
     hobbies:
-      "Veille sécurité, programmation, TryHackMe/RootMe, Taekwondo, course à pied, lecture, Baseball",
+      "Veille technologique (Réseau/Cloud), Running, Lecture, Automatisation domotique",
   },
 
-  // Chips
+  // Chips (Mots clés pour le scan rapide du recruteur)
   topChips: [
-    "ELK/Kibana",
-    "PowerBI",
-    "Suricata",
-    "OWASP",
-    "Burp Suite",
-    "Docker",
+    "Python",
+    "BGP / OSPF",
+    "Ansible",
+    "Linux",
+    "Wireshark",
+    "Centreon",
   ],
 };
