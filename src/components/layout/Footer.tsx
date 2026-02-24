@@ -186,7 +186,7 @@ export const Footer: React.FC = () => {
                     className="text-violet-600 group-hover:scale-110 group-hover:rotate-3 transition-all"
                   />
                   <span className="truncate">
-                    abdoulaye.toure.cyber@gmail.com
+                    ablayetoure2014@gmail.com
                   </span>
                 </a>
               </li>
