@@ -1,91 +1,23 @@
-name: "CI/CD — deploy to VPS (PM2)"
+name: 🚀 Deploy Portfolio
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: ✅ Déploiement sur VPS
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          node-version: "20"
-          cache: npm
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Build (Next.js)
-        run: npm run build
-
-      - name: Prepare artifact
-        run: |
-          mkdir -p deploy
-          # On copie tout sauf .git et node_modules
-          cp -r .next package.json package-lock.json next.config.* public deploy/ 2>/dev/null || true
-
-      - name: Deploy via rsync/ssh
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-        run: |
-          set -euo pipefail
-
-          # Configuration SSH
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-
-          # Variables de déploiement
-          TS="$(date -u +%Y%m%dT%H%M%SZ)"
-          REMOTE_BASE="/home/abdou-deploy/deployments"
-          REMOTE_RELEASE="$REMOTE_BASE/releases/$TS"
-
-          echo "📂 Creating remote release dir..."
-          ssh -i ~/.ssh/deploy_key abdou-deploy@$VPS_HOST "mkdir -p $REMOTE_RELEASE"
-
-          echo "⏫ Uploading files via rsync..."
-          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" deploy/ abdou-deploy@$VPS_HOST:$REMOTE_RELEASE/
-
-          echo "🔁 Switching symlink & Reloading PM2..."
-          ssh -i ~/.ssh/deploy_key abdou-deploy@$VPS_HOST "
-            set -e
-            
-            # 1. Installation des dépendances de prod
-            cd $REMOTE_RELEASE
-            npm ci --omit=dev
-
-            # 2. Copie du BON fichier .env (depuis la version courante qui marche)
-            # C'est ici qu'on sécurise la config
-            if [ -f $REMOTE_BASE/current/.env ]; then
-              cp $REMOTE_BASE/current/.env $REMOTE_RELEASE/.env
-              echo '✅ .env copied from current release'
-            else
-              echo '⚠️ WARNING: No .env found in current release!'
-            fi
-
-            # 3. Mise à jour du lien symbolique 'current'
-            ln -sfn $REMOTE_RELEASE $REMOTE_BASE/current
-            
-            # 4. Redémarrer PM2 avec la méthode 'Direct Binary' (Stable)
-            # Si le reload échoue, on démarre proprement sans passer par npm
-            pm2 reload portfolio --update-env || pm2 start node_modules/next/dist/bin/next --name 'portfolio' -- start
-            
-            # 5. Sauvegarder l'état PM2
-            pm2 save
-            
-            # Nettoyage : garder seulement les 5 dernières versions
-            cd $REMOTE_BASE/releases
-            ls -dt * | tail -n +6 | xargs -r rm -rf
-          "
-
-          echo "✅ Deploy done"
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          timeout: 300s
+          script: |
+            echo "🚀 Début du déploiement portfolio..."
+            bash ~/deploy_portfolio.sh
+            echo "✅ Déploiement terminé !"
