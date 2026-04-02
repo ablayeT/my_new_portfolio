@@ -65,7 +65,7 @@ export const EXPERIENCES: Experience[] = [
   {
     title: "Développeur Full Stack / DevOps (Freelance)",
     company: "Skeelfully • Paris",
-    period: "Juillet 2025 – Octobre 2025",
+    period: "Juillet 2025 – Decembre 2025",
     tasks: [
       "Administration système et déploiement d'une marketplace sur Linux",
       "Mise en place de pipelines CI/CD pour automatiser les livraisons",
