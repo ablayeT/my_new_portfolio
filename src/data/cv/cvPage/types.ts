@@ -9,6 +9,7 @@ export type Experience = {
   title: string;
   company: string;
   period: string;
+  current?: boolean;   // ← nouveau
   tasks: string[];
 };
 

@@ -1,22 +1,15 @@
-/* eslint-disable jsx-a11y/alt-text */ // Image de @react-pdf/renderer n'a pas d'alt
+/* eslint-disable jsx-a11y/alt-text */
 import React, { type ReactElement } from "react";
 import {
-  Document,
-  Page,
-  View,
-  Text,
-  Image,
-  Link,
-  type DocumentProps,
+  Document, Page, View, Text, Image, Link, type DocumentProps,
 } from "@react-pdf/renderer";
 import { styles } from "@/components/styles/CVDocument_styles";
 
-// ===== Types =====
 export type CVData = {
   identity: {
     name: string;
     title: string;
-    under_title?: string; // ex: dispo/localisation/modalité
+    under_title?: string;
     phone: string;
     email: string;
     local: string;
@@ -31,7 +24,7 @@ export type CVData = {
   experiences: Array<{
     role: string;
     company: string;
-    period: string; // ex: "Mars 2025 – Juillet 2025 · Stage de fin d’études (validation ALT-RH – Bac+4)"
+    period: string;
     bullets: string[];
   }>;
   featuredProjects: Array<{
@@ -40,11 +33,11 @@ export type CVData = {
     tags?: string[] | null;
   }>;
   skills: {
-    security: string; // SOC/Blue Team
-    red?: string; // Pentest/Red Team (optionnel)
+    security: string;
+    red?: string;
     systems: string;
     dev: string;
-    tools: string; // "ELK, Suricata, Wireshark, ..."
+    tools: string;
     ats: string;
     language: string;
   };
@@ -55,272 +48,264 @@ export type CVData = {
     note?: string;
   }>;
   personal: {
-    langues: {
-      francais: string; // "courant"
-      anglais: string; // "courant"
-      espagnol?: string; // "intermédiaire"
-    };
+    langues: { francais: string; anglais: string; espagnol?: string };
     soft: string;
     hobbies: string;
   };
   meta?: { updatedAt?: string };
-
-  // Optionnels
   kpis?: Array<{ value: string; label: string }> | null;
   topChips?: string[] | null;
 };
 
-type Props = {
-  data: CVData;
-  photoSrc?: string; // data URL injectée par la route
-};
+type Props = { data: CVData; photoSrc?: string; badgeSrc?: string };
 
-// Utilitaire pour obtenir des chips lisibles depuis "skills.tools"
-function deriveChipsFromTools(tools: string | undefined, max = 6): string[] {
-  if (!tools) return [];
-  return tools
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean)
-    .slice(0, max);
+function toChips(str: string): string[] {
+  return str.split(/[,·]/).map((s) => s.trim()).filter(Boolean);
 }
 
-export function CVDocument({
-  data,
-  photoSrc,
-}: Props): ReactElement<DocumentProps> {
+function SectionHead({ title }: { title: string }) {
+  return (
+    <View style={styles.sectionHeader}>
+      <View style={styles.sectionAccent} />
+      <Text style={styles.sectionTitle}>{title}</Text>
+    </View>
+  );
+}
+
+export function CVDocument({ data, photoSrc, badgeSrc }: Props): ReactElement<DocumentProps> {
   const {
     identity,
     summary,
     experiences,
-    featuredProjects,
-    skills,
     education,
+    skills,
+    featuredProjects,
     personal,
-    meta,
-    topChips,
   } = data;
 
-  // Chips : jamais null avant itération
-  const CHIP_LIMIT = 5;
-  const chipsSource: string[] =
-    (topChips && topChips.length > 0
-      ? topChips
-      : deriveChipsFromTools(skills?.tools, CHIP_LIMIT)) ?? [];
-  const chips = chipsSource.slice(0, CHIP_LIMIT);
+  const skillSections: { label: string; chips: string[] }[] = [
+    { label: "SOC & Blue Team",      chips: toChips(skills.security) },
+    ...(skills.red
+      ? [{ label: "Pentest & Red Team", chips: toChips(skills.red) }]
+      : []),
+    { label: "Systemes & Reseau",    chips: toChips(skills.systems) },
+    { label: "Automatisation & Dev", chips: toChips(skills.dev) },
+    { label: "Outils",               chips: toChips(skills.tools) },
+    { label: "Langages",             chips: toChips(skills.language) },
+  ];
 
-  // Langues (pile verticale)
+  const navLinks = [
+    { label: "Portfolio",  src: identity.links.portfolio },
+    { label: "GitHub",     src: identity.links.github },
+    { label: "LinkedIn",   src: identity.links.linkedin },
+    { label: "TryHackMe",  src: identity.links.tryhackme },
+  ] as const;
   const langs = [
-    ["Français", personal.langues.francais] as [string, string],
-    ["Anglais", personal.langues.anglais] as [string, string],
-    personal.langues.espagnol
-      ? (["Espagnol", personal.langues.espagnol] as [string, string])
-      : null,
-  ].filter(Boolean) as Array<[string, string]>;
+    { name: "Francais",  level: personal.langues.francais },
+    { name: "Anglais",   level: personal.langues.anglais },
+    ...(personal.langues.espagnol
+      ? [{ name: "Espagnol", level: personal.langues.espagnol }]
+      : []),
+  ];
 
   return (
     <Document
       title={`CV ${identity.name}`}
       author={identity.name}
-      subject="Cybersécurité"
+      subject="Cybersecurite"
     >
       <Page size="A4" style={styles.page}>
-        {/* ===== Header ===== */}
-        <View style={styles.header}>
-          <View style={styles.left}>
-            {photoSrc ? <Image src={photoSrc} style={styles.avatar} /> : null}
-            <View style={styles.ViewsCol}>
-              <Text style={styles.name}>{identity.name}</Text>
-              <Text style={styles.role}>{identity.title}</Text>
 
-              {/* Liens visibles (une ligne, wrap auto) */}
-              <View style={styles.linksInline}>
-                <Link src={identity.links.portfolio} style={styles.linkSmall}>
-                  Portfolio
-                </Link>
-                <Text style={styles.sep}>·</Text>
-                <Link src={identity.links.github} style={styles.linkSmall}>
-                  GitHub
-                </Link>
-                <Text style={styles.sep}>·</Text>
-                <Link src={identity.links.tryhackme} style={styles.linkSmall}>
-                  TryHackMe
-                </Link>
-                <Text style={styles.sep}>·</Text>
-                <Link src={identity.links.linkedin} style={styles.linkSmall}>
-                  LinkedIn
-                </Link>
-              </View>
+        {/* ── Numéro de page ──────────────────────────────────────── */}
+        <Text
+          style={styles.pageNumber}
+          render={({ pageNumber, totalPages }) =>
+            `Page ${pageNumber} / ${totalPages}`
+          }
+          fixed
+        />
+
+        {/* ── Bande footer fixe ───────────────────────────────────── */}
+        <View style={styles.footerBand} fixed />
+
+        {/* ══════════════════════════════════════════════════════════
+             HEADER
+            ══════════════════════════════════════════════════════════ */}
+        <View style={styles.headerBand}>
+
+          {/* Photo */}
+          {photoSrc ? <Image src={photoSrc} style={styles.avatar} /> : null}
+
+          {/* Nom + titre + contact + liens */}
+          <View style={{ flex: 1 }}>
+            <Text style={styles.name}>{identity.name}</Text>
+            <Text style={styles.role}>{identity.title}</Text>
+
+            <View style={styles.headerMeta}>
+              <Text style={styles.headerMetaItem}>{identity.local}</Text>
+              <Text style={styles.headerMetaItem}>{identity.email}</Text>
+              <Text style={styles.headerMetaItem}>{identity.phone}</Text>
+              {identity.under_title
+                ? <Text style={styles.headerMetaItem}>{identity.under_title}</Text>
+                : null}
             </View>
-          </View>
 
-          <View style={styles.right}>
-            <Text>{identity.phone}</Text>
-            <Text>{identity.email}</Text>
-            <Text>{identity.local}</Text>
-          </View>
-        </View>
-
-        {/* ===== Profil ===== */}
-        <Text style={styles.sectionTitle}>Profil</Text>
-        <Text style={styles.banner}>{summary}</Text>
-
-        <View style={styles.row}>
-          {/* ===== Colonne gauche : Expériences -> Formations -> Compétences ===== */}
-          <View style={styles.colLeft}>
-            <Text style={styles.sectionTitle}>
-              Expériences et réalisations sélectionnées
-            </Text>
-
-            {experiences.map((exp, i) => (
-              <View key={i} style={{ marginBottom: 6, gap: 6 }}>
-                <Text style={{ fontWeight: 700 }}>
-                  {exp.role} | {exp.company}
-                </Text>
-                <Text
-                  style={{
-                    color: "#718096",
-                    fontStyle: "italic",
-                    marginBottom: 2,
-                  }}
-                >
-                  {exp.period}
-                </Text>
-                {exp.bullets.map((b, k) => (
-                  <Text key={k} style={styles.bullet}>
-                    • {b}
-                  </Text>
-                ))}
-              </View>
-            ))}
-
-            {/* ===== Formations (avec note ADVENS) ===== */}
-            <Text style={styles.sectionTitle}>Formations</Text>
-            {education.map((e, i) => (
-              <View key={i} style={{ marginBottom: 2 }}>
-                <Text style={{ fontWeight: 700 }}>{e.title}</Text>
-                <Text style={{ color: "#718096" }}>
-                  {e.school} | {e.period}
-                </Text>
-                {e.note ? <Text style={styles.eduNote}>{e.note}</Text> : null}
-              </View>
-            ))}
-
-            <Text style={styles.sectionTitle}>Centres d’intérêt</Text>
-            <Text>{personal.hobbies}</Text>
-
-            {/* ===== Langues ===== */}
-            <Text style={styles.sectionTitle}>Langues</Text>
-            <View style={styles.langList}>
-              {langs.map(([name, level], i) => (
-                <Text key={i} style={styles.langItem}>
-                  • {name} ({level})
-                </Text>
+            <View style={styles.linksInline}>
+              {navLinks.map(({ label, src }, i) => (
+                <React.Fragment key={label}>
+                  {i > 0 && <Text style={styles.sep}> · </Text>}
+                  <Link src={src} style={styles.linkSmall}>{label}</Link>
+                </React.Fragment>
               ))}
             </View>
           </View>
 
-          {/* ===== Colonne droite : Projets -> Liens utiles -> Centres d’intérêt ===== */}
-          <View style={styles.colRight}>
-            <Text style={styles.sectionTitle}>Projets</Text>
-            {featuredProjects.map((p, i) => (
-              <View key={i} style={{ marginBottom: 4 }}>
-                <Text style={{ fontWeight: 700 }}>{p.name}</Text>
+          {/* Badge Microsoft — coin haut droit */}
+          {badgeSrc ? (
+            <View style={styles.badgeWrapper}>
+              <Image src={badgeSrc} style={styles.badge} />
+              <Text style={styles.badgeLabel}>SC-900</Text>
+            </View>
+          ) : null}
 
-                {(p.tags ?? []).length > 0 ? (
-                  <View style={styles.chipRow}>
-                    {(p.tags ?? []).map((t, idx) => (
-                      <Text key={idx} style={styles.chip}>
-                        {t}
-                      </Text>
-                    ))}
-                  </View>
-                ) : null}
+        </View>
 
-                {p.bullets.map((b, k) => (
-                  <Text key={k} style={styles.bullet}>
-                    • {b}
-                  </Text>
+        {/* ══════════════════════════════════════════════════════════
+             RÉSUMÉ
+            ══════════════════════════════════════════════════════════ */}
+        <View style={styles.summaryBand} wrap={false}>
+          <Text style={styles.summaryText}>{summary}</Text>
+        </View>
+
+        {/* ══════════════════════════════════════════════════════════
+             BODY — Expériences (gauche) | Formations (droite)
+            ══════════════════════════════════════════════════════════ */}
+        <View style={styles.row1}>
+
+          {/* ── Colonne gauche : Expériences ──────────────────────── */}
+          <View style={styles.colLeft}>
+            <SectionHead title="Experiences professionnelles" />
+            <View style={styles.divider} />
+
+            {experiences.map((exp, i) => (
+              <View key={i} style={styles.expBlock} wrap={false}>
+                <Text style={styles.expRole}>{exp.role}</Text>
+                <Text style={styles.expCompany}>{exp.company}</Text>
+                <Text style={styles.expPeriod}>{exp.period}</Text>
+                {exp.bullets.map((b, k) => (
+                  <Text key={k} style={styles.bullet}>{"• "}{b}</Text>
                 ))}
               </View>
             ))}
+          </View>
 
-            {/* Liens utiles */}
-            <Text style={styles.sectionTitle}>Liens utiles</Text>
-            <View style={styles.linkLine}>
-              <Link src={identity.links.portfolio} style={styles.linkLabel}>
-                Portfolio
-              </Link>
-              <Text style={styles.linkUrl}>{identity.links.portfolio}</Text>
-            </View>
-            <View style={styles.linkLine}>
-              <Link src={identity.links.github} style={styles.linkLabel}>
-                GitHub
-              </Link>
-              <Text style={styles.linkUrl}>{identity.links.github}</Text>
-            </View>
-            <View style={styles.linkLine}>
-              <Link src={identity.links.linkedin} style={styles.linkLabel}>
-                LinkedIn
-              </Link>
-              <Text style={styles.linkUrl}>{identity.links.linkedin}</Text>
-            </View>
-            <View style={styles.linkLine}>
-              <Link src={identity.links.tryhackme} style={styles.linkLabel}>
-                TryHackMe
-              </Link>
-              <Text style={styles.linkUrl}>{identity.links.tryhackme}</Text>
-            </View>
-            {/* ===== Compétences ===== */}
-            <View style={styles.ViewsCol}>
-              <View style={{ gap: 5 }}>
-                <Text style={styles.sectionTitle}>Compétences</Text>
-                <Text style={{ marginBottom: 2 }}>
-                  <Text style={{ fontWeight: 700 }}>
-                    SOC & Blue Team&nbsp;:{" "}
-                  </Text>
-                  <Text>{skills.security}</Text>
-                </Text>
+          {/* ── Colonne droite : Formations ───────────────────────── */}
+          <View style={styles.colRight}>
+            <SectionHead title="Formations" />
+            <View style={styles.divider} />
 
-                {skills.red ? (
-                  <Text style={{ marginBottom: 2 }}>
-                    <Text style={{ fontWeight: 700 }}>
-                      Pentest & Red Team&nbsp;:{" "}
-                    </Text>
-                    <Text>{skills.red}</Text>
-                  </Text>
-                ) : null}
-
-                <Text style={{ marginBottom: 2 }}>
-                  <Text style={{ fontWeight: 700 }}>
-                    Systèmes / Réseau&nbsp;:{" "}
-                  </Text>
-                  <Text>{skills.systems}</Text>
-                </Text>
-                <Text style={{ marginBottom: 2 }}>
-                  <Text style={{ fontWeight: 700 }}>
-                    Automatisation / Dev&nbsp;:{" "}
-                  </Text>
-                  <Text>{skills.dev}</Text>
-                </Text>
-                <Text style={{ marginBottom: 2 }}>
-                  <Text style={{ fontWeight: 700 }}>Outils&nbsp;: </Text>
-                  <Text>{skills.tools}</Text>
-                </Text>
-                <Text style={{ marginBottom: 2 }}>
-                  <Text style={{ fontWeight: 700 }}>Languages&nbsp;: </Text>
-                  <Text>{skills.language}</Text>
-                </Text>
+            {education.map((e, i) => (
+              <View key={i} style={styles.eduBlock} wrap={false}>
+                <Text style={styles.eduTitle}>{e.title}</Text>
+                <Text style={styles.eduSchool}>{e.school}</Text>
+                <Text style={styles.eduPeriod}>{e.period}</Text>
+                {e.note ? <Text style={styles.eduNote}>{e.note}</Text> : null}
               </View>
-            </View>
+            ))}
+          </View>
+
+        </View>{/* ── fin row Expériences / Formations ── */}
+
+        {/* ══════════════════════════════════════════════════════════
+             COMPÉTENCES — pleine largeur
+            ══════════════════════════════════════════════════════════ */}
+        <View style={styles.skillsFullSection}>
+          <SectionHead title="Competences" />
+          <View style={styles.divider} />
+          <View style={styles.skillsGrid}>
+            {skillSections.map(({ label, chips }: { label: string; chips: string[] }) => (
+              <View key={label} style={styles.skillsGridItem} wrap={false}>
+                <Text style={styles.skillLabel}>{label}</Text>
+                <View style={styles.chipRow}>
+                  {chips.map((c: string, i: number) => (
+                    <Text key={i} style={styles.chip}>{c}</Text>
+                  ))}
+                </View>
+              </View>
+            ))}
           </View>
         </View>
+        {/* ══════════════════════════════════════════════════════════
+             PROJETS (gauche) | LIENS & SOFT SKILLS (droite)
+            ══════════════════════════════════════════════════════════ */}
+        <View style={styles.row2}>
 
-        {/* ===== Footer ===== */}
-        <View style={styles.divider} />
-        <Text style={styles.footerNote}>
-          {/* Mis à jour : {meta?.updatedAt || "—"} */}
+{/* ── Colonne gauche : Projets ───────────────────────────── */}
+<View style={styles.colLeft}>
+  <SectionHead title="Projets" />
+  <View style={styles.divider} />
+
+  {featuredProjects.map((p, i) => (
+    <View key={i} style={styles.projectBlock} wrap={false}>
+      <Text style={styles.projectName}>{p.name}</Text>
+      {(p.tags ?? []).length > 0 && (
+        <View style={[styles.chipRow, { marginBottom: 3 }]}>
+          {(p.tags ?? []).map((t: string, idx: number) => (
+            <Text key={idx} style={styles.chipAccent}>{t}</Text>
+          ))}
+        </View>
+      )}
+      {p.bullets.map((b: string, k: number) => (
+        <Text key={k} style={styles.bullet}>{"• "}{b}</Text>
+      ))}
+    </View>
+  ))}
+</View>
+
+{/* ── Colonne droite : Liens + Soft Skills ──────────────── */}
+<View style={styles.colRight}>
+  <SectionHead title="Liens" />
+  <View style={styles.divider} />
+
+  <View wrap={false} style={{ marginBottom: 8 }}>
+    {navLinks.map(({ label, src }) => (
+      <View key={label} style={styles.linkLine}>
+        <Link src={src} style={styles.linkLabel}>{label}</Link>
+        <Text style={styles.linkUrl}>
+          {src.replace("https://", "").replace("http://", "")}
         </Text>
+      </View>
+    ))}
+  </View>
+
+  <SectionHead title="Soft Skills" />
+  <View style={styles.divider} />
+  <View style={styles.chipRow} wrap={false}>
+    {toChips(personal.soft).map((s: string, i: number) => (
+      <Text key={i} style={styles.chip}>{s}</Text>
+    ))}
+  </View>
+
+  <SectionHead title="Langues" />
+  <View style={styles.divider} />
+  <View wrap={false}>
+    {langs.map(({ name, level }, i) => (
+      <View key={i} style={styles.langRow}>
+        <Text style={styles.langName}>{name}</Text>
+        <Text style={styles.langLevel}>{level}</Text>
+      </View>
+    ))}
+  </View>
+
+</View>
+</View>
+
+        {/* ── Footer note ───────────────────────────────────────────
+        <Text style={styles.footerNote}>
+          {"abdou-cyber.dev  —  Mis a jour "}
+          {data.meta?.updatedAt ?? "2026"}
+        </Text> */}
+
       </Page>
     </Document>
   );

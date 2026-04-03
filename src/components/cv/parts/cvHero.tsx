@@ -1,103 +1,65 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  Download,
-  Mail,
-  Linkedin,
-  Github,
-  MapPin,
-  Phone,
-  Target,
-} from "lucide-react";
+import { Download, Mail, Linkedin, Github, MapPin, Phone, Target } from "lucide-react";
 import type { ContactInfo } from "@/data/cv/cvPage/types";
 
-export function CvHero({
-  name,
-  headline,
-  contact,
-  downloadHref,
-  downloadName,
-}: {
-  name: string;
-  headline: string;
-  contact: ContactInfo;
-  downloadHref: string;
-  downloadName: string;
+export function CvHero({ name, headline, contact, downloadHref, downloadName }: {
+  name: string; headline: string; contact: ContactInfo;
+  downloadHref: string; downloadName: string;
 }) {
   return (
-    <section className="text-center">
-      <div className="mx-auto mb-6 flex h-50 w-28 items-center justify-center rounded-full bg-primary/10 shadow-sm md:h-32 md:w-32">
-        <div className="relative h-24 w-24 md:h-28 md:w-28  border-2 rounded-full overflow-hidden shadow-md">
-          <img
-            src="/cv/photo.jpeg"
-            alt="Photo de profil Abdoulaye Touré"
-            className="absolute inset-0 h-50 w-60 object-cover rounded-full transition-transform duration-500 ease-out hover:scale-105 animate-fadeIn"
-          />
+    <section className="relative overflow-hidden rounded-2xl border bg-card">
+      {/* Subtle grid overlay */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{ backgroundImage: "linear-gradient(hsl(var(--border)) 1px,transparent 1px),linear-gradient(90deg,hsl(var(--border)) 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
+      {/* Top accent line */}
+      <div className="h-[3px] w-full bg-gradient-to-r from-primary via-primary/60 to-transparent" />
+
+      <div className="flex flex-col items-center gap-6 px-6 py-8 md:flex-row md:items-start md:gap-8 md:px-10 md:py-10">
+        {/* Photo */}
+        <div className="relative shrink-0">
+          <div className="h-24 w-24 overflow-hidden rounded-2xl border-2 border-primary/30 shadow-lg md:h-28 md:w-28">
+            <img src="/cv/photo.jpeg" alt="Abdoulaye Touré" className="h-full w-full object-cover" />
+          </div>
+          <span className="absolute -bottom-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 ring-2 ring-background">
+            <span className="h-2 w-2 rounded-full bg-white" />
+          </span>
         </div>
-      </div>
 
-      {/* {name
-            .split(" ")
-            .map((n) => n[0])
-            .join("")
-            .slice(0, 2)
-            .toUpperCase()} */}
+        {/* Info */}
+        <div className="flex-1 text-center md:text-left">
+          <div className="mb-1 flex flex-wrap items-center justify-center gap-2 md:justify-start">
+            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{name}</h1>
+            <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-500">
+              Disponible en alternance
+            </span>
+          </div>
+          <p className="mb-4 text-sm font-medium text-primary/80">{headline}</p>
 
-      <h1 className="mb-1 text-3xl font-bold tracking-tight text-primary md:text-4xl">
-        {name}
-      </h1>
+          <div className="mb-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-xs text-muted-foreground md:justify-start">
+            <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" />{contact.location}</span>
+            <span className="flex items-center gap-1"><Mail className="h-3.5 w-3.5" />{contact.email}</span>
+            <span className="flex items-center gap-1"><Phone className="h-3.5 w-3.5" />{contact.phone}</span>
+          </div>
 
-      <p className="mx-auto mb-5 max-w-3xl text-sm text-muted-foreground md:text-base">
-        {headline}
-      </p>
-
-      <div className="mx-auto mb-6 flex max-w-3xl flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
-        <span className="inline-flex items-center gap-1.5">
-          <MapPin className="h-4 w-4" /> {contact.location}
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <Mail className="h-4 w-4" /> {contact.email}
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <Phone className="h-4 w-4" /> {contact.phone}
-        </span>
-      </div>
-
-      <div className="flex flex-wrap justify-center gap-3">
-        <Button asChild>
-          <a href={downloadHref} download={downloadName}>
-            <Download className="mr-2 h-4 w-4" />
-            Télécharger le CV (PDF)
-          </a>
-        </Button>
-
-        <Button variant="outline" size="sm" asChild>
-          <a href={`mailto:${contact.email}`}>
-            <Mail className="mr-2 h-4 w-4" />
-            Email
-          </a>
-        </Button>
-
-        <Button variant="outline" size="sm" asChild>
-          <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">
-            <Linkedin className="mr-2 h-4 w-4" />
-            LinkedIn
-          </a>
-        </Button>
-
-        <Button variant="outline" size="sm" asChild>
-          <a href={contact.github} target="_blank" rel="noopener noreferrer">
-            <Github className="mr-2 h-4 w-4" />
-            GitHub
-          </a>
-        </Button>
-
-        <Button variant="outline" size="sm" asChild>
-          <a href={contact.tryhackme} target="_blank" rel="noopener noreferrer">
-            <Target className="mr-2 h-4 w-4" />
-            TryHackMe
-          </a>
-        </Button>
+          <div className="flex flex-wrap justify-center gap-2 md:justify-start">
+            <Button asChild size="sm" className="h-8 gap-1.5 text-xs">
+              <a href={downloadHref} download={downloadName}>
+                <Download className="h-3.5 w-3.5" /> Télécharger CV
+              </a>
+            </Button>
+            {[
+              { href: contact.linkedin, icon: <Linkedin className="h-3.5 w-3.5" />, label: "LinkedIn" },
+              { href: contact.github, icon: <Github className="h-3.5 w-3.5" />, label: "GitHub" },
+              { href: contact.tryhackme, icon: <Target className="h-3.5 w-3.5" />, label: "TryHackMe" },
+              { href: `mailto:${contact.email}`, icon: <Mail className="h-3.5 w-3.5" />, label: "Email" },
+            ].map(({ href, icon, label }) => (
+              <Button key={label} variant="outline" size="sm" asChild className="h-8 gap-1.5 text-xs">
+                <a href={href} target="_blank" rel="noopener noreferrer">{icon}{label}</a>
+              </Button>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

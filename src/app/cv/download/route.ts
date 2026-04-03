@@ -1,4 +1,3 @@
-// src/app/cv/download/route.ts
 import type { NextRequest } from "next/server";
 import * as React from "react";
 import { readFile } from "node:fs/promises";
@@ -10,96 +9,67 @@ import { CV_DATA } from "@/data/cv/cv";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET(_req: NextRequest): Promise<Response> {
-  // 1) Photo optionnelle
-  let photoDataUrl: string | undefined;
+async function loadImage(relativePath: string): Promise<string | undefined> {
   try {
-    const img = await readFile(
-      join(process.cwd(), "public", "cv", "photo.jpeg")
-    );
-    photoDataUrl = `data:image/jpeg;base64,${img.toString("base64")}`;
+    const ext = relativePath.split(".").pop()?.toLowerCase();
+    const mime = ext === "png" ? "image/png" : "image/jpeg";
+    const buf = await readFile(join(process.cwd(), "public", relativePath));
+    return `data:${mime};base64,${buf.toString("base64")}`;
   } catch {
-    // pas bloquant si la photo n'existe pas
+    return undefined;
   }
+}
 
-  // 2) Élément React du Document PDF
+async function toArrayBuffer(result: unknown): Promise<ArrayBuffer> {
+  if (Buffer.isBuffer(result)) {
+    // Copie propre du buffer pour obtenir un ArrayBuffer standalone
+    const copy = new Uint8Array(result);
+    return copy.buffer as ArrayBuffer;
+  }
+  // Fallback ReadableStream
+  const chunks: Uint8Array[] = [];
+  await new Promise<void>((resolve, reject) => {
+    const stream = result as NodeJS.ReadableStream;
+    stream.on("data", (c: Buffer) => chunks.push(new Uint8Array(c)));
+    stream.on("end", resolve);
+    stream.on("error", reject);
+  });
+  const total = chunks.reduce((acc, c) => acc + c.byteLength, 0);
+  const merged = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    merged.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return merged.buffer as ArrayBuffer;
+}
+
+export async function GET(_req: NextRequest): Promise<Response> {
+  const [photoDataUrl, badgeDataUrl] = await Promise.all([
+    loadImage("cv/photo.jpeg"),
+    loadImage("cv/microsoft-certified-fundamentals-badge.png"),
+  ]);
+
   const element = React.createElement(CVDocument, {
-    data: CV_DATA,
+    data:     CV_DATA,
     photoSrc: photoDataUrl,
+    badgeSrc: badgeDataUrl,
   }) as React.ReactElement<DocumentProps>;
 
-  // 3) Solution : traiter le ReadableStream correctement
   try {
-    const pdfStream = await pdf(element).toBuffer();
+    const result      = await pdf(element).toBuffer();
+    const arrayBuffer = await toArrayBuffer(result);
 
-    // Vérifier si c'est déjà un Buffer (versions anciennes)
-    if (Buffer.isBuffer(pdfStream)) {
-      const body = new Uint8Array(pdfStream);
-      return new Response(body, {
-        status: 200,
-        headers: {
-          "Content-Type": "application/pdf",
-          "Content-Disposition": 'attachment; filename="cv_Abdou_cyber.pdf"',
-          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
-        },
-      });
-    }
-
-    // Si c'est un ReadableStream, le convertir en Buffer
-    const stream = pdfStream as NodeJS.ReadableStream;
-    const chunks: Buffer[] = [];
-
-    return new Promise<Response>((resolve, reject) => {
-      stream.on("data", (chunk: Buffer) => {
-        chunks.push(chunk);
-      });
-
-      stream.on("end", () => {
-        try {
-          const buffer = Buffer.concat(chunks);
-          const body = new Uint8Array(buffer);
-
-          resolve(
-            new Response(body, {
-              status: 200,
-              headers: {
-                "Content-Type": "application/pdf",
-                "Content-Disposition":
-                  'attachment; filename="cv_Abdou_cyber.pdf"',
-                "Cache-Control":
-                  "no-store, no-cache, must-revalidate, max-age=0",
-              },
-            })
-          );
-        } catch (error) {
-          reject(error);
-        }
-      });
-
-      stream.on("error", (error) => {
-        reject(error);
-      });
+    return new Response(arrayBuffer, {
+      status: 200,
+      headers: {
+        "Content-Type":        "application/pdf",
+        "Content-Disposition": 'attachment; filename="CV_Abdoulaye_Toure.pdf"',
+        "Cache-Control":       "no-store, no-cache, must-revalidate, max-age=0",
+      },
     });
-  } catch (error) {
-    // Fallback : utiliser toBlob() si toBuffer() ne fonctionne pas
-    try {
-      const pdfBlob = await pdf(element).toBlob();
-      const arrayBuffer = await pdfBlob.arrayBuffer();
-      const body = new Uint8Array(arrayBuffer);
-
-      return new Response(body, {
-        status: 200,
-        headers: {
-          "Content-Type": "application/pdf",
-          "Content-Disposition": 'attachment; filename="cv_Abdou_cyber.pdf"',
-          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
-        },
-      });
-    } catch (blobError) {
-      console.error("Erreur lors de la génération du PDF:", error, blobError);
-      return new Response("Erreur lors de la génération du PDF", {
-        status: 500,
-      });
-    }
+  } catch (err) {
+    console.error("[CV route] PDF generation error:", err);
+    return new Response("Erreur generation PDF", { status: 500 });
   }
 }

@@ -6,6 +6,12 @@ module.exports = {
     "./src/components/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
-  theme: { extend: {} },
+  theme: {
+    extend: {
+      animation: {
+        "spin-slow": "spin 8s linear infinite",
+      },
+    },
+  },
   plugins: [],
 };
