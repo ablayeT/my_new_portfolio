@@ -1,8 +1,6 @@
-// src/components/home/parts/KPI.tsx
 "use client";
 
 import * as React from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import type { KPITrend } from "@/data/home/home";
 
 export function KPI({
@@ -49,46 +47,35 @@ export function KPI({
   }, [visible, value]);
 
   const trendColor =
-    trend === "up"
-      ? "text-emerald-600"
-      : trend === "down"
-        ? "text-red-600"
-        : "text-slate-500";
+    trend === "up" ? "text-emerald-600 dark:text-emerald-400"
+    : trend === "down" ? "text-red-600"
+    : "text-slate-500";
+
   const chipBg =
-    trend === "up"
-      ? "bg-emerald-50 border-emerald-100"
-      : trend === "down"
-        ? "bg-red-50 border-red-100"
-        : "bg-slate-50 border-slate-100";
+    trend === "up" ? "bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-800"
+    : trend === "down" ? "bg-red-50 border-red-200 dark:bg-red-900/20"
+    : "bg-slate-50 border-slate-200 dark:bg-slate-800 dark:border-slate-700";
+
+  const dotColor =
+    trend === "up" ? "bg-emerald-500"
+    : trend === "down" ? "bg-red-500"
+    : "bg-slate-400";
 
   return (
-    <Card
+    <div
       ref={ref}
-      className="transition-all hover:-translate-y-0.5 hover:shadow-md dark:hover:shadow-black/20"
+      className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:hover:shadow-black/20"
     >
-      <CardContent className="py-6">
-        <div className="text-4xl font-bold tracking-tight">
-          {display}
-          {suffix}
+      <div className="text-4xl font-bold tracking-tight text-foreground">
+        {display}{suffix}
+      </div>
+      <div className="mt-1.5 text-sm text-muted-foreground">{label}</div>
+      {trendValue && (
+        <div className={`mt-3 inline-flex items-center gap-2 rounded-lg border px-2.5 py-1 text-xs font-medium ${chipBg} ${trendColor}`}>
+          <span className={`h-1.5 w-1.5 rounded-full ${dotColor}`} />
+          {trendValue}
         </div>
-        <div className="mt-1 text-slate-500">{label}</div>
-        {trendValue && (
-          <div
-            className={`mt-3 inline-flex items-center gap-2 rounded-md border px-2 py-1 text-sm ${chipBg} ${trendColor}`}
-          >
-            <span
-              className={`inline-block h-2 w-2 rounded-full ${
-                trend === "up"
-                  ? "bg-emerald-500"
-                  : trend === "down"
-                    ? "bg-red-500"
-                    : "bg-slate-400"
-              }`}
-            />
-            {trendValue}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      )}
+    </div>
   );
 }

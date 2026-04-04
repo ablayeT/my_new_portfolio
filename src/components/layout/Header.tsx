@@ -49,7 +49,7 @@ export function Header() {
       >
         <Shield className="h-5 w-5" style={{ color: "var(--tokens-color-brand-purple)" }} />
       </span>
-      <span className="font-semibold">Abdoulaye Touré</span>
+      <span className="font-semibold">Abdoulaye Toure</span>
     </div>
   ), []);
 

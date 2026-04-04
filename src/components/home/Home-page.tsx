@@ -4,7 +4,7 @@ import * as React from "react";
 import { KPI_ITEMS } from "@/data/home/home";
 import { Hero } from "@/components/home/parts/Hero";
 import { KPI } from "@/components/home/parts/KPI";
-import { ProjectFeature } from "@/components/home//parts/ProjectFeature";
+import { ProjectFeature } from "@/components/home/parts/ProjectFeature";
 import { FinalCTA } from "@/components/home/parts/FinalCTA";
 
 export interface HomePageProps {
@@ -17,30 +17,22 @@ export const HomePage: React.FC<HomePageProps> = ({
   className = "",
 }) => {
   return (
-    <div className={["space-y-4", className].filter(Boolean).join(" ")}>
-      {/* décor doux */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[--tokens-color-brand-purple,#7c3aed]/15 blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[--tokens-color-brand-primary,#6d28d9]/15 blur-3xl" />
-      </div>
+    <div className={["space-y-8", className].filter(Boolean).join(" ")}>
 
+      {/* ── Hero ─────────────────────────────────────────────── */}
       <Hero onNavigateToProject={onNavigateToProject} />
 
-      {/* KPIs */}
+      {/* ── KPIs ─────────────────────────────────────────────── */}
       <section className="px-4 sm:px-6">
-        <div className="mx-auto mb-12 max-w-6xl text-center">
-          <h2
-            className="mb-4 text-2xl font-semibold"
-            style={{ color: "var(--color-foreground)" }}
-          >
+        <div className="mx-auto mb-8 max-w-6xl text-center">
+          <h2 className="mb-2 text-2xl font-bold text-foreground">
             Expertise en chiffres
           </h2>
-          <p style={{ color: "var(--color-muted-foreground)" }}>
-            Quelques statistiques sur mon parcours en cybersécurité
+          <p className="text-sm text-muted-foreground">
+            Quelques indicateurs sur mon parcours en cybersécurité
           </p>
         </div>
-
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-3">
           {KPI_ITEMS.map((k) => (
             <KPI
               key={k.label}
@@ -53,23 +45,22 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* ── Projet phare ─────────────────────────────────────── */}
       <section className="px-4 sm:px-6">
-        <div className="mx-auto mb-12 max-w-6xl text-center">
-          <h2
-            className="mb-4 text-2xl font-semibold"
-            style={{ color: "var(--color-foreground)" }}
-          >
+        <div className="mx-auto mb-8 max-w-6xl text-center">
+          <h2 className="mb-2 text-2xl font-bold text-foreground">
             Projet phare
           </h2>
-          <p style={{ color: "var(--color-muted-foreground)" }}>
+          <p className="text-sm text-muted-foreground">
             Découvrez mon laboratoire Purple Team complet
           </p>
         </div>
-
         <ProjectFeature onNavigateToProject={onNavigateToProject} />
       </section>
 
+      {/* ── CTA final ────────────────────────────────────────── */}
       <FinalCTA />
+
     </div>
   );
 };

@@ -1,20 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/components/comp/Button";
-import { Card } from "@/components/comp/Card";
-import { Badge } from "@/components/comp/Badge";
+import Link from "next/link";
 import {
-  Network,
-  GitHub,
-  Download,
-  External,
-  Shield,
-  Terminal,
-  Radar,
-  Mail,
-  ArrowLeft,
-} from "@/components/portfolio/Icons";
+  Network, Github, Download, ExternalLink,
+  Shield, Terminal, Radar, Mail, ArrowLeft,
+  Clock, Zap, Target, TrendingUp,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CVDownloadModal } from "@/components/portfolio/cv-download-modal";
 import { NetworkDiagram } from "@/components/portfolio/Network-diagram";
 
@@ -25,706 +20,344 @@ export interface PurpleTeamProjectProps {
 
 type TabId = "overview" | "red-team" | "blue-team" | "results";
 
-export const PurpleTeamProject: React.FC<PurpleTeamProjectProps> = ({
-  onBack,
-  className = "",
-}) => {
-  const [showDownloadModal, setShowDownloadModal] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState<TabId>("overview");
-  const [showDiagram, setShowDiagram] = React.useState(false);
+const TABS: { id: TabId; label: string; icon: React.ReactNode }[] = [
+  { id: "overview",  label: "Aperçu",     icon: <Shield size={15} /> },
+  { id: "red-team",  label: "Red Team",   icon: <Terminal size={15} /> },
+  { id: "blue-team", label: "Blue Team",  icon: <Radar size={15} /> },
+  { id: "results",   label: "Résultats",  icon: <TrendingUp size={15} /> },
+];
 
-  const kpis = [
-    {
-      label: "Temps de détection",
-      value: "2.3",
-      unit: "min",
-      change: "30% plus rapide",
-      intent: "success" as const,
-    },
-    {
-      label: "Alertes générées",
-      value: "24",
-      change: null,
-      intent: "secondary" as const,
-    },
-    {
-      label: "Taux de précision",
-      value: "94",
-      unit: "%",
-      change: "6% d'amélioration",
-      intent: "success" as const,
-    },
-    {
-      label: "Temps de réponse",
-      value: "5.1",
-      unit: "min",
-      change: "2min plus rapide",
-      intent: "warning" as const,
-    },
-  ];
+const KPIS = [
+  { label: "Temps de détection", value: "2.3", unit: "min", change: "−30%", icon: <Clock size={16} />, color: "text-emerald-500" },
+  { label: "Alertes générées",   value: "24",  unit: "",    change: null,    icon: <Zap size={16} />,   color: "text-blue-500" },
+  { label: "Taux de précision",  value: "94",  unit: "%",   change: "+6%",  icon: <Target size={16} />, color: "text-emerald-500" },
+  { label: "Temps de réponse",   value: "5.1", unit: "min", change: "−2min", icon: <TrendingUp size={16} />, color: "text-amber-500" },
+];
 
-  const attacks = [
-    { phase: "Reconnaissance & Phishing", time: "T+00:00", icon: Mail },
-    { phase: "Initial Access", time: "T+01:30", icon: Terminal },
-    { phase: "Privilege Escalation", time: "T+02:15", icon: Shield },
-    { phase: "Lateral Movement", time: "T+03:00", icon: Network },
-  ];
+const ATTACKS = [
+  { phase: "Reconnaissance & Phishing", time: "T+00:00", icon: Mail, desc: "Reconnaissance OSINT et déploiement campagne phishing avec GoPhish." },
+  { phase: "Initial Access",            time: "T+01:30", icon: Terminal, desc: "Exploitation des vulnérabilités DVWA via Burp Suite et Metasploit." },
+  { phase: "Privilege Escalation",      time: "T+02:15", icon: Shield, desc: "Élévation de privilèges et établissement de persistance." },
+  { phase: "Lateral Movement",          time: "T+03:00", icon: Network, desc: "Reconnaissance interne et déplacement latéral dans l'infrastructure." },
+];
+
+const ALERTS = [
+  { sev: "critical", src: "Suricata", title: "Phishing Email Campaign Detected", desc: "Détection de campagne de phishing ciblant les utilisateurs internes.", ts: "T+00:45" },
+  { sev: "critical", src: "ELK",      title: "Suspicious Process Execution",     desc: "Exécution de processus malveillant détectée sur la VM victime.",    ts: "T+01:45" },
+  { sev: "warn",     src: "Kibana",   title: "Lateral Movement Attempt",         desc: "Tentative de mouvement latéral détectée via analyse des logs réseau.", ts: "T+03:15" },
+];
+
+const TECHS = ["Kali Linux", "ELK Stack", "Suricata", "DVWA", "GoPhish", "Metasploit", "Kibana", "Nginx", "Docker"];
+
+export const PurpleTeamProject: React.FC<PurpleTeamProjectProps> = ({ onBack, className = "" }) => {
+  const [showDownload, setShowDownload] = React.useState(false);
+  const [activeTab, setActiveTab]       = React.useState<TabId>("overview");
+  const [showDiagram, setShowDiagram]   = React.useState(false);
 
   return (
-    <div className={`space-y-8 ${className}`}>
-      {/* Back Navigation */}
-      <div>
-        <Button
-          intent="ghost"
-          size="sm"
-          onClick={onBack}
-          className="min-h-[44px]"
-        >
-          <ArrowLeft size={16} className="mr-2" />
-          Retour aux projets
-        </Button>
+    <div className={["space-y-8", className].filter(Boolean).join(" ")}>
+
+      {/* ── Back ─────────────────────────────────────────────── */}
+      <Button variant="ghost" size="sm" className="gap-2" onClick={onBack}>
+        <ArrowLeft size={15} />
+        Retour aux projets
+      </Button>
+
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
+        <div className="h-[3px] w-full bg-gradient-to-r from-violet-600 via-violet-400 to-transparent" />
+        <div className="px-6 py-10 text-center sm:px-10">
+          {/* Glow */}
+          <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/10 blur-3xl" />
+
+          <div className="relative">
+            <div className="mb-5 flex justify-center">
+              <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-muted/30">
+                <Network size={36} className="text-violet-600" />
+              </span>
+            </div>
+
+            <div className="mb-4 flex flex-wrap justify-center gap-2">
+              <Badge variant="secondary" className="rounded-full">Purple Team</Badge>
+              <Badge variant="secondary" className="rounded-full">Infrastructure</Badge>
+              <Badge variant="secondary" className="rounded-full">MITRE ATT&CK</Badge>
+            </div>
+
+            <h1 className="mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl text-foreground">
+              Purple Team Lab Infrastructure
+            </h1>
+            <p className="mx-auto mb-8 max-w-2xl text-sm text-muted-foreground leading-relaxed sm:text-base">
+              Architecture réseau complète pour simulations d&apos;attaques et défense avec
+              monitoring en temps réel. Un laboratoire complet pour la formation et
+              l&apos;évaluation des capacités de sécurité.
+            </p>
+
+            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button asChild className="gap-2">
+                <Link href="https://github.com/ablayeT?tab=repositories" target="_blank">
+                  <Github size={16} />
+                  Voir sur GitHub
+                </Link>
+              </Button>
+              <Button variant="outline" className="gap-2" onClick={() => setShowDiagram(true)}>
+                <Network size={16} />
+                Diagramme réseau
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Hero */}
-      <section className="py-8 text-center">
-        <div
-          style={{
-            marginBottom: "var(--tokens-spacing-24,24px)",
-            color: "var(--tokens-color-brand-purple)",
-          }}
-        >
-          <Network className="mx-auto mb-4" size={64} />
-        </div>
+      {/* ── KPIs ─────────────────────────────────────────────── */}
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {KPIS.map((k) => (
+          <div key={k.label} className="rounded-xl border border-border bg-card p-4 shadow-sm">
+            <div className={`mb-2 ${k.color}`}>{k.icon}</div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-bold text-foreground">{k.value}</span>
+              {k.unit && <span className="text-sm text-muted-foreground">{k.unit}</span>}
+            </div>
+            <p className="text-xs text-muted-foreground">{k.label}</p>
+            {k.change && (
+              <p className={`mt-1 text-xs font-medium ${k.color}`}>{k.change}</p>
+            )}
+          </div>
+        ))}
+      </div>
 
-        <h1
-          style={{
-            fontSize:
-              "clamp(var(--tokens-text-h2-28,28px), 4vw, var(--tokens-text-h1-36,36px))",
-            fontWeight: 700,
-            color: "var(--color-foreground,#0b1324)",
-            marginBottom: "var(--tokens-spacing-16,16px)",
-            lineHeight: 1.2,
-          }}
-        >
-          Purple Team Lab Infrastructure
-        </h1>
-
-        <p
-          style={{
-            color: "var(--color-muted-foreground,#6b7280)",
-            fontSize: "var(--tokens-text-body-16,16px)",
-            maxWidth: "48rem",
-            margin: "0 auto",
-            marginBottom: "var(--tokens-spacing-32,32px)",
-            lineHeight: 1.6,
-            padding: "0 var(--tokens-spacing-16,16px)",
-          }}
-        >
-          Architecture réseau complète pour simulations d&apos;attaques et
-          défense avec monitoring en temps réel. Un laboratoire complet pour la
-          formation et l&apos;évaluation des capacités de sécurité.
-        </p>
-
-        <div className="flex flex-col justify-center gap-4 px-4 sm:flex-row">
-          <a href="https://github.com/ablayeT?tab=repositories">
-            <Button
-              intent="primary"
-              size="lg"
-              className="min-h-[44px] w-full sm:w-auto"
-            >
-              <GitHub size={18} className="mr-2" />
-              <span className="hidden sm:inline">Voir le dépôt GitHub</span>
-              <span className="sm:hidden">GitHub</span>
-            </Button>
-          </a>
-
-          <Button
-            intent="secondary"
-            size="lg"
-            className="min-h-[44px] w-full sm:w-auto"
-            onClick={() => setShowDiagram(true)}
-          >
-            <Network size={18} className="mr-2" />
-            <span className="hidden sm:inline">Voir le diagramme</span>
-            <span className="sm:hidden">Diagramme</span>
-          </Button>
-        </div>
-      </section>
-
-      {/* Tabs (style Figma) */}
-      <div
-        style={{
-          borderBottom: "1px solid var(--color-border,#e5e7eb)",
-          overflowX: "auto",
-          msOverflowStyle: "none",
-          scrollbarWidth: "none",
-        }}
-      >
-        <div className="min-w-max px-4 sm:px-0 flex gap-1">
-          {[
-            {
-              id: "overview" as TabId,
-              label: "Aperçu",
-              icon: <Shield size={16} />,
-            },
-            {
-              id: "red-team" as TabId,
-              label: "Red Team",
-              icon: <Terminal size={16} />,
-            },
-            {
-              id: "blue-team" as TabId,
-              label: "Blue Team",
-              icon: <Radar size={16} />,
-            },
-            {
-              id: "results" as TabId,
-              label: "Résultats",
-              icon: <Network size={16} />,
-            },
-          ].map((tab) => {
-            const isActive = activeTab === tab.id;
+      {/* ── Tabs ─────────────────────────────────────────────── */}
+      <div>
+        {/* Tab bar */}
+        <div className="flex gap-1 overflow-x-auto rounded-xl border border-border bg-muted/30 p-1">
+          {TABS.map((tab) => {
+            const active = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                style={{
-                  padding:
-                    "var(--tokens-spacing-8,8px) var(--tokens-spacing-12,12px)",
-                  borderRadius:
-                    "var(--tokens-radius-8,8px) var(--tokens-radius-8,8px) 0 0",
-                  fontWeight: 500,
-                  fontSize: "var(--tokens-text-body-14,14px)",
-                  transition: "all 0.15s ease-out",
-                  minHeight: "44px",
-                  whiteSpace: "nowrap",
-                  flexShrink: 0,
-                  backgroundColor: isActive
-                    ? "var(--color-background,#fff)"
-                    : "transparent",
-                  color: isActive
-                    ? "var(--tokens-color-brand-purple,#6d28d9)"
-                    : "var(--color-muted-foreground,#6b7280)",
-                  border: isActive
-                    ? "1px solid var(--color-border,#e5e7eb)"
-                    : "none",
-                  borderBottom: isActive ? "1px solid transparent" : "none",
-                  marginBottom: isActive ? "-1px" : "0",
-                }}
-                className="focus:outline-none focus:ring-2 focus:ring-[var(--color-ring,#6366f1)] hover:text-[var(--color-foreground,#0b1324)] hover:bg-[color:var(--color-muted,#f3f4f6)]/50"
+                className={[
+                  "flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all",
+                  active
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
+                ].join(" ")}
               >
-                <div className="flex items-center gap-2">
-                  {tab.icon}
-                  <span className="hidden sm:inline">{tab.label}</span>
-                  <span className="sm:hidden">
-                    {tab.label === "Aperçu"
-                      ? "Aperçu"
-                      : tab.label === "Red Team"
-                        ? "Red"
-                        : tab.label === "Blue Team"
-                          ? "Blue"
-                          : "Résultats"}
-                  </span>
-                </div>
+                {tab.icon}
+                <span className="hidden sm:inline">{tab.label}</span>
               </button>
             );
           })}
         </div>
-      </div>
 
-      {/* Tab Content */}
-      <div className="px-4 sm:px-0">
+        {/* ── Tab : Overview ─────────────────────────────────── */}
         {activeTab === "overview" && (
-          <div className="space-y-8">
-            {/* Aperçu */}
-            <Card
-              elev={1}
-              withHeader
-              header={
-                <h2
-                  className="font-semibold"
-                  style={{ fontSize: "var(--tokens-text-h3-22,22px)" }}
-                >
-                  Aperçu du projet
-                </h2>
-              }
-            >
-              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                <div>
-                  <h3
-                    className="mb-4 font-semibold"
-                    style={{ color: "var(--color-foreground,#0b1324)" }}
-                  >
-                    Objectif
-                  </h3>
-                  <p
-                    className="mb-6"
-                    style={{
-                      color: "var(--color-muted-foreground,#6b7280)",
-                      fontSize: "var(--tokens-text-body-16,16px)",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    Créer un environnement de simulation Purple Team permettant
-                    de tester des scénarios d&apos;attaque réalistes tout en
-                    développant et validant les capacités de détection et de
-                    réponse.
-                  </p>
+          <div className="mt-6 space-y-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-                  <h3
-                    className="mb-4 font-semibold"
-                    style={{ color: "var(--color-foreground,#0b1324)" }}
-                  >
-                    Technologies clés
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base">Objectif du projet</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Créer un environnement de simulation Purple Team permettant de tester
+                    des scénarios d&apos;attaque réalistes tout en développant et validant
+                    les capacités de détection et de réponse.
+                  </p>
+                  <ul className="space-y-1.5 text-sm text-muted-foreground">
                     {[
-                      "Kali Linux",
-                      "ELK Stack",
-                      "Suricata",
-                      "DVWA",
-                      "GoPhish",
-                      "Metasploit",
-                      "Kibana",
-                      "Nginx",
-                      "Docker",
-                    ].map((tech) => (
-                      <Badge key={tech} intent="secondary">
-                        {tech}
-                      </Badge>
+                      "Infrastructure réseau segmentée (Public, DMZ, Private)",
+                      "Scénarios d'attaque MITRE ATT&CK complets",
+                      "Monitoring et détection en temps réel",
+                      "Dashboards d'analyse et de reporting",
+                      "Automatisation des réponses aux incidents",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base">Technologies utilisées</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {TECHS.map((t) => (
+                      <span key={t} className="rounded-lg border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-muted-foreground">
+                        {t}
+                      </span>
                     ))}
                   </div>
-                </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        )}
 
-                <div>
-                  <h3
-                    className="mb-4 font-semibold"
-                    style={{ color: "var(--color-foreground,#0b1324)" }}
-                  >
-                    Portée
-                  </h3>
-                  <ul
-                    className="space-y-2"
-                    style={{
-                      color: "var(--color-muted-foreground,#6b7280)",
-                      fontSize: "var(--tokens-text-body-14,14px)",
-                    }}
-                  >
-                    <li>
-                      • Infrastructure réseau segmentée (Public, DMZ, Private)
-                    </li>
-                    <li>• Scénarios d&apos;attaque MITRE ATT&CK complets</li>
-                    <li>• Monitoring et détection en temps réel</li>
-                    <li>• Dashboards d&apos;analyse et de reporting</li>
-                    <li>• Automatisation des réponses aux incidents</li>
-                  </ul>
-                </div>
-              </div>
-            </Card>
-
-            {/* KPIs */}
-            <Card
-              elev={1}
-              withHeader
-              header={
-                <h2
-                  className="font-semibold"
-                  style={{ fontSize: "var(--tokens-text-h3-22,22px)" }}
-                >
-                  Statistiques du laboratoire
-                </h2>
-              }
-            >
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                {kpis.map((k) => (
-                  <div
-                    key={k.label}
-                    className="rounded-[8px] border p-4"
-                    style={{
-                      backgroundColor:
-                        "var(--tokens-color-neutral-100,#f5f7fa)",
-                    }}
-                  >
-                    <p
-                      className="mb-2 text-[12px]"
-                      style={{ color: "var(--color-muted-foreground,#6b7280)" }}
-                    >
-                      {k.label}
-                    </p>
-                    <div className="mb-1 flex items-baseline gap-1">
-                      <span
-                        className="text-[22px] font-semibold"
-                        style={{
-                          color: "var(--tokens-color-brand-primary,#1B2A4A)",
-                        }}
-                      >
-                        {k.value}
-                      </span>
-                      {k.unit && (
-                        <span
-                          className="text-[14px]"
-                          style={{
-                            color: "var(--color-muted-foreground,#6b7280)",
-                          }}
-                        >
-                          {k.unit}
+        {/* ── Tab : Red Team ─────────────────────────────────── */}
+        {activeTab === "red-team" && (
+          <div className="mt-6">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Terminal size={16} className="text-red-500" />
+                  Phase Red Team — Simulation d&apos;attaque
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  Scénario d&apos;attaque complet suivant la kill chain : reconnaissance,
+                  initial access, exécution, persistance et exfiltration.
+                </p>
+                <div className="space-y-3">
+                  {ATTACKS.map((a, i) => {
+                    const Icon = a.icon;
+                    return (
+                      <div key={i} className="flex items-start gap-4 rounded-xl border border-border bg-muted/10 p-4">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-500/10 text-red-500">
+                          <Icon size={16} />
                         </span>
-                      )}
-                    </div>
-                    {k.change && (
-                      <p
-                        className="text-[12px]"
-                        style={{
-                          color: "var(--color-feedback-success,#059669)",
-                        }}
-                      >
-                        {k.change}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="mb-1 flex flex-wrap items-center gap-2">
+                            <span className="text-sm font-medium text-foreground">
+                              Phase {i + 1} : {a.phase}
+                            </span>
+                            <Badge variant="destructive" className="text-[10px]">{a.time}</Badge>
+                          </div>
+                          <p className="text-xs text-muted-foreground">{a.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
             </Card>
           </div>
         )}
 
-        {activeTab === "red-team" && (
-          <Card
-            elev={1}
-            withHeader
-            header={
-              <div className="flex items-center gap-2">
-                <span
-                  style={{
-                    color: "var(--tokens-color-feedback-danger,#dc2626)",
-                  }}
-                >
-                  <Terminal size={20} />
-                </span>
-                <h2
-                  className="font-semibold"
-                  style={{ fontSize: "var(--tokens-text-h3-22,22px)" }}
-                >
-                  Phase Red Team - Simulation d&apos;attaque
-                </h2>
-              </div>
-            }
-          >
-            <p
-              className="mb-6"
-              style={{
-                color: "var(--color-muted-foreground,#6b7280)",
-                fontSize: "var(--tokens-text-body-16,16px)",
-              }}
-            >
-              Scénario d&apos;attaque complet suivant la kill chain :
-              reconnaissance, initial access, exécution, persistance et
-              exfiltration.
-            </p>
-
-            <div className="space-y-4">
-              {attacks.map((a, i) => {
-                const Icon = a.icon;
-                return (
-                  <div
-                    key={i}
-                    className="flex items-start gap-4 rounded-[8px] p-4"
-                    style={{
-                      backgroundColor:
-                        "var(--tokens-color-neutral-100,#f5f7fa)",
-                    }}
-                  >
-                    <div
-                      className="rounded-[8px] p-2"
-                      style={{
-                        backgroundColor: "var(--color-feedback-danger,#dc2626)",
-                      }}
-                    >
-                      <Icon size={16} className="text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="mb-2 flex items-center gap-2">
-                        <h4 className="font-medium">
-                          Phase {i + 1}: {a.phase}
-                        </h4>
-                        <Badge intent="danger" size="sm">
-                          {a.time}
-                        </Badge>
-                      </div>
-                      <p
-                        className="text-[14px]"
-                        style={{
-                          color: "var(--color-muted-foreground,#6b7280)",
-                        }}
-                      >
-                        {a.phase === "Reconnaissance & Phishing" &&
-                          "Reconnaissance OSINT et déploiement campagne phishing avec GoPhish."}
-                        {a.phase === "Initial Access" &&
-                          "Exploitation des vulnérabilités DVWA via Burp Suite et Metasploit."}
-                        {a.phase === "Privilege Escalation" &&
-                          "Élévation de privilèges et établissement de persistance."}
-                        {a.phase === "Lateral Movement" &&
-                          "Reconnaissance interne et déplacement latéral dans l'infrastructure."}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        )}
-
+        {/* ── Tab : Blue Team ────────────────────────────────── */}
         {activeTab === "blue-team" && (
-          <Card
-            elev={1}
-            withHeader
-            header={
-              <div className="flex items-center gap-2">
-                <span
-                  style={{ color: "var(--tokens-color-feedback-info,#2563eb)" }}
-                >
-                  <Radar size={20} />
-                </span>
-                <h2
-                  className="font-semibold"
-                  style={{ fontSize: "var(--tokens-text-h3-22,22px)" }}
-                >
-                  Phase Blue Team - Détection et réponse
-                </h2>
-              </div>
-            }
-          >
-            <div className="space-y-6">
-              {/* KPIs */}
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                {kpis.map((k) => (
-                  <div
-                    key={k.label}
-                    className="rounded-[8px] border p-4"
-                    style={{
-                      backgroundColor:
-                        "var(--tokens-color-neutral-100,#f5f7fa)",
-                    }}
-                  >
-                    <p
-                      className="mb-2 text-[12px]"
-                      style={{ color: "var(--color-muted-foreground,#6b7280)" }}
-                    >
-                      {k.label}
-                    </p>
-                    <div className="mb-1 flex items-baseline gap-1">
-                      <span
-                        className="text-[20px] font-semibold"
-                        style={{
-                          color: "var(--tokens-color-brand-primary,#1B2A4A)",
-                        }}
-                      >
-                        {k.value}
-                      </span>
-                      {k.unit && (
-                        <span
-                          className="text-[14px]"
-                          style={{
-                            color: "var(--color-muted-foreground,#6b7280)",
-                          }}
+          <div className="mt-6">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Radar size={16} className="text-blue-500" />
+                  Phase Blue Team — Détection et réponse
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  {ALERTS.map((a, i) => (
+                    <div key={i} className="rounded-xl border border-border bg-muted/10 p-4">
+                      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className={a.sev === "critical" ? "text-red-500" : "text-amber-500"}>
+                            ▲
+                          </span>
+                          <span className="text-sm font-medium text-foreground">{a.title}</span>
+                          <Badge variant="secondary" className="text-[10px]">{a.src}</Badge>
+                        </div>
+                        <Badge
+                          variant={a.sev === "critical" ? "destructive" : "outline"}
+                          className="text-[10px]"
                         >
-                          {k.unit}
-                        </span>
-                      )}
-                    </div>
-                    {k.change && (
-                      <p
-                        className="text-[12px]"
-                        style={{
-                          color: "var(--color-feedback-success,#059669)",
-                        }}
-                      >
-                        {k.change}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Alertes */}
-              <div className="space-y-4">
-                <h3
-                  className="mb-2 font-semibold"
-                  style={{
-                    fontSize: "var(--tokens-text-h3-22,22px)",
-                    color: "var(--color-foreground,#0b1324)",
-                  }}
-                >
-                  Alertes de sécurité détectées
-                </h3>
-
-                {[
-                  {
-                    sev: "critical",
-                    src: "Suricata",
-                    title: "Phishing Email Campaign Detected",
-                    desc: "Détection de campagne de phishing ciblant les utilisateurs internes.",
-                    ts: "T+00:45",
-                  },
-                  {
-                    sev: "critical",
-                    src: "ELK",
-                    title: "Suspicious Process Execution",
-                    desc: "Exécution de processus malveillant détectée sur la VM victime.",
-                    ts: "T+01:45",
-                  },
-                  {
-                    sev: "warn",
-                    src: "Kibana",
-                    title: "Lateral Movement Attempt",
-                    desc: "Tentative de mouvement latéral détectée via analyse des logs réseau.",
-                    ts: "T+03:15",
-                  },
-                ].map((d, i) => (
-                  <div key={i} className="rounded-[8px] border p-4">
-                    <div className="mb-2 flex items-start justify-between">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={
-                            d.sev === "critical"
-                              ? "text-[var(--color-feedback-danger,#dc2626)]"
-                              : "text-[var(--color-feedback-warning,#d97706)]"
-                          }
-                        >
-                          ▲
-                        </span>
-                        <h4 className="font-medium">{d.title}</h4>
-                        <Badge intent="secondary" size="sm">
-                          {d.src}
+                          {a.ts}
                         </Badge>
                       </div>
-                      <Badge
-                        intent={d.sev === "critical" ? "danger" : "warning"}
-                        size="sm"
-                      >
-                        {d.ts}
-                      </Badge>
+                      <p className="text-xs text-muted-foreground">{a.desc}</p>
                     </div>
-                    <p
-                      className="text-[14px]"
-                      style={{ color: "var(--color-muted-foreground,#6b7280)" }}
-                    >
-                      {d.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         )}
 
+        {/* ── Tab : Résultats ────────────────────────────────── */}
         {activeTab === "results" && (
-          <div className="space-y-8">
-            <Card
-              elev={1}
-              withHeader
-              header={
-                <h2
-                  className="font-semibold"
-                  style={{ fontSize: "var(--tokens-text-h3-22,22px)" }}
-                >
-                  Résultats et leçons apprises
-                </h2>
-              }
-            >
-              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                <div>
-                  <h3
-                    className="mb-4 font-semibold"
-                    style={{ color: "var(--color-feedback-success,#059669)" }}
-                  >
-                    ✅ Points forts identifiés
-                  </h3>
-                  <ul
-                    className="space-y-2 text-[14px]"
-                    style={{ color: "var(--color-muted-foreground,#6b7280)" }}
-                  >
-                    <li>• Détection efficace des campagnes de phishing</li>
-                    <li>
-                      • Corrélation automatique des événements de sécurité
-                    </li>
-                    <li>
-                      • Temps de réponse optimisé grâce à l&apos;automatisation
-                    </li>
-                    <li>• Visibilité complète sur l&apos;infrastructure</li>
+          <div className="mt-6 space-y-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base text-emerald-600">✅ Points forts</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {[
+                      "Détection efficace des campagnes de phishing",
+                      "Corrélation automatique des événements de sécurité",
+                      "Temps de réponse optimisé grâce à l'automatisation",
+                      "Visibilité complète sur l'infrastructure",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+                        {item}
+                      </li>
+                    ))}
                   </ul>
-                </div>
-                <div>
-                  <h3
-                    className="mb-4 font-semibold"
-                    style={{ color: "var(--color-feedback-warning,#d97706)" }}
-                  >
-                    ⚠️ Axes d&apos;amélioration
-                  </h3>
-                  <ul
-                    className="space-y-2 text-[14px]"
-                    style={{ color: "var(--color-muted-foreground,#6b7280)" }}
-                  >
-                    <li>
-                      • Réduction des faux positifs sur les alertes réseau
-                    </li>
-                    <li>
-                      • Amélioration de la détection des mouvements latéraux
-                    </li>
-                    <li>
-                      • Intégration de l&apos;intelligence artificielle pour
-                      l&apos;analyse
-                    </li>
-                    <li>• Extension du périmètre de monitoring</li>
-                  </ul>
-                </div>
-              </div>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card
-              elev={1}
-              withHeader
-              header={
-                <h2
-                  className="font-semibold"
-                  style={{ fontSize: "var(--tokens-text-h3-22,22px)" }}
-                >
-                  Ressources et liens
-                </h2>
-              }
-            >
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <Button intent="primary" className="min-h-[44px]">
-                  <GitHub size={18} className="mr-2" />
-                  Code source GitHub
-                </Button>
-                <Button
-                  intent="secondary"
-                  className="min-h-[44px]"
-                  onClick={() => setShowDownloadModal(true)}
-                >
-                  <Download size={18} className="mr-2" />
-                  Rapport détaillé (PDF)
-                </Button>
-                <Button intent="secondary" className="min-h-[44px]">
-                  <External size={18} className="mr-2" />
-                  Présentation (Slides)
-                </Button>
-              </div>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base text-amber-600">⚠️ Axes d&apos;amélioration</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {[
+                      "Réduction des faux positifs sur les alertes réseau",
+                      "Amélioration de la détection des mouvements latéraux",
+                      "Intégration de l'IA pour l'analyse comportementale",
+                      "Extension du périmètre de monitoring",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Ressources */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base">Ressources</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Button asChild className="gap-2">
+                    <Link href="https://github.com/ablayeT?tab=repositories" target="_blank">
+                      <Github size={15} />
+                      Code source GitHub
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="gap-2" onClick={() => setShowDownload(true)}>
+                    <Download size={15} />
+                    Rapport PDF
+                  </Button>
+                  <Button variant="outline" className="gap-2" asChild>
+                    <Link href="/projects">
+                      <ExternalLink size={15} />
+                      Tous les projets
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
             </Card>
           </div>
         )}
       </div>
 
-      {/* Modal */}
-      <CVDownloadModal
-        isOpen={showDownloadModal}
-        onClose={() => setShowDownloadModal(false)}
-      />
-      <NetworkDiagram
-        open={showDiagram}
-        onClose={() => setShowDiagram(false)}
-      />
+      {/* ── Modals ───────────────────────────────────────────── */}
+      <CVDownloadModal isOpen={showDownload} onClose={() => setShowDownload(false)} />
+      <NetworkDiagram open={showDiagram} onClose={() => setShowDiagram(false)} />
     </div>
   );
 };

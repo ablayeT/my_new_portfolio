@@ -1,6 +1,5 @@
 // src/data/home/home.ts
 
-/** ---------- Thème & textes ---------- */
 export const THEME = {
   brand: "var(--tokens-color-brand-purple, #6c5ce7)",
   textDefault: "var(--tokens-semantic-text-default, var(--color-foreground))",
@@ -10,7 +9,7 @@ export const THEME = {
 export const HERO = {
   title: "INGÉNIEUR CYBERSÉCURITÉ",
   subtitle:
-    "De l'administration système à la sécurité offensive.J'aide les entreprises à sécuriser leurs infrastructures en combinant l'automatisation défensive et les techniques d'audit offensif (Pentest & Threat Hunting).",
+    "De l'administration système à la sécurité offensive. J'aide les entreprises à sécuriser leurs infrastructures en combinant l'automatisation défensive et les techniques d'audit offensif (Pentest & Threat Hunting).",
   ctaPrimaryLabel: "Voir le projet Purple Team",
   ctaSecondaryLabel: "Télécharger mon CV",
   projectHref: "/projects/purple-team",
@@ -18,12 +17,11 @@ export const HERO = {
 
 export const FINAL_CTA = {
   title: "Prêt à collaborer ?",
-  text: "Je recherche une alternance en Master Cybersécurité pour septembre 2025. Contactez-moi pour discuter d’opportunités.",
+  text: "Je recherche une alternance en cybersécurité. Contactez-moi pour discuter d'opportunités.",
   ctaContact: "Me contacter",
   ctaCv: "Voir mon CV",
 } as const;
 
-/** ---------- KPI ---------- */
 export type KPITrend = "up" | "down" | "neutral";
 export type KPIItem = {
   label: string;
@@ -35,24 +33,28 @@ export type KPIItem = {
 
 export const KPI_ITEMS: ReadonlyArray<KPIItem> = [
   {
-    label: "Projets publiés",
-    value: 12,
+    label: "Années d'expérience",
+    value: 3,
     trend: "up",
-    trendValue: "3 nouveaux cette année",
+    trendValue: "En progression",
   },
   {
-    label: "Articles de blog",
-    value: 28,
+    label: "Projets cybersécurité",
+    value: 8,
     trend: "up",
-    trendValue: "5 ce mois-ci",
+    trendValue: "Labs + Prod",
   },
-  { label: "Certifications", value: 3, trend: "neutral" },
+  {
+    label: "Certifications",
+    value: 3,
+    trend: "up",
+    trendValue: "SC-900 obtenue",
+  },
 ] as const;
 
-/** ---------- Données du projet (titre/techs/objectifs) ---------- */
 export const PROJECT = {
   title: "Purple Team Lab Infrastructure",
-  subtitle: "Architecture réseau pour simulations d’attaques & défense",
+  subtitle: "Architecture réseau pour simulations d'attaques & défense",
   objectives: [
     "Simulation d'attaques réalistes en environnement contrôlé",
     "Détection & analyse des techniques MITRE ATT&CK",
@@ -71,7 +73,6 @@ export const PROJECT = {
   ],
 } as const;
 
-/** ---------- Types & données pour l’aperçu d’architecture ---------- */
 export const ICON_NAMES = [
   "Terminal",
   "Server",
@@ -80,7 +81,6 @@ export const ICON_NAMES = [
   "Shield",
 ] as const;
 export type IconName = (typeof ICON_NAMES)[number];
-
 export type ToneName = "red" | "amber" | "sky" | "slate" | "brand";
 
 export type ArchitectureItem = {
@@ -106,7 +106,6 @@ export type ArchitectureData = {
   flows: ArchitectureFlows;
 };
 
-// Helper pour typer sans `satisfies`
 function makeArchitecture<T extends ArchitectureData>(a: T): T {
   return a;
 }
@@ -116,46 +115,21 @@ export const ARCHITECTURE = makeArchitecture({
     {
       title: "Public Subnet",
       items: [
-        {
-          icon: "Terminal",
-          tone: "red",
-          title: "VM Attaquant",
-          subtitle: "Kali Linux",
-        },
-        {
-          icon: "Server",
-          tone: "brand",
-          title: "VM Portfolio",
-          subtitle: "Nginx + Next.js",
-        },
+        { icon: "Terminal", tone: "red",   title: "VM Attaquant",  subtitle: "Kali Linux" },
+        { icon: "Server",   tone: "brand", title: "VM Portfolio",  subtitle: "Nginx + Next.js" },
       ],
     },
     {
       title: "DMZ Subnet",
       items: [
-        {
-          icon: "Mail",
-          tone: "amber",
-          title: "VM Phishing",
-          subtitle: "GoPhish + SMTP",
-        },
-        {
-          icon: "Radar",
-          tone: "sky",
-          title: "VM Surveillance",
-          subtitle: "ELK + Suricata",
-        },
+        { icon: "Mail",  tone: "amber", title: "VM Phishing",    subtitle: "GoPhish + SMTP" },
+        { icon: "Radar", tone: "sky",   title: "VM Surveillance", subtitle: "ELK + Suricata" },
       ],
     },
     {
       title: "Private Subnet",
       items: [
-        {
-          icon: "Shield",
-          tone: "slate",
-          title: "VM Victime",
-          subtitle: "Ubuntu + DVWA",
-        },
+        { icon: "Shield", tone: "slate", title: "VM Victime", subtitle: "Ubuntu + DVWA" },
       ],
     },
   ],
