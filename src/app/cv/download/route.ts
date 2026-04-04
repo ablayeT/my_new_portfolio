@@ -5,13 +5,14 @@ import { join } from "node:path";
 import { pdf, type DocumentProps } from "@react-pdf/renderer";
 import { CVDocument } from "@/components/cv/pdf/CVDocument";
 import { CV_DATA } from "@/data/cv/cv";
+import { CV_DATA_EN } from "@/data/cv/cv.en";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 async function loadImage(relativePath: string): Promise<string | undefined> {
   try {
-    const ext = relativePath.split(".").pop()?.toLowerCase();
+    const ext = relativePath.split(".").pop()?.toLowerCase() ?? "jpeg";
     const mime = ext === "png" ? "image/png" : "image/jpeg";
     const buf = await readFile(join(process.cwd(), "public", relativePath));
     return `data:${mime};base64,${buf.toString("base64")}`;
@@ -20,16 +21,14 @@ async function loadImage(relativePath: string): Promise<string | undefined> {
   }
 }
 
-async function toArrayBuffer(result: unknown): Promise<ArrayBuffer> {
-  if (Buffer.isBuffer(result)) {
-    // Copie propre du buffer pour obtenir un ArrayBuffer standalone
-    const copy = new Uint8Array(result);
+async function toArrayBuffer(input: unknown): Promise<ArrayBuffer> {
+  if (Buffer.isBuffer(input)) {
+    const copy = new Uint8Array(input);
     return copy.buffer as ArrayBuffer;
   }
-  // Fallback ReadableStream
   const chunks: Uint8Array[] = [];
   await new Promise<void>((resolve, reject) => {
-    const stream = result as NodeJS.ReadableStream;
+    const stream = input as NodeJS.ReadableStream;
     stream.on("data", (c: Buffer) => chunks.push(new Uint8Array(c)));
     stream.on("end", resolve);
     stream.on("error", reject);
@@ -44,14 +43,27 @@ async function toArrayBuffer(result: unknown): Promise<ArrayBuffer> {
   return merged.buffer as ArrayBuffer;
 }
 
-export async function GET(_req: NextRequest): Promise<Response> {
+export async function GET(req: NextRequest): Promise<Response> {
+  const lang    = (req.nextUrl.searchParams.get("lang") ?? "fr") as "fr" | "en";
+  const preview = req.nextUrl.searchParams.get("preview") === "1";
+
+  const data =
+    lang === "en"
+      ? { ...CV_DATA_EN, lang: "en" as const }
+      : { ...CV_DATA,    lang: "fr" as const };
+
+  const filename =
+    lang === "en"
+      ? "CV_Abdoulaye_Toure_EN.pdf"
+      : "CV_Abdoulaye_Toure_FR.pdf";
+
   const [photoDataUrl, badgeDataUrl] = await Promise.all([
     loadImage("cv/photo.jpeg"),
     loadImage("cv/microsoft-certified-fundamentals-badge.png"),
   ]);
 
   const element = React.createElement(CVDocument, {
-    data:     CV_DATA,
+    data,
     photoSrc: photoDataUrl,
     badgeSrc: badgeDataUrl,
   }) as React.ReactElement<DocumentProps>;
@@ -63,9 +75,12 @@ export async function GET(_req: NextRequest): Promise<Response> {
     return new Response(arrayBuffer, {
       status: 200,
       headers: {
-        "Content-Type":        "application/pdf",
-        "Content-Disposition": 'attachment; filename="CV_Abdoulaye_Toure.pdf"',
-        "Cache-Control":       "no-store, no-cache, must-revalidate, max-age=0",
+        "Content-Type": "application/pdf",
+        // inline = aperçu dans le navigateur | attachment = téléchargement forcé
+        "Content-Disposition": preview
+          ? `inline; filename="${filename}"`
+          : `attachment; filename="${filename}"`,
+        "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
       },
     });
   } catch (err) {

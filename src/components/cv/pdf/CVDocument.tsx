@@ -5,7 +5,49 @@ import {
 } from "@react-pdf/renderer";
 import { styles } from "@/components/styles/CVDocument_styles";
 
+// ── Traductions ───────────────────────────────────────────────────────────
+const LABELS = {
+  fr: {
+    experiences: "Experiences professionnelles",
+    formations:  "Formations",
+    competences: "Competences",
+    projets:     "Projets",
+    liens:       "Liens",
+    softSkills:  "Soft Skills",
+    langues:     "Langues",
+    socBlue:     "SOC & Blue Team",
+    pentest:     "Pentest & Red Team",
+    systemes:    "Systemes & Reseau",
+    autodev:     "Automatisation & Dev",
+    outils:      "Outils",
+    langages:    "Langages",
+    francais:    "Francais",
+    anglais:     "Anglais",
+    espagnol:    "Espagnol",
+  },
+  en: {
+    experiences: "Professional Experience",
+    formations:  "Education",
+    competences: "Skills",
+    projets:     "Projects",
+    liens:       "Links",
+    softSkills:  "Soft Skills",
+    langues:     "Languages",
+    socBlue:     "SOC & Blue Team",
+    pentest:     "Pentest & Red Team",
+    systemes:    "Systems & Network",
+    autodev:     "Automation & Dev",
+    outils:      "Tools",
+    langages:    "Programming Languages",
+    francais:    "French",
+    anglais:     "English",
+    espagnol:    "Spanish",
+  },
+};
+
+// ── Types ─────────────────────────────────────────────────────────────────
 export type CVData = {
+  lang?: "fr" | "en";
   identity: {
     name: string;
     title: string;
@@ -59,6 +101,7 @@ export type CVData = {
 
 type Props = { data: CVData; photoSrc?: string; badgeSrc?: string };
 
+// ── Helpers ───────────────────────────────────────────────────────────────
 function toChips(str: string): string[] {
   return str.split(/[,·]/).map((s) => s.trim()).filter(Boolean);
 }
@@ -72,6 +115,7 @@ function SectionHead({ title }: { title: string }) {
   );
 }
 
+// ── Composant principal ───────────────────────────────────────────────────
 export function CVDocument({ data, photoSrc, badgeSrc }: Props): ReactElement<DocumentProps> {
   const {
     identity,
@@ -83,15 +127,17 @@ export function CVDocument({ data, photoSrc, badgeSrc }: Props): ReactElement<Do
     personal,
   } = data;
 
+  // Traduction selon la langue
+  const lang = data.lang ?? "fr";
+  const t = LABELS[lang];
+
   const skillSections: { label: string; chips: string[] }[] = [
-    { label: "SOC & Blue Team",      chips: toChips(skills.security) },
-    ...(skills.red
-      ? [{ label: "Pentest & Red Team", chips: toChips(skills.red) }]
-      : []),
-    { label: "Systemes & Reseau",    chips: toChips(skills.systems) },
-    { label: "Automatisation & Dev", chips: toChips(skills.dev) },
-    { label: "Outils",               chips: toChips(skills.tools) },
-    { label: "Langages",             chips: toChips(skills.language) },
+    { label: t.socBlue,  chips: toChips(skills.security) },
+    ...(skills.red ? [{ label: t.pentest, chips: toChips(skills.red) }] : []),
+    { label: t.systemes, chips: toChips(skills.systems) },
+    { label: t.autodev,  chips: toChips(skills.dev) },
+    { label: t.outils,   chips: toChips(skills.tools) },
+    { label: t.langages, chips: toChips(skills.language) },
   ];
 
   const navLinks = [
@@ -100,11 +146,12 @@ export function CVDocument({ data, photoSrc, badgeSrc }: Props): ReactElement<Do
     { label: "LinkedIn",   src: identity.links.linkedin },
     { label: "TryHackMe",  src: identity.links.tryhackme },
   ] as const;
+
   const langs = [
-    { name: "Francais",  level: personal.langues.francais },
-    { name: "Anglais",   level: personal.langues.anglais },
+    { name: t.francais, level: personal.langues.francais },
+    { name: t.anglais,  level: personal.langues.anglais },
     ...(personal.langues.espagnol
-      ? [{ name: "Espagnol", level: personal.langues.espagnol }]
+      ? [{ name: t.espagnol, level: personal.langues.espagnol }]
       : []),
   ];
 
@@ -184,7 +231,7 @@ export function CVDocument({ data, photoSrc, badgeSrc }: Props): ReactElement<Do
 
           {/* ── Colonne gauche : Expériences ──────────────────────── */}
           <View style={styles.colLeft}>
-            <SectionHead title="Experiences professionnelles" />
+            <SectionHead title={t.experiences} />
             <View style={styles.divider} />
 
             {experiences.map((exp, i) => (
@@ -201,7 +248,7 @@ export function CVDocument({ data, photoSrc, badgeSrc }: Props): ReactElement<Do
 
           {/* ── Colonne droite : Formations ───────────────────────── */}
           <View style={styles.colRight}>
-            <SectionHead title="Formations" />
+            <SectionHead title={t.formations} />
             <View style={styles.divider} />
 
             {education.map((e, i) => (
@@ -214,13 +261,13 @@ export function CVDocument({ data, photoSrc, badgeSrc }: Props): ReactElement<Do
             ))}
           </View>
 
-        </View>{/* ── fin row Expériences / Formations ── */}
+        </View>
 
         {/* ══════════════════════════════════════════════════════════
              COMPÉTENCES — pleine largeur
             ══════════════════════════════════════════════════════════ */}
         <View style={styles.skillsFullSection}>
-          <SectionHead title="Competences" />
+          <SectionHead title={t.competences} />
           <View style={styles.divider} />
           <View style={styles.skillsGrid}>
             {skillSections.map(({ label, chips }: { label: string; chips: string[] }) => (
@@ -235,76 +282,71 @@ export function CVDocument({ data, photoSrc, badgeSrc }: Props): ReactElement<Do
             ))}
           </View>
         </View>
+
         {/* ══════════════════════════════════════════════════════════
              PROJETS (gauche) | LIENS & SOFT SKILLS (droite)
             ══════════════════════════════════════════════════════════ */}
         <View style={styles.row2}>
 
-{/* ── Colonne gauche : Projets ───────────────────────────── */}
-<View style={styles.colLeft}>
-  <SectionHead title="Projets" />
-  <View style={styles.divider} />
+          {/* ── Colonne gauche : Projets ──────────────────────────── */}
+          <View style={styles.colLeft}>
+            <SectionHead title={t.projets} />
+            <View style={styles.divider} />
 
-  {featuredProjects.map((p, i) => (
-    <View key={i} style={styles.projectBlock} wrap={false}>
-      <Text style={styles.projectName}>{p.name}</Text>
-      {(p.tags ?? []).length > 0 && (
-        <View style={[styles.chipRow, { marginBottom: 3 }]}>
-          {(p.tags ?? []).map((t: string, idx: number) => (
-            <Text key={idx} style={styles.chipAccent}>{t}</Text>
-          ))}
+            {featuredProjects.map((p, i) => (
+              <View key={i} style={styles.projectBlock} wrap={false}>
+                <Text style={styles.projectName}>{p.name}</Text>
+                {(p.tags ?? []).length > 0 && (
+                  <View style={[styles.chipRow, { marginBottom: 3 }]}>
+                    {(p.tags ?? []).map((t: string, idx: number) => (
+                      <Text key={idx} style={styles.chipAccent}>{t}</Text>
+                    ))}
+                  </View>
+                )}
+                {p.bullets.map((b: string, k: number) => (
+                  <Text key={k} style={styles.bullet}>{"• "}{b}</Text>
+                ))}
+              </View>
+            ))}
+          </View>
+
+          {/* ── Colonne droite : Liens + Soft Skills + Langues ───── */}
+          <View style={styles.colRight}>
+
+            <SectionHead title={t.liens} />
+            <View style={styles.divider} />
+            <View wrap={false} style={{ marginBottom: 8 }}>
+              {navLinks.map(({ label, src }) => (
+                <View key={label} style={styles.linkLine}>
+                  <Link src={src} style={styles.linkLabel}>{label}</Link>
+                  <Text style={styles.linkUrl}>
+                    {src.replace("https://", "").replace("http://", "")}
+                  </Text>
+                </View>
+              ))}
+            </View>
+
+            <SectionHead title={t.softSkills} />
+            <View style={styles.divider} />
+            <View style={styles.chipRow} wrap={false}>
+              {toChips(personal.soft).map((s: string, i: number) => (
+                <Text key={i} style={styles.chip}>{s}</Text>
+              ))}
+            </View>
+
+            <SectionHead title={t.langues} />
+            <View style={styles.divider} />
+            <View wrap={false}>
+              {langs.map(({ name, level }, i) => (
+                <View key={i} style={styles.langRow}>
+                  <Text style={styles.langName}>{name}</Text>
+                  <Text style={styles.langLevel}>{level}</Text>
+                </View>
+              ))}
+            </View>
+
+          </View>
         </View>
-      )}
-      {p.bullets.map((b: string, k: number) => (
-        <Text key={k} style={styles.bullet}>{"• "}{b}</Text>
-      ))}
-    </View>
-  ))}
-</View>
-
-{/* ── Colonne droite : Liens + Soft Skills ──────────────── */}
-<View style={styles.colRight}>
-  <SectionHead title="Liens" />
-  <View style={styles.divider} />
-
-  <View wrap={false} style={{ marginBottom: 8 }}>
-    {navLinks.map(({ label, src }) => (
-      <View key={label} style={styles.linkLine}>
-        <Link src={src} style={styles.linkLabel}>{label}</Link>
-        <Text style={styles.linkUrl}>
-          {src.replace("https://", "").replace("http://", "")}
-        </Text>
-      </View>
-    ))}
-  </View>
-
-  <SectionHead title="Soft Skills" />
-  <View style={styles.divider} />
-  <View style={styles.chipRow} wrap={false}>
-    {toChips(personal.soft).map((s: string, i: number) => (
-      <Text key={i} style={styles.chip}>{s}</Text>
-    ))}
-  </View>
-
-  <SectionHead title="Langues" />
-  <View style={styles.divider} />
-  <View wrap={false}>
-    {langs.map(({ name, level }, i) => (
-      <View key={i} style={styles.langRow}>
-        <Text style={styles.langName}>{name}</Text>
-        <Text style={styles.langLevel}>{level}</Text>
-      </View>
-    ))}
-  </View>
-
-</View>
-</View>
-
-        {/* ── Footer note ───────────────────────────────────────────
-        <Text style={styles.footerNote}>
-          {"abdou-cyber.dev  —  Mis a jour "}
-          {data.meta?.updatedAt ?? "2026"}
-        </Text> */}
 
       </Page>
     </Document>
