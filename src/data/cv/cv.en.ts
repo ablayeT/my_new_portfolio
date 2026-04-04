@@ -11,7 +11,7 @@ export const CV_DATA_EN = {
       links: {
         linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
         github: "https://github.com/ablayeT",
-        tryhackme: "https://tryhackme.com/p/ablaye.toure0",
+        tryhackme: "https://tryhackme.com/p/abdou.toure0",
         portfolio: "https://abdou-cyber.dev",
       },
     },
