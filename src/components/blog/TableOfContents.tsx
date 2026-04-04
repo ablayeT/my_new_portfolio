@@ -1,9 +1,9 @@
-// src/components/blog/TableOfContents.tsx
 "use client";
 
 import React from "react";
 import type { ContentBlock } from "@/data/blog/types";
 import { slugify } from "@/data/blog/utils";
+import { List } from "lucide-react";
 
 export function TableOfContents({ content }: { content: ContentBlock[] }) {
   const headings = React.useMemo(
@@ -38,19 +38,32 @@ export function TableOfContents({ content }: { content: ContentBlock[] }) {
   if (headings.length === 0) return null;
 
   return (
-    <nav aria-label="Table des matières" className="rounded-lg border p-4">
-      <div className="mb-2 text-sm font-semibold text-foreground">Sommaire</div>
-      <ul className="space-y-1">
+    <nav aria-label="Table des matières" className="rounded-xl border border-border bg-card p-4">
+      <div className="mb-3 flex items-center gap-2">
+        <List size={14} className="text-muted-foreground" />
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Sommaire
+        </span>
+      </div>
+      <ul className="space-y-0.5">
         {headings.map((h, i) => (
-          <li key={i} className={h.level === 3 ? "ml-3" : ""}>
-            <a
+          <li key={i}>
+            
               href={`#${h.id}`}
-              className={`block rounded px-2 py-1 text-sm transition ${
+              className={[
+                "flex items-start gap-2 rounded-lg px-2 py-1.5 text-xs transition-all",
+                h.level === 3 ? "ml-3" : "",
                 activeId === h.id
-                  ? "bg-[color:var(--tokens-color-brand-purple,#6d28d9)]/10 text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
+                  ? "bg-primary/10 font-semibold text-primary"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground",
+              ].join(" ")}
+            <a>
+              {h.level === 2 && (
+                <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-current opacity-60" />
+              )}
+              {h.level === 3 && (
+                <span className="mt-0.5 h-1 w-1 shrink-0 rounded-full bg-current opacity-40" />
+              )}
               {h.text}
             </a>
           </li>
