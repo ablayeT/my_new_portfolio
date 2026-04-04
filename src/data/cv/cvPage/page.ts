@@ -17,7 +17,7 @@ export const CONTACT: ContactInfo = {
   phone: "+33 644 93 26 27",
   github: "https://github.com/ablayeT",
   linkedin: "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
-  tryhackme: "https://tryhackme.com/p/ablaye.toure0",
+  tryhackme: "https://tryhackme.com/p/abdou.toure0",
 };
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
