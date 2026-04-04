@@ -1,34 +1,37 @@
 {
   "identity": {
     "fullName": "Abdoulaye Touré",
-    "title": "Analyste Cybersécurité – SOC / Administrateur systèmes & réseaux, Auditeur/Pentester",
+    "title": "Analyste SecOps · Ingénieur Réseau · Cybersécurité & Automatisation",
     "location": "Île-de-France",
     "languages": [
       "français (courant)",
-      "anglais (courant)",
+      "anglais (courant, C1/C2)",
       "espagnol (intermédiaire)"
     ]
   },
 
-  "about": "Profil hybride rare mêlant cybersécurité opérationnelle, développement et infrastructures sécurisées. Spécialisé en SOC, threat hunting, détection MITRE ATT&CK et analyse avancée de logs, avec une forte appétence offensive/défensive (Purple Team). Conçoit et déploie des environnements d’entraînement réalistes, automatise la détection, et développe des agents IA appliqués à la cybersécurité pour renforcer les capacités d’analyse et de réponse.",
+  "about": "Profil hybride rare mêlant cybersécurité opérationnelle, développement et infrastructures sécurisées. Analyste SecOps en alternance chez Hessling (LynxAI), spécialisé en SOC, threat hunting, détection MITRE ATT&CK et analyse avancée de logs, avec une forte appétence offensive/défensive (Purple Team). Conçoit et déploie des environnements d'entraînement réalistes, automatise la détection, et développe des agents IA appliqués à la cybersécurité pour renforcer les capacités d'analyse et de réponse.",
 
   "contact": {
-    "email": "contact@abdou-cyber.dev",
+    "email": "ablayetoure2014@gmail.com",
     "linkedin": "https://www.linkedin.com/in/abdoulaye-toure-b37b30100/",
     "github": "https://github.com/ablayeT",
-    "portfolio": "https://abdou-cyber.dev"
+    "portfolio": "https://abdou-cyber.dev",
+    "tryhackme": "https://tryhackme.com/p/ablaye.toure0"
   },
 
   "lookingFor": {
     "roles": [
       "Analyste SOC",
       "Threat Hunter",
+      "Analyste SecOps",
       "Analyste Sécurité",
       "Pentester junior",
-      "Purple Team / Blue Team Engineer"
+      "Purple Team / Blue Team Engineer",
+      "Ingénieur Cybersécurité"
     ],
     "contract": ["alternance", "CDD", "CDI"],
-    "domains": ["santé", "fintech", "industrie", "ESN", "conseil"]
+    "domains": ["santé", "fintech", "industrie", "ESN", "conseil", "banque", "défense"]
   },
 
   "skills": {
@@ -40,7 +43,10 @@
       "Threat Hunting (MITRE ATT&CK)",
       "Use cases & règles de détection",
       "Sigma rules",
-      "Incident Response (triage, containment, lessons learned)"
+      "Incident Response (triage, containment, lessons learned)",
+      "Gestion des incidents et Zero Data Exfiltration",
+      "Firewalling / NAC",
+      "Centreon"
     ],
     "redTeam": [
       "Nmap (reconnaissance réseau)",
@@ -48,76 +54,128 @@
       "SQLMap (injections SQL)",
       "XSS / CSRF / upload vulnérables",
       "Bypass de filtrages simples",
+      "OWASP Top 10",
+      "Audit réseau et applicatif",
       "TryHackMe – web hacking, RCE, privilege escalation"
     ],
     "infra": [
       "Administration Windows Server & Active Directory (domaine, GPO, comptes)",
-      "Administration Linux (Debian, Ubuntu, Kali) et durcissement de base",
-      "Réseaux TCP/IP (adressage, VLAN, routage simple, firewalling)",
+      "Administration Linux (Debian, Ubuntu, Kali, RedHat) et durcissement",
+      "Réseaux TCP/IP (adressage, VLAN, routage, BGP, OSPF, STP, firewalling)",
       "DNS, DHCP, NAT, segmentation réseau",
       "Labs virtualisés (Hyper-V, VMware Workstation, VirtualBox)",
       "DMZ sécurisée (pfSense, Guacamole, reverse proxy, bases de données)",
       "Supervision via ELK, Filebeat, Winlogbeat, Sysmon, journaux Linux",
       "Sauvegardes, snapshots, restauration",
-      "Scripts d’automatisation (Bash, PowerShell) pour tâches récurrentes"
+      "Scripts d'automatisation (Bash, PowerShell) pour tâches récurrentes",
+      "VxLAN, EVPN"
     ],
     "devSec": [
-      "Développement web : Next.js, React, Node.js, TailwindCSS",
-      "APIs sécurisées, authentification JWT",
-      "CI/CD (GitHub Actions, déploiement VPS Contabo, Caddy)",
+      "Développement web : Next.js, React, Node.js, TailwindCSS, TypeScript",
+      "APIs sécurisées, authentification JWT / OAuth2",
+      "CI/CD (GitHub Actions, déploiement VPS Contabo)",
       "Gestion des secrets et dépendances",
-      "Création d’outils internes orientés cybersécurité"
+      "Création d'outils internes orientés cybersécurité",
+      "Python, Bash, PowerShell, Ansible",
+      "Docker",
+      "PowerBI"
     ],
     "gov": [
       "OWASP ASVS (audit applicatif)",
       "ISO 27001 (bases)",
       "RGPD (bases)",
+      "Zero Trust Architecture",
       "Analyse de risques et recommandations",
-      "Rédaction de rapports techniques clients"
+      "Rédaction de rapports techniques clients",
+      "Conformité réglementaire Azure/M365 (SC-900)"
     ],
     "ailab": [
       "Conception de chatbots personnalisés (OpenRouter, OpenAI, Mistral, Anthropic)",
       "Agents IA métier (analyse de fiches de poste, matching profil ↔ besoin)",
       "Intégration IA dans un portfolio (Next.js, API sécurisées)",
-      "Sécurisation d’API IA (rate limiting, CORS, filtrage d’entrée, logs)",
-      "Production de sorties JSON strictes pour intégration front"
+      "Sécurisation d'API IA (rate limiting, CORS, filtrage d'entrée, logs)",
+      "Production de sorties JSON strictes pour intégration front",
+      "LLM open-source et Shadow AI",
+      "SecOps IA et Zero Data Exfiltration",
+      "RAG et agents autonomes"
     ]
   },
 
   "education": [
     {
-      "label": "Bac+4 – Administrateur d’Infrastructures Sécurisées",
-      "org": "ALT-RH (Paris)",
-      "year": "2025",
+      "label": "Bac+5 – Expert en Cybersécurité",
+      "org": "OTERIA Cyber School",
+      "year": "2025–2027",
       "topics": [
-        "Administration d’une infrastructure réseaux Windows / GNU Linux",
-        "Sécurisation d’un réseau informatique",
-        "Administration et sécurisation d’environnements systèmes hétérogènes",
-        "Administration et sécurisation d’une infrastructure de serveurs virtualisée",
-        "Scripts d’automatisation (PowerShell, Bash)",
+        "Threat Intelligence & Risk Analysis",
+        "Détection avancée (SIEM/EDR/XDR)",
+        "Réponse aux incidents (DFIR)",
+        "Simulation d'attaques Red Team / Pentest",
+        "Zero Trust Architecture",
+        "Sécurité Cloud & IA"
+      ]
+    },
+    {
+      "label": "Bac+4 – Administrateur d'Infrastructures Sécurisées (RNCP)",
+      "org": "ALT-RH (Paris)",
+      "year": "2024–2025",
+      "topics": [
+        "Administration d'une infrastructure réseaux Windows / GNU Linux",
+        "Sécurisation d'un réseau informatique",
+        "Administration et sécurisation d'environnements systèmes hétérogènes",
+        "Administration et sécurisation d'une infrastructure de serveurs virtualisée",
+        "Scripts d'automatisation (PowerShell, Bash)",
         "Supervision, performances, qualité de service",
-        "Mesure et analyse du niveau de sécurité d’une infrastructure",
+        "Mesure et analyse du niveau de sécurité d'une infrastructure",
         "Participation à la politique de sécurité et gestion de projets"
       ]
     },
     {
       "label": "Bac+3 – Développeur Web & Web Mobile",
       "org": "WebForce3 (Paris)",
-      "year": "2023"
+      "year": "2022–2023",
+      "topics": [
+        "Architecture full-stack sécurisée (React, Node.js, API REST)",
+        "Security by Design",
+        "OWASP Top 10",
+        "Authentification JWT/OAuth2",
+        "CI/CD et DevSecOps"
+      ]
     },
     {
       "label": "Bac+2 – Développeur Intégrateur Web",
       "org": "OpenClassrooms (Paris)",
-      "year": "2022"
+      "year": "2022",
+      "topics": [
+        "HTML, CSS, JavaScript",
+        "Protocoles HTTP/HTTPS",
+        "Manipulation des données",
+        "Initiation à la sécurité applicative"
+      ]
     },
     {
-      "label": "Bac+5 – Littérature & civilisation anglophone",
-      "org": "UCAD",
-      "year": "2015"
+      "label": "Bac+5 – Littérature & Civilisation Anglophone",
+      "org": "UCAD (Dakar)",
+      "year": "2011–2015",
+      "topics": [
+        "Maîtrise de l'anglais technique C1/C2",
+        "Analyse critique et rédaction de rapports"
+      ]
     }
   ],
 
   "certifications": [
+    {
+      "name": "Microsoft SC-900 – Security, Compliance, and Identity Fundamentals",
+      "level": "obtenue",
+      "status": "obtenue",
+      "focus": [
+        "Fondamentaux sécurité Microsoft 365 / Azure",
+        "Compliance & identity",
+        "Zero Trust & gouvernance de l'identité",
+        "Entra ID, Purview"
+      ]
+    },
     {
       "name": "CompTIA Security+ (SY0-701)",
       "level": "critique",
@@ -127,16 +185,6 @@
         "Gestion des risques",
         "Architecture sécurisée",
         "Opérations SOC de base"
-      ]
-    },
-    {
-      "name": "Microsoft Certified : Security, Compliance, and Identity Fundamentals (SC-900)",
-      "level": "haute",
-      "status": "en cours",
-      "focus": [
-        "Fondamentaux sécurité Microsoft 365 / Azure",
-        "Compliance & identity",
-        "Zero Trust & gouvernance de l’identité"
       ]
     },
     {
@@ -153,26 +201,29 @@
   ],
 
   "growthAreas": [
-    "Monter en puissance sur la gestion de services d’infrastructure à grande échelle (production 24/7, multi-sites, SLA stricts).",
+    "Monter en puissance sur la gestion de services d'infrastructure à grande échelle (production 24/7, multi-sites, SLA stricts).",
     "Renforcer la pratique de la virtualisation haute disponibilité (clusters, réplication, failover).",
-    "Approfondir la sécurité cloud managée (Azure / AWS) au-delà des fondamentaux."
+    "Approfondir la sécurité cloud managée (Azure / AWS) au-delà des fondamentaux.",
+    "Approfondissement MITRE ATT&CK et développement de use cases de détection avancés."
   ],
 
   "productionExperience": {
-    "summary": "Abdoulaye dispose d’une exposition réelle à des environnements de production grâce à ses projets encadrés, à ses déploiements sur VPS, à ses travaux pratiques en conditions proches de la production et à la mise en place de services critiques (DMZ, reverse proxy, SIEM, supervision).",
+    "summary": "Abdoulaye dispose d'une exposition réelle à des environnements de production grâce à ses projets encadrés, à ses déploiements sur VPS, à ses travaux pratiques en conditions proches de la production et à la mise en place de services critiques (DMZ, reverse proxy, SIEM, supervision, infrastructure IA).",
     "highlights": [
-      "Déploiement et maintien d’un portfolio complet en production sur VPS (Linux, Caddy, GitHub Actions, journaux et supervision).",
-      "Mise en place d’une DMZ sécurisée (pfSense, Guacamole, reverse proxy, bases de données) et gestion de la sécurité réseau associée.",
+      "Sécurisation et maintien d'une infrastructure hébergeant des modèles LLM en production chez Hessling/LynxAI (Jan 2026 – présent).",
+      "Déploiement et maintien d'un portfolio complet en production sur VPS (Linux, Nginx, GitHub Actions, journaux et supervision).",
+      "Mise en place d'une DMZ sécurisée (pfSense, Guacamole, reverse proxy, bases de données) et gestion de la sécurité réseau associée.",
       "Environnements virtualisés complets (Hyper-V, VMware) avec Active Directory, serveurs Windows/Linux et segmentation réseau.",
       "Mise en production de pipelines ELK/Beats avec TLS et monitoring des logs Windows + Linux.",
-      "Gestion pratique d’incidents dans un environnement encadré (projets ALT-RH + stage Advens)."
+      "Pipelines CI/CD en production pour marketplace Skeelfully (2025).",
+      "Gestion pratique d'incidents dans un environnement encadré (projets ALT-RH + stage Advens)."
     ],
-    "status": "Débutant–intermédiaire : en montée en compétences vers des environnements de production de plus grande échelle (clusters, haute disponibilité, SLA stricts)."
+    "status": "Intermédiaire : en montée en compétences vers des environnements de production de plus grande échelle (clusters, haute disponibilité, SLA stricts)."
   },
 
   "iaSkillMatrix": [
     {
-      "dimension": "Design d’agents & prompts",
+      "dimension": "Design d'agents & prompts",
       "level": "intermédiaire+",
       "keywords": [
         "system prompts structurés",
@@ -181,8 +232,8 @@
         "gestion des sorties JSON"
       ],
       "examples": [
-        "Conception d’un agent de matching de postes orienté recruteurs",
-        "Définition de règles pour éviter l’hallucination sur les expériences"
+        "Conception d'un agent de matching de postes orienté recruteurs",
+        "Définition de règles pour éviter l'hallucination sur les expériences"
       ]
     },
     {
@@ -196,8 +247,8 @@
         "observabilité"
       ],
       "examples": [
-        "Intégration d’API IA dans un portfolio avec Next.js",
-        "Déploiement continu sur VPS (CI/CD GitHub Actions + Caddy)"
+        "Intégration d'API IA dans un portfolio avec Next.js",
+        "Déploiement continu sur VPS (CI/CD GitHub Actions + Nginx)"
       ]
     },
     {
@@ -206,13 +257,15 @@
       "keywords": [
         "rate limiting",
         "CORS",
-        "filtrage d’entrée",
+        "filtrage d'entrée",
         "journalisation",
-        "non-rétention des prompts"
+        "non-rétention des prompts",
+        "Zero Data Exfiltration"
       ],
       "examples": [
-        "Mise en place de contrôles anti-abus sur l’API agent-career",
-        "Filtrage et sanitation d’entrée avant appel LLM"
+        "Mise en place de contrôles anti-abus sur l'API agent-career",
+        "Filtrage et sanitation d'entrée avant appel LLM",
+        "Maintien de l'exigence Zero Data Exfiltration chez LynxAI"
       ]
     },
     {
@@ -224,41 +277,61 @@
         "génération guidée de use cases"
       ],
       "examples": [
-        "Agent d’explication de logs SIEM basé sur Elastic / Suricata",
-        "Utilisation d’IA pour synthétiser des résultats de labs TryHackMe / Purple Team"
+        "Agent d'explication de logs SIEM basé sur Elastic / Suricata",
+        "Utilisation d'IA pour synthétiser des résultats de labs TryHackMe / Purple Team"
       ]
     }
   ],
 
   "experience": [
     {
-      "label": "Audit & Pentest (5 mois)",
+      "label": "Analyste SecOps & Ingénieur Avant-Vente",
+      "org": "Hessling · LynxAI (Paris)",
+      "period": "Jan 2026 – Présent",
+      "type": "Alternance",
+      "highlights": [
+        "Surveillance, détection et analyse des menaces (SOC) — maintien de l'exigence Zero Data Exfiltration",
+        "Sécurisation des opérations et de l'infrastructure hébergeant les modèles d'IA (SecOps)",
+        "Release management et coordination des mises en production",
+        "Traduction des capacités LLM open-source en proposition de valeur B2B (DSI, cabinets d'avocats, santé)",
+        "Structuration de la stratégie d'acquisition B2B : Pitch Deck, argumentaires, sensibilisation aux risques du Shadow AI"
+      ]
+    },
+    {
+      "label": "Audit & Pentest (4 mois)",
       "org": "Advens (Paris)",
+      "period": "Mars 2025 – Juin 2025",
+      "type": "Stage",
       "highlights": [
-        "Audit applicatif et infrastructure",
-        "Pentest web & API encadré (Burp, Nmap, SQLMap)",
+        "Audit applicatif et infrastructure (systèmes/réseau/applicatif) et priorisation des risques",
+        "Pentest web & API encadré (Burp Suite, Nmap, SQLMap) — méthodologie OWASP",
+        "Threat Hunting & corrélation SIEM ELK/Kibana",
         "Cartographie des vulnérabilités et recommandations",
-        "Corrélation de logs et support à la détection",
-        "Rédaction de rapports techniques clients"
+        "Industrialisation du reporting Bash/PowerShell et restitution aux équipes"
       ]
     },
     {
-      "label": "Développeur Node.js / React – Freelance",
-      "org": "Skeelfully",
+      "label": "Développeur Full Stack / DevOps",
+      "org": "Skeelfully (Paris)",
+      "period": "Juil 2025 – Déc 2025",
+      "type": "Freelance",
       "highlights": [
-        "Développement et maintenance d’une plateforme web",
-        "Migration Node et correction de problèmes Webpack",
-        "Sécurisation d’APIs et optimisation de la CI/CD",
-        "Travail avec une équipe produit / tech"
+        "Développement d'une marketplace connectant porteurs de projet et talents",
+        "Stabilisation front-end : migration Node 16, correctifs Webpack/OpenSSL",
+        "Optimisation CI/CD, tests unitaires, audit sécurité et durcissement NPM",
+        "Sécurisation d'APIs et travail avec une équipe produit/tech"
       ]
     },
     {
-      "label": "Développeur Web & Web Mobile",
-      "org": "Entourage",
+      "label": "Développeur Web & Mobile",
+      "org": "Entourage (Paris)",
+      "period": "Oct 2022 – Oct 2023",
+      "type": "Alternance",
       "highlights": [
-        "Développement d’applications web",
-        "Intégration d’APIs",
-        "Sensibilisation aux bonnes pratiques OWASP"
+        "Conception et sécurisation d'applications full-stack (Node.js, React) avec Security by Design",
+        "Réduction de la surface d'attaque des API : authentification robuste, gestion des secrets",
+        "Amélioration de la posture de sécurité du code (standards AppSec/OWASP)",
+        "Gestion de bases de données MySQL et collaboration en méthode Agile (Jira)"
       ]
     }
   ],
@@ -266,25 +339,27 @@
   "projects": [
     {
       "slug": "purple-team-lab",
-      "name": "Purple Team Lab",
+      "name": "Purple Team Lab Infrastructure",
       "stack": ["ELK", "Suricata", "GoPhish", "Kali", "Ubuntu", "Sysmon"],
-      "url": "/projects/purple-team-lab",
+      "url": "/projects/purple-team",
       "focus": [
-        "Scénarios d’attaques MITRE ATT&CK",
+        "Scénarios d'attaques MITRE ATT&CK",
         "Chaîne de détection Blue Team de bout en bout",
         "Dashboards SOC et KPIs de détection",
-        "Playbooks d’investigation et de réponse"
+        "Playbooks d'investigation et de réponse",
+        "Architecture segmentée VLANs, journalisation ELK centralisée"
       ]
     },
     {
       "slug": "siem-dashboard",
       "name": "Dashboard SIEM personnalisé",
-      "stack": ["Elastic", "Winlogbeat", "Filebeat", "TLS"],
+      "stack": ["Elastic", "Winlogbeat", "Filebeat", "Kibana", "TLS"],
       "url": "/projects/siem-dashboard",
       "focus": [
         "Dashboards par type de menace",
         "Réduction du bruit et priorisation des alertes",
-        "Baselines et tuning d’alerting"
+        "Baselines et tuning d'alerting",
+        "Réduction des faux positifs et optimisation MCO"
       ]
     },
     {
@@ -293,7 +368,7 @@
       "stack": ["pfSense", "Hyper-V", "Guacamole", "Debian", "MariaDB"],
       "url": "/projects/dmz-secure-lab",
       "focus": [
-        "Conception d’une DMZ segmentée",
+        "Conception d'une DMZ segmentée",
         "Publication sécurisée de services via Guacamole",
         "Filtrage, NAT et journalisation sur pfSense",
         "Durcissement des services exposés"
@@ -302,21 +377,34 @@
     {
       "slug": "ai-career-agent",
       "name": "AI Career Matching Agent",
-      "stack": ["Next.js", "OpenRouter", "LLM agents"],
+      "stack": ["Next.js", "OpenRouter", "LLM agents", "Mistral"],
       "url": "/agent-lab",
       "focus": [
-        "Agent IA pour recruteurs",
+        "Agent IA pour recruteurs — matching profil ↔ fiche de poste",
         "Sortie JSON strict (score, forces, risques, questions)",
         "Utilisation de profile.json comme graphe de connaissances",
-        "Sécurisation d’API (CORS, rate limiting, filtrage d’entrée)"
+        "Sécurisation d'API (CORS, rate limiting, filtrage d'entrée)"
+      ]
+    },
+    {
+      "slug": "reporting-kpi",
+      "name": "Automatisation de Reporting KPI",
+      "stack": ["PowerBI", "Python", "Bash", "Scripting"],
+      "url": "/projects/incident-response",
+      "focus": [
+        "Automatisation de la collecte et transformation de données techniques via Python",
+        "Création de visuels décisionnels PowerBI pour le suivi des KPIs"
       ]
     }
   ],
 
   "hobbies": [
     "TryHackMe / labs cybersécurité",
+    "Veille Cyber / Cloud",
     "Projets associatifs",
     "Création de contenu",
-    "Sport : baseball, course à pied, taekwondo"
+    "Sport : baseball, course à pied, taekwondo",
+    "Lecture",
+    "Domotique"
   ]
 }

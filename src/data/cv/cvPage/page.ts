@@ -25,64 +25,64 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     title: "SOC & Blue Team",
     skills: [
       { name: "Détection & Analyse SIEM", level: "advanced" },
-      { name: "ELK / Kibana", level: "advanced" },
-      { name: "Threat Hunting", level: "advanced" },
-      { name: "Wireshark", level: "expert" },
-      { name: "Firewalling / NAC", level: "advanced" },
-      { name: "Gestion des incidents", level: "advanced" },
-      { name: "Centreon", level: "intermediate" },
+      { name: "ELK / Kibana",             level: "advanced" },
+      { name: "Threat Hunting",            level: "advanced" },
+      { name: "Wireshark",                 level: "expert" },
+      { name: "Firewalling / NAC",         level: "advanced" },
+      { name: "Gestion des incidents",     level: "advanced" },
+      { name: "Centreon",                  level: "intermediate" },
     ],
   },
   {
     title: "Pentest & Sécurité Offensive",
     skills: [
-      { name: "Burp Suite", level: "advanced" },
-      { name: "Nmap", level: "expert" },
-      { name: "SQLMap", level: "advanced" },
-      { name: "OWASP Top 10", level: "expert" },
-      { name: "Audit réseau", level: "advanced" },
+      { name: "Burp Suite",    level: "advanced" },
+      { name: "Nmap",          level: "expert" },
+      { name: "SQLMap",        level: "advanced" },
+      { name: "OWASP Top 10",  level: "expert" },
+      { name: "Audit réseau",  level: "advanced" },
     ],
   },
   {
     title: "Systèmes & Réseau",
     skills: [
       { name: "Linux (Debian/RedHat)", level: "expert" },
-      { name: "Windows Server", level: "advanced" },
-      { name: "TCP/IP · VLANs", level: "expert" },
-      { name: "BGP · OSPF · STP", level: "advanced" },
-      { name: "VxLAN · EVPN", level: "intermediate" },
-      { name: "Active Directory", level: "advanced" },
-      { name: "VMware · Hyper-V", level: "intermediate" },
+      { name: "Windows Server",        level: "advanced" },
+      { name: "TCP/IP · VLANs",        level: "expert" },
+      { name: "BGP · OSPF · STP",      level: "advanced" },
+      { name: "VxLAN · EVPN",          level: "intermediate" },
+      { name: "Active Directory",       level: "advanced" },
+      { name: "VMware · Hyper-V",       level: "intermediate" },
     ],
   },
   {
     title: "Automatisation & DevSecOps",
     skills: [
-      { name: "Python", level: "expert" },
-      { name: "Bash", level: "expert" },
-      { name: "PowerShell", level: "advanced" },
-      { name: "Ansible", level: "intermediate" },
+      { name: "Python",               level: "expert" },
+      { name: "Bash",                 level: "expert" },
+      { name: "PowerShell",           level: "advanced" },
+      { name: "Ansible",              level: "intermediate" },
       { name: "CI/CD (GitHub Actions)", level: "advanced" },
-      { name: "Docker", level: "intermediate" },
-      { name: "PowerBI", level: "advanced" },
+      { name: "Docker",               level: "intermediate" },
+      { name: "PowerBI",              level: "advanced" },
     ],
   },
   {
     title: "Développement",
     skills: [
       { name: "React / Next.js", level: "advanced" },
-      { name: "Node.js", level: "advanced" },
-      { name: "SQL / MySQL", level: "advanced" },
-      { name: "TypeScript", level: "advanced" },
-      { name: "REST API", level: "expert" },
+      { name: "Node.js",         level: "advanced" },
+      { name: "SQL / MySQL",     level: "advanced" },
+      { name: "TypeScript",      level: "advanced" },
+      { name: "REST API",        level: "expert" },
     ],
   },
   {
     title: "Langues",
     skills: [
-      { name: "Français — courant", level: "expert" },
-      { name: "Anglais — C1/C2", level: "expert" },
-      { name: "Espagnol — intermédiaire", level: "intermediate" },
+      { name: "Français — courant",        level: "expert" },
+      { name: "Anglais — C1/C2",          level: "expert" },
+      { name: "Espagnol — intermédiaire",  level: "intermediate" },
     ],
   },
 ];
@@ -143,33 +143,35 @@ export const EDUCATION: EducationEntry[] = [
     school: "OTERIA Cyber School",
     period: "Sep 2025 – Juil 2027",
     details:
-      "Threat Intelligence, SIEM/EDR, réponse aux incidents, Red Team / Pentest, Risk Analysis.",
+      "Threat Intelligence & Risk Analysis, détection avancée (SIEM/EDR/XDR), réponse aux incidents (DFIR), simulation d'attaques Red Team/Pentest, Zero Trust Architecture, sécurité Cloud & IA.",
   },
   {
     title: "Bac+4 — Administrateur d'infrastructures sécurisées (RNCP)",
     school: "ALT-RH, Paris",
     period: "2024 – 2025",
     details:
-      "Architecture Réseau, Routage/Commutation, Virtualisation (VMware/Hyper-V), Sécurité SI, Active Directory.",
+      "Déploiement et durcissement d'infrastructures (Windows/Linux), routage réseau avancé (VLANs, BGP, OSPF), virtualisation (VMware/Hyper-V), gestion des identités (Active Directory, PKI), conformité ANSSI.",
   },
   {
     title: "Certification Microsoft SC-900",
     school: "Microsoft",
     period: "2025",
-    details: "Fondamentaux Sécurité, Conformité et Identité (Azure/M365).",
+    details:
+      "Fondamentaux Sécurité, Conformité & Identité sur Azure/M365 : Zero Trust, gestion des accès (Entra ID), protection des données (Purview), conformité réglementaire.",
   },
   {
     title: "Bac+3 — Développeur Web & Web Mobile",
     school: "WebForce3, Paris",
     period: "Oct 2022 – Nov 2023",
     details:
-      "Full-Stack React/Node.js, sécurisation des API, OWASP Top 10, CI/CD.",
+      "Architecture full-stack sécurisée (React, Node.js, API REST), Security by Design, OWASP Top 10, authentification JWT/OAuth2, CI/CD et DevSecOps.",
   },
   {
     title: "Bac+2 — Développeur Intégrateur Web",
     school: "OpenClassrooms",
     period: "Avr 2022 – Oct 2023",
-    details: "HTML/CSS/JS, HTTP/HTTPS, manipulation des données, débogage.",
+    details:
+      "Fondamentaux du développement web (HTML, CSS, JavaScript), protocoles HTTP/HTTPS, manipulation des données, initiation à la sécurité applicative.",
   },
   {
     title: "Certification HTML · CSS3 · SASS · JavaScript · React",
@@ -177,13 +179,6 @@ export const EDUCATION: EducationEntry[] = [
     period: "Jan 2020 – Jan 2022",
     details:
       "Écosystème JavaScript complet (MERN), sécurité DOM/client, fondamentaux Cloud (AWS, Azure, GCP), Git.",
-  },
-  {
-    title: "Master 2 — Littérature & Civilisation Anglophone",
-    school: "Université Cheikh Anta Diop, Dakar",
-    period: "2011 – 2015",
-    details:
-      "Analyse critique, recherche rigoureuse, maîtrise de l'anglais technique C1/C2.",
   },
 ];
 
@@ -197,9 +192,11 @@ export const SOFT_SKILLS = [
 ];
 
 export const INTERESTS = [
-  "Veille Réseau / Cloud",
+  "Veille Cyber / Cloud",
   "CTF & TryHackMe",
-  "Running",
+  "Taekwondo",
+  "Baseball",
+  "Course à pied",
   "Lecture",
   "Domotique",
 ];
