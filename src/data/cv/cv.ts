@@ -52,7 +52,7 @@ export const CV_DATA = {
 
   identity: {
     name: "Abdoulaye Toure",
-    title: "Analyste SecOps · Ingénieur Réseau · Cybersécurité & Automatisation",
+    title: "Architecte DevOps | Analyste SecOps · Ingénieur Réseau · Cybersécurité & Automatisation",
     under_title: "Alternance · Anglais C1/C2",
     phone: "+33 644 93 26 27",
     email: "ablayetoure2014@gmail.com",
@@ -66,19 +66,19 @@ export const CV_DATA = {
   },
 
   summary:
-    "Analyste SecOps en alternance chez Hessling (LynxAI), je conçois et automatise la détection des menaces, sécurise des infrastructures hébergeant des modèles d'IA et traduis des capacités techniques complexes en propositions de valeur B2B. Ingénieur réseau de formation, j'allie approche offensive (pentest) et défensive (SOC/SIEM) pour anticiper les vulnérabilités.",
+    "Je conçois et sécurise des pipelines DevSecOps, automatise la détection des menaces et protège des infrastructures critiques, notamment liées à l’IA.J’intègre une approche GRC (analyse de risques, conformité) pour aligner sécurité et enjeux métier.À la croisée du pentest et du SOC/SIEM, j’allie approche offensive et défensive pour anticiper les menaces et réduire la surface d’attaque.",
 
     experiences: [
       {
-        role: "Analyste SecOps & Ingénieur Avant-Vente",
+        role: "Architecte DevOps | Analyste SecOps",
         company: "Hessling · LynxAI — Alternance · Paris",
         period: "Janvier 2026 – Présent",
         bullets: [
-          "Surveillance, détection et analyse des menaces (SOC) — maintien de l'exigence Zero Data Exfiltration.",
-          "Sécurisation des opérations et de l'infrastructure hébergeant les modèles d'IA (SecOps).",
-          "Release management et coordination des mises en production.",
-          "Traduction des capacités LLM open-source en proposition de valeur B2B (DSI, cabinets d'avocats, santé).",
-          "Structuration de la stratégie d'acquisition : Pitch Deck, argumentaires, sensibilisation aux risques du Shadow AI.",
+          "Surveillance, détection et analyse des incidents de sécurité (SOC), avec une attention particulière à la prévention des exfiltrations de données.",
+          "Sécurisation des environnements et des pipelines hébergeant des modèles d’IA (DevSecOps / SecOps).",
+          "Automatisation et sécurisation des workflows CI/CD, avec intégration de contrôles de sécurité (scans, gestion des secrets, durcissement).",
+          "Analyse de risques et mise en œuvre de bonnes pratiques (ANSSI, GRC) pour renforcer la posture de sécurité globale.",
+          "Contribution à l’identification et à la remédiation des vulnérabilités via une approche combinant pentest et supervision SOC/SIEM.",
         ],
       },
       {

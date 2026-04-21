@@ -89,16 +89,16 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 
 export const EXPERIENCES: Experience[] = [
   {
-    title: "Analyste SecOps & Ingénieur Avant-Vente",
+    title: "Architecte DecOps | Analyste SecOps",
     company: "Hessling · LynxAI — Alternance",
     period: "Jan 2026 – Présent",
     current: true,
     tasks: [
-      "Surveillance, détection et analyse des menaces (SOC) — maintien de l'exigence Zero Data Exfiltration.",
-      "Sécurisation des opérations et de l'infrastructure hébergeant les modèles d'IA (SecOps).",
-      "Release management et coordination des mises en production.",
-      "Traduction des capacités LLM open-source en proposition de valeur commerciale (DSI, cabinets d'avocats, santé).",
-      "Structuration de la stratégie d'acquisition B2B : Pitch Deck, argumentaires, sensibilisation aux risques du Shadow AI.",
+      "Surveillance, détection et analyse des incidents de sécurité (SOC), avec une attention particulière à la prévention des exfiltrations de données.",
+      "Sécurisation des environnements et des pipelines hébergeant des modèles d’IA (DevSecOps / SecOps).",
+      "Automatisation et sécurisation des workflows CI/CD, avec intégration de contrôles de sécurité (scans, gestion des secrets, durcissement).",
+      "Analyse de risques et mise en œuvre de bonnes pratiques (ANSSI, GRC) pour renforcer la posture de sécurité globale.",
+      "Contribution à l’identification et à la remédiation des vulnérabilités via une approche combinant pentest et supervision SOC/SIEM.",
     ],
   },
   {

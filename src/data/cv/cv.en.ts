@@ -2,8 +2,8 @@ export const CV_DATA_EN = {
     meta: { updatedAt: "2026-04" },
   
     identity: {
-      name: "Abdoulaye Touré",
-      title: "SecOps Analyst · Network Engineer · Cybersecurity & Automation",
+      name: "Abdoulaye Toure",
+      title: "DevOps Architect | SecOps Analyst · Network Engineer · Cybersecurity & Automation",
       under_title: "Work-Study · Île-de-France · English C1/C2",
       phone: "+33 644 93 26 27",
       email: "ablayetoure2014@gmail.com",
@@ -17,7 +17,7 @@ export const CV_DATA_EN = {
     },
   
     summary:
-      "SecOps Analyst on a work-study contract at Hessling (LynxAI), I design and automate threat detection, secure AI model hosting infrastructure, and translate complex technical capabilities into B2B value propositions. With a background in network engineering, I combine offensive (pentest) and defensive (SOC/SIEM) approaches to anticipate vulnerabilities.",
+      "I design and secure DevSecOps pipelines, automate threat detection, and protect critical infrastructures, particularly those involving AI systems.I integrate a GRC approach (risk analysis, compliance) to align security with business objectives.At the intersection of pentesting and SOC/SIEM, I combine offensive and defensive strategies to anticipate threats and reduce the attack surface.",
   
     experiences: [
       {
@@ -25,11 +25,11 @@ export const CV_DATA_EN = {
         company: "Hessling · LynxAI — Work-Study · Paris",
         period: "January 2026 – Present",
         bullets: [
-          "Threat surveillance, detection and analysis (SOC) — Zero Data Exfiltration enforcement.",
-          "Securing operations and AI model hosting infrastructure (SecOps).",
-          "Release management and production deployment coordination.",
-          "Translating open-source LLM capabilities into B2B value propositions (CISOs, law firms, healthcare).",
-          "B2B acquisition strategy: Pitch Decks, sales arguments, Shadow AI risk awareness.",
+          "Monitoring, detection, and analysis of security incidents (SOC), with a strong focus on preventing data exfiltration.",
+          "Securing environments and pipelines hosting AI models (DevSecOps / SecOps).",
+          "Automating and securing CI/CD workflows, including the integration of security controls (scanning, secrets management, hardening).",
+          "Conducting risk assessments and implementing best practices (GRC, ANSSI-aligned) to strengthen overall security posture.",
+          "Contributing to vulnerability identification and remediation through a combined pentesting and SOC/SIEM approach.",
         ],
       },
       {
