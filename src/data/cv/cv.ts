@@ -68,79 +68,79 @@ export const CV_DATA = {
   summary:
     "Je conçois et sécurise des pipelines DevSecOps, automatise la détection des menaces et protège des infrastructures critiques, notamment liées à l’IA.J’intègre une approche GRC (analyse de risques, conformité) pour aligner sécurité et enjeux métier.À la croisée du pentest et du SOC/SIEM, j’allie approche offensive et défensive pour anticiper les menaces et réduire la surface d’attaque.",
 
-    experiences: [
-      {
-        role: "Architecte DevOps | Analyste SecOps",
-        company: "Hessling · LynxAI — Alternance · Paris",
-        period: "Janvier 2026 – Présent",
-        bullets: [
-          "Surveillance, détection et analyse des incidents de sécurité (SOC), avec une attention particulière à la prévention des exfiltrations de données.",
-          "Sécurisation des environnements et des pipelines hébergeant des modèles d’IA (DevSecOps / SecOps).",
-          "Automatisation et sécurisation des workflows CI/CD, avec intégration de contrôles de sécurité (scans, gestion des secrets, durcissement).",
-          "Analyse de risques et mise en œuvre de bonnes pratiques (ANSSI, GRC) pour renforcer la posture de sécurité globale.",
-          "Contribution à l’identification et à la remédiation des vulnérabilités via une approche combinant pentest et supervision SOC/SIEM.",
-        ],
-      },
-      {
-        role: "Développeur Full Stack / DevOps",
-        company: "Skeelfully — Freelance · Paris",
-        period: "Juillet 2025 – Décembre 2025",
-        bullets: [
-          "Développement d'une marketplace connectant porteurs de projet et talents.",
-          "Stabilisation du front-end : migration Node 16, correctifs Webpack/OpenSSL.",
-          "Optimisation CI/CD et ajout de tests unitaires pour fiabiliser les livraisons.",
-          "Audit de sécurité applicative et durcissement des dépendances NPM.",
-        ],
-      },
-      {
-        role: "Audit Infrastructure & Pentest",
-        company: "Advens — Stage · Paris",
-        period: "Mars 2025 – Juin 2025",
-        bullets: [
-          "Audits techniques (systèmes / réseau / applicatif) et priorisation des risques.",
-          "Tests d'intrusion web & réseau : Burp Suite, Nmap, SQLMap — méthodologie OWASP.",
-          "Threat Hunting & corrélation SIEM (ELK/Kibana).",
-          "Industrialisation du reporting (Bash/PowerShell) et restitution aux équipes.",
-        ],
-      },
-      {
-        role: "Développeur Web & Mobile",
-        company: "Entourage — Alternance · Paris",
-        period: "Octobre 2022 – Octobre 2023",
-        bullets: [
-          "Conception et sécurisation d'applications full-stack (Node.js, React) avec Security by Design.",
-          "Réduction de la surface d'attaque des API : authentification robuste, gestion des secrets.",
-          "Amélioration de la posture de sécurité du code (standards AppSec / OWASP).",
-          "Gestion de bases de données MySQL et collaboration en méthode Agile (Jira).",
-        ],
-      },
-    ],
-    featuredProjects: [
-      {
-        name: "Purple Team Lab — Infrastructure Sécurisée",
-        tags: ["SIEM", "VLANs", "ELK", "Linux"],
-        bullets: [
-          "Déploiement d'une architecture segmentée : VLANs, adressage IP, routage inter-VLAN.",
-          "Journalisation centralisée (ELK) et règles de filtrage pour la supervision et détection.",
-        ],
-      },
-      {
-        name: "Dashboard de Supervision & Monitoring",
-        tags: ["Kibana", "Data Viz", "Analyse de logs"],
-        bullets: [
-          "Conception de tableaux de bord Kibana pour le suivi d'activité et la détection d'anomalies.",
-          "Tuning des seuils d'alerte pour réduire les faux positifs et optimiser le MCO.",
-        ],
-      },
-      {
-        name: "Automatisation de Reporting KPI",
-        tags: ["PowerBI", "Python", "Scripting"],
-        bullets: [
-          "Automatisation de la collecte et transformation de données techniques via Python.",
-          "Création de visuels décisionnels PowerBI pour le suivi des indicateurs de performance.",
-        ],
-      },
-    ],
+  experiences: [
+    // {
+    //   role: "Architecte DevOps | Analyste SecOps",
+    //   company: "Hessling · LynxAI — Alternance · Paris",
+    //   period: "Janvier 2026 – Présent",
+    //   bullets: [
+    //     "Surveillance, détection et analyse des incidents de sécurité (SOC), avec une attention particulière à la prévention des exfiltrations de données.",
+    //     "Sécurisation des environnements et des pipelines hébergeant des modèles d’IA (DevSecOps / SecOps).",
+    //     "Automatisation et sécurisation des workflows CI/CD, avec intégration de contrôles de sécurité (scans, gestion des secrets, durcissement).",
+    //     "Analyse de risques et mise en œuvre de bonnes pratiques (ANSSI, GRC) pour renforcer la posture de sécurité globale.",
+    //     "Contribution à l’identification et à la remédiation des vulnérabilités via une approche combinant pentest et supervision SOC/SIEM.",
+    //   ],
+    // },
+    {
+      role: "Développeur Full Stack / DevOps",
+      company: "Skeelfully — Freelance · Paris",
+      period: "Juillet 2025 – Décembre 2025",
+      bullets: [
+        "Développement d'une marketplace connectant porteurs de projet et talents.",
+        "Stabilisation du front-end : migration Node 16, correctifs Webpack/OpenSSL.",
+        "Optimisation CI/CD et ajout de tests unitaires pour fiabiliser les livraisons.",
+        "Audit de sécurité applicative et durcissement des dépendances NPM.",
+      ],
+    },
+    {
+      role: "Audit Infrastructure & Pentest",
+      company: "Advens — Stage · Paris",
+      period: "Mars 2025 – Juin 2025",
+      bullets: [
+        "Audits techniques (systèmes / réseau / applicatif) et priorisation des risques.",
+        "Tests d'intrusion web & réseau : Burp Suite, Nmap, SQLMap — méthodologie OWASP.",
+        "Threat Hunting & corrélation SIEM (ELK/Kibana).",
+        "Industrialisation du reporting (Bash/PowerShell) et restitution aux équipes.",
+      ],
+    },
+    {
+      role: "Développeur Web & Mobile",
+      company: "Entourage — Alternance · Paris",
+      period: "Octobre 2022 – Octobre 2023",
+      bullets: [
+        "Conception et sécurisation d'applications full-stack (Node.js, React) avec Security by Design.",
+        "Réduction de la surface d'attaque des API : authentification robuste, gestion des secrets.",
+        "Amélioration de la posture de sécurité du code (standards AppSec / OWASP).",
+        "Gestion de bases de données MySQL et collaboration en méthode Agile (Jira).",
+      ],
+    },
+  ],
+  featuredProjects: [
+    {
+      name: "Purple Team Lab — Infrastructure Sécurisée",
+      tags: ["SIEM", "VLANs", "ELK", "Linux"],
+      bullets: [
+        "Déploiement d'une architecture segmentée : VLANs, adressage IP, routage inter-VLAN.",
+        "Journalisation centralisée (ELK) et règles de filtrage pour la supervision et détection.",
+      ],
+    },
+    {
+      name: "Dashboard de Supervision & Monitoring",
+      tags: ["Kibana", "Data Viz", "Analyse de logs"],
+      bullets: [
+        "Conception de tableaux de bord Kibana pour le suivi d'activité et la détection d'anomalies.",
+        "Tuning des seuils d'alerte pour réduire les faux positifs et optimiser le MCO.",
+      ],
+    },
+    {
+      name: "Automatisation de Reporting KPI",
+      tags: ["PowerBI", "Python", "Scripting"],
+      bullets: [
+        "Automatisation de la collecte et transformation de données techniques via Python.",
+        "Création de visuels décisionnels PowerBI pour le suivi des indicateurs de performance.",
+      ],
+    },
+  ],
 
   skills: {
     // SOC & Blue Team — 5 éléments clés
@@ -165,12 +165,12 @@ export const CV_DATA = {
   },
 
   education: [
-    {
-      title: "Bac+5 — Expert en Cybersécurité",
-      school: "OTERIA Cyber School",
-      period: "Sep 2025 – Juil 2027",
-      note: "Threat Intelligence & Risk Analysis, détection avancée (SIEM/EDR/XDR), réponse aux incidents (DFIR), simulation d'attaques Red Team/Pentest, Zero Trust Architecture, sécurité Cloud & IA.",
-    },
+    // {
+    //   title: "Bac+5 — Expert en Cybersécurité",
+    //   school: "OTERIA Cyber School",
+    //   period: "Sep 2025 – Juil 2027",
+    //   note: "Threat Intelligence & Risk Analysis, détection avancée (SIEM/EDR/XDR), réponse aux incidents (DFIR), simulation d'attaques Red Team/Pentest, Zero Trust Architecture, sécurité Cloud & IA.",
+    // },
     {
       title: "Bac+4 — Administrateur d'infrastructures sécurisées (RNCP)",
       school: "ALT-RH, Paris",
