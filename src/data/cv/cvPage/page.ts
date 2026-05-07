@@ -25,82 +25,82 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     title: "SOC & Blue Team",
     skills: [
       { name: "Détection & Analyse SIEM", level: "advanced" },
-      { name: "ELK / Kibana",             level: "advanced" },
-      { name: "Threat Hunting",            level: "advanced" },
-      { name: "Wireshark",                 level: "expert" },
-      { name: "Firewalling / NAC",         level: "advanced" },
-      { name: "Gestion des incidents",     level: "advanced" },
-      { name: "Centreon",                  level: "intermediate" },
+      { name: "ELK / Kibana", level: "advanced" },
+      { name: "Threat Hunting", level: "advanced" },
+      { name: "Wireshark", level: "expert" },
+      { name: "Firewalling / NAC", level: "advanced" },
+      { name: "Gestion des incidents", level: "advanced" },
+      { name: "Centreon", level: "intermediate" },
     ],
   },
   {
     title: "Pentest & Sécurité Offensive",
     skills: [
-      { name: "Burp Suite",    level: "advanced" },
-      { name: "Nmap",          level: "expert" },
-      { name: "SQLMap",        level: "advanced" },
-      { name: "OWASP Top 10",  level: "expert" },
-      { name: "Audit réseau",  level: "advanced" },
+      { name: "Burp Suite", level: "advanced" },
+      { name: "Nmap", level: "expert" },
+      { name: "SQLMap", level: "advanced" },
+      { name: "OWASP Top 10", level: "expert" },
+      { name: "Audit réseau", level: "advanced" },
     ],
   },
   {
     title: "Systèmes & Réseau",
     skills: [
       { name: "Linux (Debian/RedHat)", level: "expert" },
-      { name: "Windows Server",        level: "advanced" },
-      { name: "TCP/IP · VLANs",        level: "expert" },
-      { name: "BGP · OSPF · STP",      level: "advanced" },
-      { name: "VxLAN · EVPN",          level: "intermediate" },
-      { name: "Active Directory",       level: "advanced" },
-      { name: "VMware · Hyper-V",       level: "intermediate" },
+      { name: "Windows Server", level: "advanced" },
+      { name: "TCP/IP · VLANs", level: "expert" },
+      { name: "BGP · OSPF · STP", level: "advanced" },
+      { name: "VxLAN · EVPN", level: "intermediate" },
+      { name: "Active Directory", level: "advanced" },
+      { name: "VMware · Hyper-V", level: "intermediate" },
     ],
   },
   {
     title: "Automatisation & DevSecOps",
     skills: [
-      { name: "Python",               level: "expert" },
-      { name: "Bash",                 level: "expert" },
-      { name: "PowerShell",           level: "advanced" },
-      { name: "Ansible",              level: "intermediate" },
+      { name: "Python", level: "expert" },
+      { name: "Bash", level: "expert" },
+      { name: "PowerShell", level: "advanced" },
+      { name: "Ansible", level: "intermediate" },
       { name: "CI/CD (GitHub Actions)", level: "advanced" },
-      { name: "Docker",               level: "intermediate" },
-      { name: "PowerBI",              level: "advanced" },
+      { name: "Docker", level: "intermediate" },
+      { name: "PowerBI", level: "advanced" },
     ],
   },
   {
     title: "Développement",
     skills: [
       { name: "React / Next.js", level: "advanced" },
-      { name: "Node.js",         level: "advanced" },
-      { name: "SQL / MySQL",     level: "advanced" },
-      { name: "TypeScript",      level: "advanced" },
-      { name: "REST API",        level: "expert" },
+      { name: "Node.js", level: "advanced" },
+      { name: "SQL / MySQL", level: "advanced" },
+      { name: "TypeScript", level: "advanced" },
+      { name: "REST API", level: "expert" },
     ],
   },
   {
     title: "Langues",
     skills: [
-      { name: "Français — courant",        level: "expert" },
-      { name: "Anglais — C1/C2",          level: "expert" },
-      { name: "Espagnol — intermédiaire",  level: "intermediate" },
+      { name: "Français — courant", level: "expert" },
+      { name: "Anglais — C1/C2", level: "expert" },
+      { name: "Espagnol — intermédiaire", level: "intermediate" },
     ],
   },
 ];
 
 export const EXPERIENCES: Experience[] = [
-  {
-    title: "Architecte DecOps | Analyste SecOps",
-    company: "Hessling · LynxAI — Alternance",
-    period: "Jan 2026 – Présent",
-    current: true,
-    tasks: [
-      "Surveillance, détection et analyse des incidents de sécurité (SOC), avec une attention particulière à la prévention des exfiltrations de données.",
-      "Sécurisation des environnements et des pipelines hébergeant des modèles d’IA (DevSecOps / SecOps).",
-      "Automatisation et sécurisation des workflows CI/CD, avec intégration de contrôles de sécurité (scans, gestion des secrets, durcissement).",
-      "Analyse de risques et mise en œuvre de bonnes pratiques (ANSSI, GRC) pour renforcer la posture de sécurité globale.",
-      "Contribution à l’identification et à la remédiation des vulnérabilités via une approche combinant pentest et supervision SOC/SIEM.",
-    ],
-  },
+  // {
+  //   title: "Architecte DecOps | Analyste SecOps",
+  //   company: "Hessling · LynxAI — Alternance",
+  //   period: "Jan 2026 – Présent",
+  //   current: true,
+  //   tasks: [
+  //     "Surveillance, détection et analyse des incidents de sécurité (SOC), avec une attention particulière à la prévention des exfiltrations de données.",
+  //     "Sécurisation des environnements et des pipelines hébergeant des modèles d’IA (DevSecOps / SecOps).",
+  //     "Automatisation et sécurisation des workflows CI/CD, avec intégration de contrôles de sécurité (scans, gestion des secrets, durcissement).",
+  //     "Analyse de risques et mise en œuvre de bonnes pratiques (ANSSI, GRC) pour renforcer la posture de sécurité globale.",
+  //     "Contribution à l’identification et à la remédiation des vulnérabilités via une approche combinant pentest et supervision SOC/SIEM.",
+  //   ],
+  // },
   {
     title: "Développeur Full Stack / DevOps",
     company: "Skeelfully — Freelance",
@@ -138,13 +138,13 @@ export const EXPERIENCES: Experience[] = [
 ];
 
 export const EDUCATION: EducationEntry[] = [
-  {
-    title: "Bac+5 — Expert en Cybersécurité",
-    school: "OTERIA Cyber School",
-    period: "Sep 2025 – Juil 2027",
-    details:
-      "Threat Intelligence & Risk Analysis, détection avancée (SIEM/EDR/XDR), réponse aux incidents (DFIR), simulation d'attaques Red Team/Pentest, Zero Trust Architecture, sécurité Cloud & IA.",
-  },
+  // {
+  //   title: "Bac+5 — Expert en Cybersécurité",
+  //   school: "OTERIA Cyber School",
+  //   period: "Sep 2025 – Juil 2027",
+  //   details:
+  //     "Threat Intelligence & Risk Analysis, détection avancée (SIEM/EDR/XDR), réponse aux incidents (DFIR), simulation d'attaques Red Team/Pentest, Zero Trust Architecture, sécurité Cloud & IA.",
+  // },
   {
     title: "Bac+4 — Administrateur d'infrastructures sécurisées (RNCP)",
     school: "ALT-RH, Paris",
